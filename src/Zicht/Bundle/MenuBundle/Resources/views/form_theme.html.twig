@@ -1,0 +1,90 @@
+{% block zicht_parent_choice_widget %}
+    <div class="controls">
+
+    <span id="{{ form.get('id') }}_controls" style="cursor: pointer">
+        {% for parent in form.get('parents') %}
+            <span class="parent" data-id="{{ parent.parent.id|default('') }}">
+                {{ parent }} &gt;
+            </span>
+        {% endfor %}
+
+        {{ form_widget(form.parent) }}
+    </span>
+
+    <script type="text/javascript">
+        (function($) {
+            var dropdown_selector = '#{{ form.parent.get('id') }}';
+            var container = '#{{ form.get('id') }}_controls';
+
+            var addEventHandlers = function() {
+                $(function() {
+                    var form = $(dropdown_selector).parents('form:first');
+                    var formAction = form.attr('action');
+                    function doPostback() {
+                        $.post(
+                            formAction + (formAction.match(/\?/) ? '&' : '?') + '__bind_only=1',
+                            form.serialize(),
+                            function(response) {
+                                var $container = $(container);
+                                var tmp = $(response);
+                                var html = tmp.find(container).html();
+                                if (html) {
+                                    $container.html(html);
+                                    addEventHandlers();
+                                }
+                            }
+                        );
+                    }
+
+                    $(dropdown_selector).change(doPostback);
+                    $('.parent[data-id]', container).each(function(i, e) {
+                        $(e).click(function() {
+                            var select = $(dropdown_selector);
+                            $('<input type="hidden" />')
+                                    .attr('name', select.attr('name'))
+                                    .val($(e).attr('data-id'))
+                                    .insertAfter(select)
+                            ;
+                            doPostback();
+                        });
+                    });
+                });
+            };
+            addEventHandlers();
+        })(jQuery);
+    </script>
+    </div>
+{% endblock %}
+
+{% block zicht_menu_item_row %}
+    {{ form_row(form.add_to_menu) }}
+
+    <div id="{{ form.get('id') }}_config_container">
+        {{ form_row(form.parent) }}
+        {{ form_rest(form) }}
+    </div>
+
+    <script type="text/javascript">
+        (function($) {
+            var container_selector      = '#{{ form.get('id') }}_config_container';
+            var checkbox_selector       = '#{{ form.add_to_menu.get('id') }}';
+            var parent_field_selector   = '#{{ form.parent.get('id') }}';
+
+            $(function() {
+                var $checkbox = $(checkbox_selector);
+                var $container = $(container_selector);
+
+                var triggerHandler = function() {
+                    if ($checkbox.attr('checked')) {
+                        $container.slideDown();
+                    } else {
+                        $container.slideUp();
+                    }
+                };
+
+                triggerHandler();
+                $checkbox.change(triggerHandler);
+            });
+        })(jQuery);
+    </script>
+{% endblock %}#}
