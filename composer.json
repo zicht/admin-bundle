@@ -1,0 +1,21 @@
+{
+    "name": "zicht/admin-bundle",
+    "description": "Admin utilities for Symfony",
+    "type": "symfony-bundle",
+    "repositories": { },
+    "authors": [
+        {
+            "name": "Zicht online",
+            "email": "info@zicht.nl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "symfony/symfony": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "": ["src/", "tests/"] }
+    },
+    "minimum-stability": "dev"
+}
+
