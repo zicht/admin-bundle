@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+<!--
+    <parameters>
+        <parameter key="zicht_bhic_core.menu_entity">ZichtBhicCore:MenuItem</parameter>
+    </parameters>
+-->
+    <services>
+        <service id="zicht_admin.menu" class="Knp\Menu\MenuItem" factory-service="knp_menu.factory" factory-method="createItem">
+            <argument type="string">zicht_admin.root</argument>
+
+            <tag name="knp_menu.menu" alias="zicht_admin"/>
+        </service>
+
+        <service id="zicht_admin.event_subscriber" class="Zicht\Bundle\AdminBundle\Event\Subscriber">
+            <argument type="service" id="zicht_admin.menu" />
+            <argument type="service" id="knp_menu.factory" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        <service id="zicht_admin.event_propagator" class="Zicht\Bundle\AdminBundle\Event\Propagator">
+        </service>
+        <service id="zicht_admin.twig_extension" class="Zicht\Bundle\AdminBundle\Twig\Extension">
+            <tag name="twig.extension" />
+            <argument type="service" id="sonata.admin.pool"/>
+            <argument type="service" id="doctrine"/>
+        </service>
+    </services>
+</container>

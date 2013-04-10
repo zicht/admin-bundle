@@ -1,0 +1,58 @@
+#zicht_admin_menu_wrapper {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+    position: fixed;
+    left: -27px;
+    top: -23px;
+    z-index: 101;
+
+    width: 27px;
+    height: 23px;
+}
+
+#zicht_admin_menu_wrapper img.logo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-top: 4px;
+
+    cursor: pointer;
+}
+
+#zicht_admin_menu_veil {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+
+    background-color: black;
+    opacity: 0;
+
+    display: none
+}
+
+#zicht_admin_menu {
+    position: fixed;
+    top: 23px;
+    left: 0;
+    overflow: visible;
+
+    background-color: white;
+}
+
+#zicht_admin_menu ul,
+#zicht_admin_menu ul li {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding:0;
+}
+
+#zicht_admin_menu a {
+    display: block;
+    white-space: nowrap;
+    border-bottom: 1px solid #999;
+    padding: 8px;
+}
