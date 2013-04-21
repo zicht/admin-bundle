@@ -8,27 +8,51 @@
 
 namespace Zicht\Bundle\AdminBundle\Twig;
 
-use Sonata\AdminBundle\Admin\Pool;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use \Sonata\AdminBundle\Admin\Pool;
+use \Doctrine\Bundle\DoctrineBundle\Registry;
 
+
+/**
+ * Extensions for twig
+ */
 class Extension extends \Twig_Extension
 {
-    function __construct(Pool $sonata, Registry $doctrine)
+    /**
+     * Constructor.
+     *
+     * @param \Sonata\AdminBundle\Admin\Pool $sonata
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+     */
+    public function __construct(Pool $sonata, Registry $doctrine)
     {
         $this->sonata = $sonata;
         $this->doctrine = $doctrine;
     }
 
 
+    /**
+     * Registers the 'admin_url' function
+     *
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
-            'admin_url' => new \Twig_Function_Method($this, 'admin_url')
+            'admin_url' => new \Twig_Function_Method($this, 'adminUrl')
         );
     }
 
 
-    public function admin_url($subject, $action, $parameters = array())
+    /**
+     * Render an url to a sonata admin
+     *
+     * @param mixed $subject
+     * @param string $action
+     * @param array $parameters
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    public function adminUrl($subject, $action, $parameters = array())
     {
         if (is_object($subject)) {
             $className = get_class($subject);
@@ -44,7 +68,7 @@ class Extension extends \Twig_Extension
 
         /** @var $admin \Sonata\AdminBundle\Admin\Admin */
         $admin = $this->sonata->getAdminByClass($className);
-        if (!$admin){
+        if (!$admin) {
             // assume the string is an admincode.
             $admin = $this->sonata->getAdminByAdminCode($className);
         }

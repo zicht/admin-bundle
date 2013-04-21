@@ -5,7 +5,14 @@
  */
 namespace Zicht\Bundle\AdminBundle\Event;
 
-class Subscriber implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
+use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use \Knp\Menu\MenuItem;
+use \Knp\Menu\FactoryInterface;
+
+/**
+ * Kernel event subscriber for the Admin menu
+ */
+class Subscriber implements EventSubscriberInterface
 {
     /**
      * @{inheritDoc}
@@ -18,14 +25,26 @@ class Subscriber implements \Symfony\Component\EventDispatcher\EventSubscriberIn
     }
 
 
-    public function __construct(\Knp\Menu\MenuItem $root, \Knp\Menu\FactoryInterface $factory)
+    /**
+     * Constructor
+     *
+     * @param \Knp\Menu\MenuItem $root
+     * @param \Knp\Menu\FactoryInterface $factory
+     */
+    public function __construct(MenuItem $root, FactoryInterface $factory)
     {
         $this->menu = $root;
         $this->factory = $factory;
     }
 
 
-    public function addMenuItem(\Zicht\Bundle\AdminBundle\Event\MenuEvent $e)
+    /**
+     * Add a child to the menu
+     *
+     * @param MenuEvent $e
+     * @return void
+     */
+    public function addMenuItem(MenuEvent $e)
     {
         $this->menu->addChild(
             $this->factory->createFromArray($e->getMenuConfig())

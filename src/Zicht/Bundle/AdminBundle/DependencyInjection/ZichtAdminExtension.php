@@ -7,10 +7,13 @@
 namespace Zicht\Bundle\AdminBundle\DependencyInjection;
 
 use \Symfony\Component\HttpKernel\DependencyInjection\Extension as DIExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use \Symfony\Component\DependencyInjection\ContainerBuilder;
+use \Symfony\Component\Config\FileLocator;
+use \Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
+/**
+ * Provides the admin services
+ */
 class ZichtAdminExtension extends DIExtension
 {
     /**

@@ -68,7 +68,7 @@
                                 $wrapper.show();
                                 $veil.show();
                             }
-                        } else if(proximity) {
+                        } else if (proximity) {
                             proximity = false;
                             $wrapper.hide();
                             $veil.hide();

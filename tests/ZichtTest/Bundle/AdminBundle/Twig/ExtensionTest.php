@@ -49,7 +49,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($admin));
         $model = new MyModel();
         $admin->expects($this->once())->method('generateObjectUrl')->with('edit', $model);
-        $e->admin_url($model, 'edit');
+        $e->adminUrl($model, 'edit');
     }
 
 
@@ -71,7 +71,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             ->with('my_model')
             ->will($this->returnValue($admin));
         $admin->expects($this->once())->method('generateUrl')->with('list');
-        $e->admin_url('my_model', 'list');
+        $e->adminUrl('my_model', 'list');
     }
 
     /**
@@ -93,7 +93,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             ->method('getAdminByAdminCode')
             ->with('unknown_model')
             ->will($this->returnValue(null));
-        $e->admin_url('unknown_model', 'list');
+        $e->adminUrl('unknown_model', 'list');
     }
 
 
@@ -120,7 +120,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             ->with('ZichtTest\Bundle\AdminBundle\Twig\MyModel')
             ->will($this->returnValue($admin));
         $admin->expects($this->once())->method('generateUrl');
-        $e->admin_url('My:MyModel', 'list');
+        $e->adminUrl('My:MyModel', 'list');
     }
 
 
@@ -138,6 +138,6 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                 ->disableOriginalConstructor()
                 ->getMock()
         );
-        $e->admin_url(1, 2);
+        $e->adminUrl(1, 2);
     }
 }

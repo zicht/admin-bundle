@@ -7,6 +7,10 @@ namespace Zicht\Bundle\AdminBundle\Event;
 
 use \Symfony\Component\EventDispatcher\Event;
 
+
+/**
+ * Service that propagates events as other types, using PropagtionInterface instances
+ */
 class Propagator
 {
     /**

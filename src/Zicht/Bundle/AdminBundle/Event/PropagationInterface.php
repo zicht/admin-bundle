@@ -5,9 +5,18 @@
  */
 namespace Zicht\Bundle\AdminBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
- 
+use \Symfony\Component\EventDispatcher\Event;
+
+/**
+ * Interface for services that listen to one event and send out another based on that event.
+ */
 interface PropagationInterface
 {
-    function buildAndForwardEvent(Event $e);
+    /**
+     * Build the event and forward it, using the event's own dispatcher.
+     *
+     * @param \Symfony\Component\EventDispatcher\Event $e
+     * @return mixed
+     */
+    public function buildAndForwardEvent(Event $e);
 }

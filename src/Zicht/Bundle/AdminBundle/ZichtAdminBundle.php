@@ -13,8 +13,14 @@ use \Symfony\Component\HttpKernel\Bundle\Bundle;
 use \Symfony\Component\DependencyInjection\ContainerBuilder;
 use \Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
+/**
+ * Bundle for the admin menu
+ */
 class ZichtAdminBundle extends Bundle
 {
+    /**
+     * @{inheritDoc}
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

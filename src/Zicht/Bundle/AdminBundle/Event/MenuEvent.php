@@ -5,31 +5,59 @@
  */
 namespace Zicht\Bundle\AdminBundle\Event;
 
-class MenuEvent extends \Symfony\Component\EventDispatcher\Event
+use \Symfony\Component\EventDispatcher\Event;
+
+/**
+ * Event that adds an item to the admin menu
+ */
+class MenuEvent extends Event
 {
-    public function __construct($url, $title)
+    /**
+     * Constructor.
+     *
+     * @param string $url
+     * @param string $title
+     * @param array $options
+     * s
+     */
+    public function __construct($url, $title, $options = array())
     {
         $this->url = $url;
         $this->title = $title;
+        $this->options = array();
     }
 
 
+    /**
+     * Returns the title of the menu item
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * Returns the url of the menu item
+     *
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
 
+    /**
+     * Returns the config to use when building the MenuItem
+     *
+     * @return array
+     */
     public function getMenuConfig()
     {
-        return array(
-            'name' => $this->getTitle(),
-            'uri' => $this->getUrl()
-        );
+        return
+            array('name' => $this->getTitle(), 'uri' => $this->getUrl())
+            + $this->options;
     }
 }
