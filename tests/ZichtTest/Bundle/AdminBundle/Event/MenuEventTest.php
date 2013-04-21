@@ -19,4 +19,18 @@ class MenuEventTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('name' => $e->getTitle(), 'uri' => $e->getUrl()), $e->getMenuConfig());
     }
+
+
+    function testOptions()
+    {
+        $e = new MenuEvent('url', 'title', array('foo' => 'bar'));
+        $this->assertEquals(
+            array(
+                'name' => $e->getTitle(),
+                'uri' => $e->getUrl(),
+                'foo' => 'bar'
+            ),
+            $e->getMenuConfig()
+        );
+    }
 }
