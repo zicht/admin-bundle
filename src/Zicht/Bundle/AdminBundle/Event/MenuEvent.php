@@ -24,7 +24,7 @@ class MenuEvent extends Event
     {
         $this->url = $url;
         $this->title = $title;
-        $this->options = array();
+        $this->options = $options;
     }
 
 
