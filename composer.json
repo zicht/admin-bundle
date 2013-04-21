@@ -10,8 +10,16 @@
         }
     ],
     "require": {
-        "php": ">=5.3",
-        "symfony/symfony": "2.1.*"
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "symfony/http-kernel": "2.1.*@stable",
+        "symfony/dependency-injection": "2.1.*@stable",
+        "symfony/config": "2.1.*@stable",
+        "symfony/event-dispatcher": "2.1.*@stable",
+        "twig/twig": "*@stable",
+        "doctrine/doctrine-bundle": "1.1.*@stable",
+        "sonata-project/admin-bundle": "*@stable,<2.2"
     },
     "autoload": {
         "psr-0": { "": ["src/", "tests/"] }

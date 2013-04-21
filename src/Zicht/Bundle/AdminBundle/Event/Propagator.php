@@ -4,7 +4,9 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 namespace Zicht\Bundle\AdminBundle\Event;
- 
+
+use \Symfony\Component\EventDispatcher\Event;
+
 class Propagator
 {
     /**
@@ -12,18 +14,33 @@ class Propagator
      */
     protected $propagations;
 
-    function __construct()
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
+        $this->propagations = array();
     }
 
-
-    function registerPropagation($eventType, $builder)
+    /**
+     * Add a propagation for the specified event type.
+     *
+     * @param string $eventType
+     * @param PropagationInterface $builder
+     * @return void
+     */
+    public function registerPropagation($eventType, $builder)
     {
         $this->propagations[$eventType][]= $builder;
     }
 
-
-    function onEvent(\Symfony\Component\EventDispatcher\Event $anyEvent)
+    /**
+     * Builds and forwards the event for all progragations registered for the specified event type.
+     *
+     * @param \Symfony\Component\EventDispatcher\Event $anyEvent
+     * @return void
+     */
+    public function onEvent(Event $anyEvent)
     {
         if (isset($this->propagations[$anyEvent->getName()])) {
             foreach ($this->propagations[$anyEvent->getName()] as $builder) {
