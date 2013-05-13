@@ -63,8 +63,8 @@
                             }
 
                             $wrapper.css({
-                                'left': Math.round(-50 + (80 * factor)) + 'px',
-                                'top': Math.round(-50 + (80 * factor)) + 'px'
+                                'left': Math.round(Math.min(4, -50 + (80 * factor))) + 'px',
+                                'top': Math.round(Math.min(4, -50 + (80 * factor))) + 'px'
                             });
                             $veil.css('opacity', 0.4 * factor);
 
