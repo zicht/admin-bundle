@@ -53,15 +53,20 @@
                 });
                 $(window).on('mousemove', function(e) {
                     if (!isExpanded) {
-                        if (e.clientX < 100 && e.clientY < 100) {
-                            var avg = (e.clientX + e.clientY) / 2;
+                        var distance = Math.sqrt(e.clientX * e.clientX + e.clientY * e.clientY);
+                        if (distance < 50) {
+                            var factor;
+                            if (distance == 0) {
+                                factor = 1;
+                            } else {
+                                factor = ((50 - distance) / 50);
+                            }
 
                             $wrapper.css({
-                                'left': (-40 + (50 - avg)) + 'px',
-                                'top': (-38 + (50 - avg)) + 'px'
+                                'left': Math.round(-50 + (80 * factor)) + 'px',
+                                'top': Math.round(-50 + (80 * factor)) + 'px'
                             });
-//                            $logo.css('opacity', .5 + (.5 - (avg / 2 / 50.0)));
-                            $veil.css('opacity',.4 * (.5 + (.5 - (avg / 2 / 50.0))));
+                            $veil.css('opacity', 0.4 * factor);
 
                             if (!proximity) {
                                 proximity = true;
