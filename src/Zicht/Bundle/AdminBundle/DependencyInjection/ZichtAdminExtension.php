@@ -19,9 +19,19 @@ class ZichtAdminExtension extends DIExtension
     /**
      * @{inheritDoc}
      */
-    public function load(array $config, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
+        $config = $this->processConfiguration(new Configuration(), $configs);
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        if (isset($config['quicklist'])) {
+            $loader->load('quicklist.xml');
+            foreach ($config['quicklist'] as $name => $config) {
+                $container->getDefinition('zicht_admin.quicklist')
+                    ->addMethodCall('addRepositoryConfig', array($name, $config));
+            }
+        }
     }
 }

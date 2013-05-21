@@ -1,0 +1,18 @@
+<table class="table table-bordered table-collapsed">
+    <thead>
+        <tr>
+            <th colspan="2">{{ 'Quicklist'|trans }}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for k, r in repos %}
+            <tr>
+                <th>{{ r.title|trans }} <a href="{{ admin_url(r.repository, 'list') }}"><i class="icon-list"></i></a></th>
+                <td><input type="text" data-quicklist-url="{{ path('zicht_admin_quicklist_quicklist', {'repo': k}) }}"></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript" src="{{ asset('bundles/zichtadmin/javascript/quicklist.js') }}"></script>
