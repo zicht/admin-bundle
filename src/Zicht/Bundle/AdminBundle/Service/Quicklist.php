@@ -5,11 +5,20 @@
  */
 namespace Zicht\Bundle\AdminBundle\Service;
  
-use Sonata\AdminBundle\Admin\Pool;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use \Sonata\AdminBundle\Admin\Pool;
+use \Doctrine\Bundle\DoctrineBundle\Registry;
 
+/**
+ * Quick list service
+ */
 class Quicklist
 {
+    /**
+     * Constructor.
+     *
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+     * @param \Sonata\AdminBundle\Admin\Pool $pool
+     */
     public function __construct(Registry $doctrine, Pool $pool)
     {
         $this->doctrine = $doctrine;
@@ -18,18 +27,37 @@ class Quicklist
     }
 
 
+    /**
+     * Add a repository configuration
+     *
+     * @param string $name
+     * @param array $config
+     * @return void
+     */
     public function addRepositoryConfig($name, $config)
     {
         $this->repos[$name] = $config;
     }
 
 
+    /**
+     * Returns all configurations
+     *
+     * @return array
+     */
     public function getRepositoryConfigs()
     {
         return $this->repos;
     }
 
 
+    /**
+     * Get the result suggestions for the passed pattern
+     *
+     * @param string $repository
+     * @param string $pattern
+     * @return array
+     */
     public function getResults($repository, $pattern)
     {
         $repoConfig = $this->repos[$repository];
@@ -53,8 +81,8 @@ class Quicklist
                 $admin = $this->adminPool->getAdminByClass(get_parent_class($record));
             }
             $results[]= array(
-                'label' => (string) $record,
-                'value' => (string) $record,
+                'label' => (string)$record,
+                'value' => (string)$record,
                 'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null)
             );
         }
