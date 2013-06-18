@@ -1,4 +1,0 @@
-plugins: ['ci']
-
-tasks: { ci.phpunit: { pre: "composer install --dev" } }
-
