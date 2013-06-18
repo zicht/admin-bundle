@@ -35,3 +35,4 @@ Example:
                 title: Jump to user
 
 Currently, only Doctrine repositories are supported. The fields specify the fields where to look for the user's input
+using a LIKE query.
