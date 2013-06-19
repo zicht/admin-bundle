@@ -5,8 +5,9 @@
  * @author Gerard van Helden <drm@melp.nl>
  * @copyright 2012 Gerard van Helden <http://melp.nl>
  */
+namespace ZichtTest\Bundle\AdminBundle;
 
-class ZichtAdminBundleTest extends PHPUnit_Framework_TestCase
+class ZichtAdminBundleTest extends \PHPUnit_Framework_TestCase
 {
     function testBundleRegistersCompilerPass()
     {
