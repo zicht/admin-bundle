@@ -8,6 +8,9 @@
     {% set full_name = '' %}
     {% set id = '' %}
     {{ block('form_widget_simple') }}
+    {% if not required %}
+        <input type="checkbox" class="null-control" {% if not obj.id %}checked{% endif %}>
+    {% endif %}
 
     <script type="text/javascript">
         (function($) {
@@ -16,6 +19,20 @@
             function init(id) {
                 var $hidden = $('#' + id);
                 var $text = $hidden.siblings('input[type="text"]');
+                var $checkbox = $hidden.siblings('input[type="checkbox"]');
+
+                function updateCheckboxStatus() {
+                    if ($checkbox.prop('checked')) {
+                        $text.val('');
+                        $hidden.val('');
+                        $text.prop('readonly', true);
+                    } else {
+                        $text.prop('readonly', false);
+                    }
+                }
+
+                updateCheckboxStatus();
+                $checkbox.on('change', updateCheckboxStatus);
 
                 $text
                     .focus(function(){$text.select();})
