@@ -1,0 +1,45 @@
+{% block zicht_quicklist_autocomplete_widget %}
+    {% set field_id = id %}
+    {% set obj = value %}
+    {% set value = obj.id %}
+    <input type="hidden" name="{{ full_name }}" value="{{ obj.id }}" id="{{ field_id }}">
+
+    {% set value = obj.value %}
+    {% set full_name = '' %}
+    {% set id = '' %}
+    {{ block('form_widget_simple') }}
+
+    <script type="text/javascript">
+        (function($) {
+            var url = {{ path(route, route_params)|json_encode|raw }};
+
+            function init(id) {
+                var $hidden = $('#' + id);
+                var $text = $hidden.siblings('input[type="text"]');
+
+                $text
+                    .focus(function(){$text.select();})
+                    .autocomplete({
+                        source: function(req, resp) {
+                            $.get(
+                                url,
+                                {'pattern': req.term},
+                                resp
+                            )
+                        },
+                        select: function(e, ui) {
+                            $hidden.val(ui.item.id);
+                        }
+                    })
+                    .insertAfter($hidden);
+            }
+            if (typeof $ === 'undefined') {
+                document.write('jQuery is required for this to work');
+            } else if(typeof $.fn.autocomplete == 'undefined') {
+                document.write('jQuery.ui.autocomplete is required for this to work');
+            } else {
+                init('{{ field_id }}');
+            }
+        })(jQuery);
+    </script>
+{% endblock %}

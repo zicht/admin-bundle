@@ -31,6 +31,10 @@ class ZichtAdminExtension extends DIExtension
             foreach ($config['quicklist'] as $name => $config) {
                 $container->getDefinition('zicht_admin.quicklist')
                     ->addMethodCall('addRepositoryConfig', array($name, $config));
+
+                $formResources = $container->getParameter('twig.form.resources');
+                $formResources[]= 'ZichtAdminBundle::form_theme.html.twig';
+                $container->setParameter('twig.form.resources', $formResources);
             }
         }
     }

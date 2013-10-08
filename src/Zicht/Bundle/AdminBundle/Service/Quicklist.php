@@ -83,9 +83,21 @@ class Quicklist
             $results[]= array(
                 'label' => (string)$record,
                 'value' => (string)$record,
-                'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null)
+                'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
+                'id' => $admin->id($record)
             );
         }
         return $results;
+    }
+
+
+    public function getOne($repository, $id)
+    {
+        $repoConfig = $this->repos[$repository];
+        /** @var $q \Doctrine\ORM\QueryBuilder */
+        return $this->doctrine
+            ->getRepository($repoConfig['repository'])
+            ->find($id)
+        ;
     }
 }
