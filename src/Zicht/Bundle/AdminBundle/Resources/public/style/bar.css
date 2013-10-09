@@ -1,21 +1,25 @@
 #zicht_admin_menu_wrapper {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-
     position: fixed;
-    left: -27px;
-    top: -23px;
-    z-index: 101;
-
+    left: 5px;
+    top: 5px;
     width: 27px;
-    height: 23px;
+    height: 27px;
+    z-index: 101;
+    -webkit-border-radius: 14px 14px 0 0;
+    -moz-border-radius: 14px 14px 0 0;
+    -ms-border-radius: 14px 14px 0 0;
+}
+
+#zicht_admin_menu_wrapper.enabled {
+    background-color: white;
 }
 
 #zicht_admin_menu_wrapper img.logo {
     position: absolute;
     right: 0;
     bottom: 0;
-    margin-top: 4px;
-
+    margin-top: 1px;
     cursor: pointer;
 }
 
@@ -35,11 +39,19 @@
 
 #zicht_admin_menu {
     position: fixed;
-    top: 23px;
-    left: 0;
+    top: 32px;
+    left: 5px;
     overflow: visible;
 
     background-color: white;
+
+    -webkit-border-radius: 0 4px 4px 4px;
+    -moz-border-radius: 0 4px 4px 4px;
+    -ms-border-radius: 0 4px 4px 4px;
+
+    -moz-box-shadow: 4px 4px 8px #000;
+    -webkit-box-shadow: 4px 4px 8px #000;
+    box-shadow: 4px 4px 8px #000;
 }
 
 #zicht_admin_menu ul,
@@ -53,6 +65,31 @@
 #zicht_admin_menu a {
     display: block;
     white-space: nowrap;
-    border-bottom: 1px solid #999;
-    padding: 8px;
+    border-bottom: 1px solid #eee;
+    padding: 14px;
+    font-size: 14px;
+    color: black;
+}
+
+#zicht_admin_menu a,
+#zicht_admin_menu a:hover {
+    text-decoration: none;
+}
+#zicht_admin_menu a:hover {
+    background-color: #eee;
+}
+
+#zicht_admin_menu li:first-child a {
+    -webkit-border-radius: 0 4px 0 0;
+    -moz-border-radius: 0 4px 0 0;
+    -ms-border-radius: 0 4px 0 0;
+}
+#zicht_admin_menu li:last-child a {
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -ms-border-radius: 0 0 4px 4px;
+}
+
+#zicht_admin_menu li:last-child a {
+    border-bottom: 0;
 }
