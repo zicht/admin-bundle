@@ -84,7 +84,7 @@ class Quicklist
                 'label' => (string)$record,
                 'value' => (string)$record,
                 'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
-                'id' => $admin->id($record)
+                'id' => ($admin ? $admin->id($record) : null)
             );
         }
         return $results;
