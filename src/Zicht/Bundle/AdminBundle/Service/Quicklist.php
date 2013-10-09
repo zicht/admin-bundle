@@ -70,7 +70,7 @@ class Quicklist
         $eb = $q->expr();
         $expr = $eb->orX();
         foreach ($repoConfig['fields'] as $fieldName) {
-            $expr->add($eb->like('i.' . $fieldName, ':pattern'));
+            $expr->add($eb->like($eb->lower('i.' . $fieldName), $eb->lower(':pattern')));
         }
         $q->where($expr);
 

@@ -1,0 +1,115 @@
+var ZichtQuicklistAutocomplete = (function($) {
+    'use strict';
+
+    function initTextControl($hidden, $text, service_url, callback) {
+        callback = callback || $.noop;
+
+        $text
+            .focus(function(){$text.select();})
+            .autocomplete({
+                source: function(req, resp) {
+                    $.get(
+                        service_url,
+                        {'pattern': req.term},
+                        resp
+                    )
+                },
+                select: function(e, ui) {
+                    $hidden.val(ui.item.id);
+                    callback(ui.item);
+                }
+            })
+        ;
+        return $text;
+    }
+
+    function initCheckboxControl($hidden, $text, $checkbox) {
+        function updateCheckboxStatus() {
+            if ($checkbox.prop('checked')) {
+                $text.val('');
+                $hidden.val('');
+                $text.prop('readonly', true);
+            } else {
+                $text.prop('readonly', false);
+            }
+        }
+        updateCheckboxStatus();
+        $checkbox.on('change', updateCheckboxStatus);
+        $text.on({
+            'click': function() {
+                if ($checkbox.prop('checked')) {
+                    $checkbox.prop('checked', false);
+                    $checkbox.trigger('change');
+                }
+            }
+        });
+        $hidden.on('change', function() {
+            $checkbox.prop('checked', !$hidden.val());
+            $checkbox.trigger('change');
+        })
+    }
+
+    function initRemoveControl($control) {
+        $control.on('click', function(e) {
+            $control.parents('li:first').remove();
+            e.preventDefault();
+        });
+    }
+
+    function initSingleAutocomplete($hidden, service_url) {
+        var $text = $hidden.siblings('input[type="text"]');
+        initTextControl($hidden, $text, service_url);
+        initCheckboxControl($hidden, $text, $hidden.siblings('input[type="checkbox"]'));
+    }
+
+
+    function initListItem($li, service_url) {
+        initRemoveControl($li.find('.remove-control'));
+        initSingleAutocomplete($li.find('input[type="hidden"]'), service_url);
+    }
+
+
+    function initMultipleAutocomplete($ul, service_url) {
+        var $add = $ul.find('.add-control');
+        var $items  = $ul.find('>li');
+        var $template = $ul.find('script#' + $ul.attr('data-template'));
+
+        $items.each(function(i, li) {
+            initListItem($(li), service_url);
+        });
+
+        function addSelectionToList($li) {
+            var $added = $($template.text());
+
+            // copy values and reset the 'add' control.
+            $.each(['input[type="hidden"]', 'input[type="text"]'], function (i, ptn) {
+                $added.find(ptn).val($li.find(ptn).val());
+                $li.find(ptn).val('');
+            });
+
+            initListItem($added, service_url);
+            $added.insertBefore($li);
+        }
+
+
+        $add.on('click', function(e) {
+            e.preventDefault();
+            var $li = $add.parents('li:first');
+            // if no value set, ignore click
+            if (!$li.find('input[type="hidden"]').val()) {
+                return;
+            }
+            addSelectionToList($li);
+        });
+    }
+
+    return {
+        'init': function($control, service_url, multiple) {
+            if (multiple) {
+                initMultipleAutocomplete($control, service_url);
+            } else {
+                initSingleAutocomplete($control, service_url);
+            }
+        }
+    };
+})(jQuery);

@@ -4,35 +4,16 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 namespace Zicht\Bundle\AdminBundle\Form;
+
 use Symfony\Component\Form\AbstractType;
-use Zicht\Bundle\AdminBundle\Service\Quicklist;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ClassTransformer implements \Symfony\Component\Form\DataTransformerInterface
-{
-    function __construct(Quicklist $lister, $repo)
-    {
-        $this->lister = $lister;
-        $this->repo = $repo;
-    }
-
-    public function transform($value)
-    {
-        return array(
-            'id' => (null !== $value ? $value->getId() : null),
-            'value' => (null !== $value ? (string) $value : null)
-        );
-    }
-
-    public function reverseTransform($value)
-    {
-        return $this->lister->getOne($this->repo, $value);
-    }
-}
-
+use Zicht\Bundle\AdminBundle\DataTransformer\MultipleTransformer;
+use Zicht\Bundle\AdminBundle\DataTransformer\ClassTransformer;
+use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 class AutocompleteType extends AbstractType
 {
@@ -45,7 +26,14 @@ class AutocompleteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->addViewTransformer(new ClassTransformer($this->quicklist, $options['repo']));
+
+        if ($options['multiple']) {
+            $builder->addViewTransformer(new MultipleTransformer(
+                new ClassTransformer($this->quicklist, $options['repo'])
+            ));
+        } else {
+            $builder->addViewTransformer(new ClassTransformer($this->quicklist, $options['repo']));
+        }
     }
 
     public function getParent()
@@ -58,6 +46,7 @@ class AutocompleteType extends AbstractType
         $resolver
             ->setRequired(array('repo'))
             ->setDefaults(array(
+                'multiple' => false,
                 'route' => 'zicht_admin_quicklist_quicklist',
                 'route_params' => array()
             ));
@@ -70,7 +59,13 @@ class AutocompleteType extends AbstractType
         $view->vars['route_params'] = $options['route_params'] + array(
             'repo' => $options['repo']
         );
+        $view->vars['multiple'] = $options['multiple'];
+
+        if ($options['multiple']) {
+            $view->vars['full_name'] = $view->vars['full_name'] . '[]';
+        }
     }
+
 
 
     /**

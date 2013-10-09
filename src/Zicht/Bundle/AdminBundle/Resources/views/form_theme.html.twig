@@ -1,62 +1,67 @@
 {% block zicht_quicklist_autocomplete_widget %}
-    {% set field_id = id %}
-    {% set obj = value %}
-    {% set value = obj.id %}
-    <input type="hidden" name="{{ full_name }}" value="{{ obj.id }}" id="{{ field_id }}">
+    {# TODO make sure somehow that this script gets loaded only once #}
+    <script type="text/javascript" src="{{ asset('bundles/zichtadmin/javascript/autocomplete.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/zichtadmin/style/autocomplete.css') }}">
 
-    {% set value = obj.value %}
-    {% set full_name = '' %}
-    {% set id = '' %}
-    {{ block('form_widget_simple') }}
-    {% if not required %}
-        <input type="checkbox" class="null-control" {% if not obj.id %}checked{% endif %}>
+    {% if multiple %}
+        {{ block('zicht_quicklist_autocomplete_multiple_widget') }}
+        {% set initializer = 'initMultiple' %}
+    {% else %}
+        {{ block('zicht_quicklist_autocomplete_single_widget') }}
+        {% set initializer = 'init' %}
     {% endif %}
-
     <script type="text/javascript">
-        (function($) {
-            var url = {{ path(route, route_params)|json_encode|raw }};
-
-            function init(id) {
-                var $hidden = $('#' + id);
-                var $text = $hidden.siblings('input[type="text"]');
-                var $checkbox = $hidden.siblings('input[type="checkbox"]');
-
-                function updateCheckboxStatus() {
-                    if ($checkbox.prop('checked')) {
-                        $text.val('');
-                        $hidden.val('');
-                        $text.prop('readonly', true);
-                    } else {
-                        $text.prop('readonly', false);
-                    }
-                }
-
-                updateCheckboxStatus();
-                $checkbox.on('change', updateCheckboxStatus);
-
-                $text
-                    .focus(function(){$text.select();})
-                    .autocomplete({
-                        source: function(req, resp) {
-                            $.get(
-                                url,
-                                {'pattern': req.term},
-                                resp
-                            )
-                        },
-                        select: function(e, ui) {
-                            $hidden.val(ui.item.id);
-                        }
-                    })
-                    .insertAfter($hidden);
-            }
-            if (typeof $ === 'undefined') {
-                document.write('jQuery is required for this to work');
-            } else if(typeof $.fn.autocomplete == 'undefined') {
-                document.write('jQuery.ui.autocomplete is required for this to work');
-            } else {
-                init('{{ field_id }}');
-            }
-        })(jQuery);
+        jQuery(function() {
+            ZichtQuicklistAutocomplete.init(
+                jQuery('#{{ id }}'),
+                {{ path(route, route_params)|json_encode|raw }},
+                {{ (multiple ? true : false)|json_encode }}
+            );
+        });
     </script>
+{% endblock %}
+
+{% block zicht_quicklist_autocomplete_control %}
+    {% set _value=value %}
+    <input type="hidden" name="{{ full_name }}" value="{{ _value.id }}" id="{{ id }}">
+    {% set value=_value.value %}
+    {% set full_name=id ~ "_text_control" %}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{% block zicht_quicklist_autocomplete_single_widget %}
+    {{ block('zicht_quicklist_autocomplete_control') }}
+
+    {% if not required %}
+        <input type="checkbox" class="null-control" {% if not value.id %}checked{% endif %}>
+    {% endif %}
+{% endblock %}
+
+{% block zicht_quicklist_autocomplete_multiple_widget %}
+    {% set _id = id %}
+    {% set _value = value %}
+    {% set list_id = id ~ '_item_list' %}
+
+    <ul id="{{ _id }}" class="zicht-autocomplete-multiple" data-template="{{ _id }}_template">
+    {% for value in _value %}
+        <li>
+            {% set id = '' %}
+            {{ block('zicht_quicklist_autocomplete_control') }}
+            <a class="remove-control"><span class="icon icon-remove"></span></a>
+        </li>
+    {% endfor %}
+        <li>
+            {% set value={value: null, id: null} %}
+            {% set id=id ~ "_add_control" %}
+            {{ block('zicht_quicklist_autocomplete_control') }}
+            <a class="add-control"><span class="icon icon-plus"></span></a>
+            <script type="text/plain" id="{{ _id }}_template">
+                <li>
+                    {% set value = {value: '', id: ''} %}
+                    {{ block('zicht_quicklist_autocomplete_control') }}
+                    <a class="remove-control"><span class="icon icon-remove"></span></a>
+                </li>
+            </script>
+        </li>
+    </ul>
 {% endblock %}

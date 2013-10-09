@@ -1,0 +1,16 @@
+ul.zicht-autocomplete-multiple,
+ul.zicht-autocomplete-multiple li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul.zicht-autocomplete-multiple li {
+    padding-bottom: 4px;
+}
+
+ul.zicht-autocomplete-multiple li a.remove-control,
+ul.zicht-autocomplete-multiple li a.add-control {
+    margin-left: -24px;
+    cursor: pointer;
+}
