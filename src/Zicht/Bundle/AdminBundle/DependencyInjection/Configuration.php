@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('title')->end()
                             ->arrayNode('fields')->prototype('scalar')->end()->end()
                             ->scalarNode('name')->end()
+                            ->booleanNode('exposed')->defaultValue(false)->end()
                         ->end()
                     ->end()
                     ->useAttributeAsKey('name')

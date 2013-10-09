@@ -45,8 +45,13 @@ class Quicklist
      *
      * @return array
      */
-    public function getRepositoryConfigs()
+    public function getRepositoryConfigs($exposedOnly = true)
     {
+        if ($exposedOnly) {
+            return array_filter($this->repos, function($item) {
+                return isset($item['exposed']) && $item['exposed'] === true;
+            });
+        }
         return $this->repos;
     }
 
