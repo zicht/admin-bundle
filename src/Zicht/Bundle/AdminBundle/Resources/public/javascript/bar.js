@@ -56,7 +56,7 @@
                         var distance = Math.sqrt(e.clientX * e.clientX + e.clientY * e.clientY);
                         if (distance < 50) {
                             var factor;
-                            if (distance == 0) {
+                            if (distance === 0) {
                                 factor = 1;
                             } else {
                                 factor = ((50 - distance) / 50);

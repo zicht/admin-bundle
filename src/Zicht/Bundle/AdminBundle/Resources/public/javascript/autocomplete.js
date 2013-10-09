@@ -1,3 +1,6 @@
+/**
+ * @author Gerard van Helden <gerard@zicht.nl>
+ */
 var ZichtQuicklistAutocomplete = (function($) {
     'use strict';
 
@@ -12,7 +15,7 @@ var ZichtQuicklistAutocomplete = (function($) {
                         service_url,
                         {'pattern': req.term},
                         resp
-                    )
+                    );
                 },
                 select: function(e, ui) {
                     $hidden.val(ui.item.id);
@@ -46,7 +49,7 @@ var ZichtQuicklistAutocomplete = (function($) {
         $hidden.on('change', function() {
             $checkbox.prop('checked', !$hidden.val());
             $checkbox.trigger('change');
-        })
+        });
     }
 
     function initRemoveControl($control) {
@@ -56,26 +59,34 @@ var ZichtQuicklistAutocomplete = (function($) {
         });
     }
 
-    function initSingleAutocomplete($hidden, service_url) {
+    function initSingleAutocomplete($hidden, service_url, callback) {
         var $text = $hidden.siblings('input[type="text"]');
-        initTextControl($hidden, $text, service_url);
+        initTextControl($hidden, $text, service_url, callback);
         initCheckboxControl($hidden, $text, $hidden.siblings('input[type="checkbox"]'));
     }
 
 
-    function initListItem($li, service_url) {
+    function initListItem($li, service_url, callback) {
         initRemoveControl($li.find('.remove-control'));
-        initSingleAutocomplete($li.find('input[type="hidden"]'), service_url);
+        initSingleAutocomplete($li.find('input[type="hidden"]'), service_url, callback);
     }
 
 
     function initMultipleAutocomplete($ul, service_url) {
-        var $add = $ul.find('.add-control');
-        var $items  = $ul.find('>li');
-        var $template = $ul.find('script#' + $ul.attr('data-template'));
+        var $add        = $ul.find('.add-control');
+        var $items      = $ul.find('>li');
+        var $template   = $ul.find('script#' + $ul.attr('data-template'));
 
         $items.each(function(i, li) {
-            initListItem($(li), service_url);
+            var $li = $(li);
+
+            if ($li.find('.add-control')) {
+                initListItem($li, service_url, function() {
+                    addSelectionToList($(li));
+                });
+            } else {
+                initListItem($li, service_url);
+            }
         });
 
         function addSelectionToList($li) {
@@ -89,6 +100,7 @@ var ZichtQuicklistAutocomplete = (function($) {
 
             initListItem($added, service_url);
             $added.insertBefore($li);
+            $li.find('input[type="text"]').focus();
         }
 
 

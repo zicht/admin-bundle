@@ -14,7 +14,7 @@
                         url,
                         {'pattern': req.term},
                         resp
-                    )
+                    );
                 },
                 select: function(e, ui) {
                     window.location.href = ui.item.url;

@@ -15,7 +15,7 @@
             ZichtQuicklistAutocomplete.init(
                 jQuery('#{{ id }}'),
                 {{ path(route, route_params)|json_encode|raw }},
-                {{ (multiple ? true : false)|json_encode }}
+                {{ (multiple ? true : false)|json_encode|raw }}
             );
         });
     </script>
