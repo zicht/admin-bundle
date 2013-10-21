@@ -21,7 +21,8 @@ namespace ZichtTest\Bundle\AdminBundle {
             $q = new \Zicht\Bundle\AdminBundle\Service\Quicklist($this->doctrine, $this->pool);
 
             $q->addRepositoryConfig('a', array('repository' => array('b' => 'c')));
-            $this->assertEquals(array('a' => array('repository' => array('b' => 'c'))), $q->getRepositoryConfigs());
+            $this->assertEquals(array('a' => array('repository' => array('b' => 'c'))), $q->getRepositoryConfigs(false));
+            $this->assertEquals(array(), $q->getRepositoryConfigs(true));
         }
 
 

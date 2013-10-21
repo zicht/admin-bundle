@@ -5,28 +5,48 @@
  */
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Zicht\Bundle\AdminBundle\Service\Quicklist;
+use \Symfony\Component\Form\DataTransformerInterface;
+use \Zicht\Bundle\AdminBundle\Service\Quicklist;
 
-class ClassTransformer implements \Symfony\Component\Form\DataTransformerInterface
+/**
+ * Simple utility transformer used for the autocomplete using the Quicklist service.
+ */
+class ClassTransformer implements DataTransformerInterface
 {
-    function __construct(Quicklist $lister, $repo)
+    /**
+     * Constructor
+     *
+     * @param \Zicht\Bundle\AdminBundle\Service\Quicklist $lister
+     * @param string $repo
+     */
+    public function __construct(Quicklist $lister, $repo)
     {
         $this->lister = $lister;
         $this->repo = $repo;
     }
 
+    /**
+     * Transform the class into an hash containing 'id' and 'value' (string repr of the object).
+     *
+     * @param mixed $value
+     * @return array|mixed
+     */
     public function transform($value)
     {
         return array(
             'id' => (null !== $value ? $value->getId() : null),
-            'value' => (null !== $value ? (string) $value : null)
+            'value' => (null !== $value ? (string)$value : null)
         );
     }
 
+    /**
+     * Return the class associated with the specified value (id)
+     *
+     * @param mixed $value
+     * @return object
+     */
     public function reverseTransform($value)
     {
         return $this->lister->getOne($this->repo, $value);
     }
 }
-

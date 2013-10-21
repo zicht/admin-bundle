@@ -43,6 +43,7 @@ class Quicklist
     /**
      * Returns all configurations
      *
+     * @param bool $exposedOnly
      * @return array
      */
     public function getRepositoryConfigs($exposedOnly = true)
@@ -96,6 +97,13 @@ class Quicklist
     }
 
 
+    /**
+     * Return a single record by it's id. Used to map the front-end variable back to an object from the repository.
+     *
+     * @param string $repository
+     * @param mixed $id
+     * @return object
+     */
     public function getOne($repository, $id)
     {
         $repoConfig = $this->repos[$repository];
