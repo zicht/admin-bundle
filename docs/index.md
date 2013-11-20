@@ -35,4 +35,7 @@ Example:
                 title: Jump to user
 
 Currently, only Doctrine repositories are supported. The fields specify the fields where to look for the user's input
-using a LIKE query.
+using a LIKE query. In the above example this would result in a '...WHERE p.title LIKE :pattern' clause for the
+MyBundle:Page entity, and a '...WHERE (u.username LIKE :pattern OR u.email LIKE :pattern OR u.full_name LIKE :pattern)'
+for the MyBundle:User entity.
+
