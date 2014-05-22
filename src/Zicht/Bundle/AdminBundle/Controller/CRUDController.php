@@ -63,7 +63,7 @@ class CRUDController extends BaseCRUDController
 
             if (count($delegates)) {
                 return $this->render(
-                    'ZichtFrameworkExtraBundle:CRUD:create-subclass.html.twig',
+                    'ZichtAdminBundle:CRUD:create-subclass.html.twig',
                     array('admins' => $delegates)
                 );
             }
