@@ -9,6 +9,8 @@
     -webkit-border-radius: 14px 14px 0 0;
     -moz-border-radius: 14px 14px 0 0;
     -ms-border-radius: 14px 14px 0 0;
+    -o-border-radius: 14px 14px 0 0;
+    border-radius: 14px 14px 0 0;
 }
 
 #zicht_admin_menu_wrapper.enabled {
@@ -83,11 +85,15 @@
     -webkit-border-radius: 0 4px 0 0;
     -moz-border-radius: 0 4px 0 0;
     -ms-border-radius: 0 4px 0 0;
+    -o-border-radius: 0 4px 0 0;
+    border-radius: 0 4px 0 0;
 }
 #zicht_admin_menu li:last-child a {
     -webkit-border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     -ms-border-radius: 0 0 4px 4px;
+    -o-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 
 #zicht_admin_menu li:last-child a {
