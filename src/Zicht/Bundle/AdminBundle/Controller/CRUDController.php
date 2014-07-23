@@ -7,6 +7,7 @@
 namespace Zicht\Bundle\AdminBundle\Controller;
 
 use \Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
+use \Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -16,6 +17,42 @@ use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CRUDController extends BaseCRUDController
 {
+    /**
+     * Duplicate pages
+     *
+     * @return RedirectResponse
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function duplicateAction()
+    {
+        $id     = $this->get('request')->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+
+        if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        }
+
+        if (false === $this->admin->isGranted('DUPLICATE', $object)) {
+            throw new AccessDeniedException();
+        }
+
+        $newObject = clone $object;
+
+        if (method_exists($newObject, 'setTitle')) {
+            $newObject->setTitle('[COPY] - ' . $newObject->getTitle());
+        }
+
+        $objectManager = $this->getDoctrine()->getManager();
+        $objectManager->persist($newObject);
+        $objectManager->flush();
+
+        $this->addFlash('sonata_flash_success', 'flash_duplicate_success');
+
+        return new RedirectResponse($this->admin->generateObjectUrl('edit', $newObject));
+    }
+
     /**
      * @{inheritDoc}
      */
