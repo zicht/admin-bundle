@@ -43,7 +43,7 @@ class MultipleTransformer implements DataTransformerInterface
     public function reverseTransform($values)
     {
         $ret = array();
-        foreach ($values as $item) {
+        foreach ((array)$values as $item) {
             if ($value = $this->innerTransformer->reverseTransform($item)) {
                 $ret[]= $value;
             }
