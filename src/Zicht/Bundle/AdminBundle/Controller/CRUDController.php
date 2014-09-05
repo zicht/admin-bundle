@@ -87,7 +87,7 @@ class CRUDController extends BaseCRUDController
     public function createAction()
     {
         $refl = new \ReflectionClass($this->admin->getClass());
-        if ($refl->isAbstract()) {
+        if ($refl->isAbstract() && !$this->getRequest()->get('subclass')) {
             $delegates = array();
             $classMetadata = $this->getDoctrine()->getManager()->getClassMetadata($this->admin->getClass());
             foreach ($classMetadata->subClasses as $subClass) {
