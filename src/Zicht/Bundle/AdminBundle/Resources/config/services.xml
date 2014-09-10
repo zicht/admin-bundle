@@ -28,5 +28,8 @@
             <argument type="service" id="sonata.admin.pool"/>
             <argument type="service" id="doctrine"/>
         </service>
+        <service id="zicht_admin.form.tinymce" class="Zicht\Bundle\AdminBundle\Form\TinymceType">
+            <tag name="form.type" alias="tinymce" />
+        </service>
     </services>
 </container>
