@@ -19,6 +19,7 @@ var ZichtQuicklistAutocomplete = (function($) {
                 },
                 select: function(e, ui) {
                     $hidden.val(ui.item.id);
+                    $text.val(ui.item.label);
                     callback(ui.item);
                 }
             })
