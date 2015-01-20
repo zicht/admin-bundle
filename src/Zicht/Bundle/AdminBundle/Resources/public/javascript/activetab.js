@@ -23,8 +23,7 @@ jQuery(function ($) {
             localStorage.removeItem('zicht_opened_tab');
         }
 
-
-        $('input[name^=btn_update_and_edit]').click(function (e) {
+        $('[name^=btn_update_and_edit]').click(function (e) {
             e.preventDefault();
 
             // Get active tab
