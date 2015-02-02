@@ -14,3 +14,8 @@ ul.zicht-autocomplete-multiple li a.add-control {
     margin-left: -24px;
     cursor: pointer;
 }
+
+input[type=text].ui-autocomplete-input {
+    display: inline;
+    width: 95%;
+}

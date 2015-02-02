@@ -47,14 +47,17 @@
         <li>
             {% set id = '' %}
             {{ block('zicht_quicklist_autocomplete_control') }}
-            <a class="remove-control"><span class="icon icon-remove"></span></a>
+            <a class="remove-control">
+                <i class="glyphicon glyphicon-remove"></i>
+                {#<span class="icon glyphicon-remove"></span>#}
+            </a>
         </li>
     {% endfor %}
         <li>
             {% set value={value: null, id: null} %}
             {% set id=id ~ "_add_control" %}
             {{ block('zicht_quicklist_autocomplete_control') }}
-            <a class="add-control"><span class="icon icon-plus"></span></a>
+            <a class="add-control"><span class="icon glyphicon glyphicon-plus"></span></a>
             <script type="text/plain" id="{{ _id }}_template">
                 <li>
                     {% set value = {value: '', id: ''} %}
