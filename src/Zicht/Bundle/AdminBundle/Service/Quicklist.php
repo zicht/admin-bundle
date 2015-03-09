@@ -66,33 +66,18 @@ class Quicklist
      */
     public function getResults($repository, $pattern)
     {
-        $repoConfig = $this->repos[$repository];
-        /** @var $q \Doctrine\ORM\QueryBuilder */
-        $q = $this->doctrine
-            ->getRepository($repoConfig['repository'])
-            ->createQueryBuilder('i')
-            ->setMaxResults(10)
-        ;
-        $eb = $q->expr();
-        $expr = $eb->orX();
-        foreach ($repoConfig['fields'] as $fieldName) {
-            $expr->add($eb->like($eb->lower('i.' . $fieldName), $eb->lower(':pattern')));
-        }
-        $q->where($expr);
+        $queryResults = $this->findRecords($repository, $pattern);
 
         $results = array();
-        foreach ($q->getQuery()->execute(array('pattern' => '%' . $pattern . '%')) as $record) {
+        foreach ($queryResults as $record) {
             $admin = $this->adminPool->getAdminByClass(get_class($record));
             if (!$admin) {
                 $admin = $this->adminPool->getAdminByClass(get_parent_class($record));
             }
-            $results[]= array(
-                'label' => (string)$record,
-                'value' => (string)$record,
-                'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
-                'id' => ($admin ? $admin->id($record) : null)
-            );
+            $resultRecord = $this->createResultRecord($record, $admin);
+            $results[] = $resultRecord;
         }
+
         return $results;
     }
 
@@ -112,5 +97,45 @@ class Quicklist
             ->getRepository($repoConfig['repository'])
             ->find($id)
         ;
+    }
+
+    /**
+     * @param $repository
+     * @param $pattern
+     * @return mixed
+     */
+    private function findRecords($repository, $pattern)
+    {
+        $repoConfig = $this->repos[$repository];
+        /** @var $q \Doctrine\ORM\QueryBuilder */
+        $q = $this->doctrine
+            ->getRepository($repoConfig['repository'])
+            ->createQueryBuilder('i')
+            ->setMaxResults(10);
+        $eb = $q->expr();
+        $expr = $eb->orX();
+        foreach ($repoConfig['fields'] as $fieldName) {
+            $expr->add($eb->like($eb->lower('i.' . $fieldName), $eb->lower(':pattern')));
+        }
+        $q->where($expr);
+
+        $queryResults = $q->getQuery()->execute(array('pattern' => '%' . $pattern . '%'));
+        return $queryResults;
+    }
+
+    /**
+     * @param $record
+     * @param $admin
+     * @return array
+     */
+    public function createResultRecord($record, $admin)
+    {
+        $resultRecord = array(
+            'label' => (string)$record,
+            'value' => (string)$record,
+            'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
+            'id' => ($admin ? $admin->id($record) : null)
+        );
+        return $resultRecord;
     }
 }
