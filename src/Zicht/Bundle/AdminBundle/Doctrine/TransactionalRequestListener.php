@@ -49,8 +49,7 @@ class TransactionalRequestListener implements EventSubscriberInterface
      */
     public function onKernelRequest(KernelEvent $event)
     {
-        // TODO explicit transaction management in stead of this.
-        // See ZICHTDEV-119
+        // TODO explicit transaction management in stead of this. See ZICHTDEV-119 for ideas on this
         if (
             $event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
             && preg_match($this->pattern, $event->getRequest()->getRequestUri())
