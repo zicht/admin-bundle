@@ -23,7 +23,8 @@ class TransactionalRequestListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => 'onKernelRequest'
+            KernelEvents::REQUEST   => 'onKernelRequest',
+            KernelEvents::RESPONSE  => 'onKernelResponse'
         );
     }
 
@@ -38,6 +39,8 @@ class TransactionalRequestListener implements EventSubscriberInterface
     {
         $this->doctrine = $doctrine;
         $this->pattern = $pattern;
+
+        $this->wasTxStarted = false;
     }
 
 
@@ -54,7 +57,27 @@ class TransactionalRequestListener implements EventSubscriberInterface
             $event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
             && preg_match($this->pattern, $event->getRequest()->getRequestUri())
         ) {
+            $this->wasTxStarted = true;
             $this->doctrine->getConnection()->beginTransaction();
+        }
+    }
+
+
+    /**
+     * Commits the transaction, if started
+     *
+     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
+     * @return void
+     */
+    public function onKernelResponse(KernelEvent $event)
+    {
+        if (
+            $event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
+            && $this->wasTxStarted
+            && $this->doctrine->getConnection()->getTransactionIsolation() > 0
+        ) {
+            $this->doctrine->getConnection()->commit();
+            $this->wasTxStarted = false;
         }
     }
 }
