@@ -17,6 +17,9 @@ use \Symfony\Component\HttpKernel\KernelEvents;
  */
 class TransactionalRequestListener implements EventSubscriberInterface
 {
+    /**
+     * @{inheritDoc}
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -25,6 +28,12 @@ class TransactionalRequestListener implements EventSubscriberInterface
     }
 
 
+    /**
+     * Construct the listener.
+     *
+     * @param Registry $doctrine
+     * @param string $pattern A Regular expression matching a url
+     */
     public function __construct(Registry $doctrine, $pattern)
     {
         $this->doctrine = $doctrine;
@@ -32,6 +41,12 @@ class TransactionalRequestListener implements EventSubscriberInterface
     }
 
 
+    /**
+     * Starts a transaction within any url matching the constructor's $pattern parameter
+     *
+     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
+     * @return void
+     */
     public function onKernelRequest(KernelEvent $event)
     {
         // TODO explicit transaction management in stead of this.
