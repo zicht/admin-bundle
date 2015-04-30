@@ -26,7 +26,14 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('auto')->defaultTrue()->end()
-                        ->scalarNode('pattern')->defaultValue('!^/admin.*(edit|delete|create|move)!')->end()
+                        ->scalarNode('pattern')
+                            ->defaultValue('!^/admin.*(edit|delete|create|move)!')
+                            ->validate()
+                                ->ifTrue(function($p) {
+                                    return (false === preg_match($p, ''));
+                                })->thenInvalid("Invalid PCRE pattern")
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('quicklist')
