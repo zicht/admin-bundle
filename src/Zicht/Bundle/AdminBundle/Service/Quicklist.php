@@ -62,11 +62,12 @@ class Quicklist
      *
      * @param string $repository
      * @param string $pattern
+     * @param null|sytring $language
      * @return array
      */
-    public function getResults($repository, $pattern)
+    public function getResults($repository, $pattern, $language = null)
     {
-        $queryResults = $this->findRecords($repository, $pattern);
+        $queryResults = $this->findRecords($repository, $pattern, $language);
 
         $results = array();
         foreach ($queryResults as $record) {
@@ -102,9 +103,10 @@ class Quicklist
     /**
      * @param $repository
      * @param $pattern
+     * @param null|string $language
      * @return mixed
      */
-    private function findRecords($repository, $pattern)
+    private function findRecords($repository, $pattern, $language = null)
     {
         $repoConfig = $this->repos[$repository];
         /** @var $q \Doctrine\ORM\QueryBuilder */
@@ -119,7 +121,15 @@ class Quicklist
         }
         $q->where($expr);
 
-        $queryResults = $q->getQuery()->execute(array('pattern' => '%' . $pattern . '%'));
+        $params = array('pattern' => '%' . $pattern . '%');
+
+        if (null !== $language) {
+            $q->andWhere('i.language = :lang');
+            $params[':lang'] = $language;
+        }
+
+
+        $queryResults = $q->getQuery()->execute($params);
         return $queryResults;
     }
 
