@@ -64,14 +64,16 @@ class Quicklist
      * @param string $pattern
      * @return array
      */
-    public function getResults($repository, $pattern)
+    public function getResults($repository, $pattern, $max = 15)
     {
         $repoConfig = $this->repos[$repository];
         /** @var $q \Doctrine\ORM\QueryBuilder */
         $q = $this->doctrine
             ->getRepository($repoConfig['repository'])
             ->createQueryBuilder('i')
-            ->setMaxResults(10)
+
+            // this is high because of sorting not done in SQL.
+            ->setMaxResults(1500)
         ;
         $eb = $q->expr();
         $expr = $eb->orX();
@@ -93,7 +95,20 @@ class Quicklist
                 'id' => ($admin ? $admin->id($record) : null)
             );
         }
-        return $results;
+
+        // TODO do this sort in DQL. Unfortunately, doctrine is not too handy with this, so
+        // I'll keep it like this for a second. Note the the "setMaxResults()" should be reverted to $max
+        // and the slice can be removed
+        usort($results, function($a, $b) use ($pattern) {
+            $percentA = 0;
+            $percentB = 0;
+            similar_text($a['label'], $pattern, $percentA);
+            similar_text($b['label'], $pattern, $percentB);
+
+            return $percentB - $percentA;
+        });
+
+        return array_slice($results, 0, $max);
     }
 
 
