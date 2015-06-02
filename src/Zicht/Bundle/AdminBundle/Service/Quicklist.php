@@ -4,7 +4,7 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 namespace Zicht\Bundle\AdminBundle\Service;
- 
+
 use \Sonata\AdminBundle\Admin\Pool;
 use \Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -62,10 +62,10 @@ class Quicklist
      *
      * @param string $repository
      * @param string $pattern
-     * @param null|sytring $language
+     * @param null|string $language
      * @return array
      */
-    public function getResults($repository, $pattern, $language = null)
+    public function getResults($repository, $pattern, $language = null, $max = 15)
     {
         $queryResults = $this->findRecords($repository, $pattern, $language);
 
@@ -79,7 +79,20 @@ class Quicklist
             $results[] = $resultRecord;
         }
 
-        return $results;
+
+        // TODO do this sort in DQL. Unfortunately, doctrine is not too handy with this, so
+        // I'll keep it like this for a second. Note the the "setMaxResults()" should be reverted to $max
+        // and the slice can be removed
+        usort($results, function($a, $b) use ($pattern) {
+            $percentA = 0;
+            $percentB = 0;
+            similar_text($a['label'], $pattern, $percentA);
+            similar_text($b['label'], $pattern, $percentB);
+
+            return $percentB - $percentA;
+        });
+
+        return array_slice($results, 0, $max);
     }
 
 
@@ -97,7 +110,7 @@ class Quicklist
         return $this->doctrine
             ->getRepository($repoConfig['repository'])
             ->find($id)
-        ;
+            ;
     }
 
     /**
@@ -106,14 +119,14 @@ class Quicklist
      * @param null|string $language
      * @return mixed
      */
-    private function findRecords($repository, $pattern, $language = null)
+    private function findRecords($repository, $pattern, $language = null, $max = 15)
     {
         $repoConfig = $this->repos[$repository];
         /** @var $q \Doctrine\ORM\QueryBuilder */
         $q = $this->doctrine
             ->getRepository($repoConfig['repository'])
             ->createQueryBuilder('i')
-            ->setMaxResults(10);
+            ->setMaxResults(1500);
         $eb = $q->expr();
         $expr = $eb->orX();
         foreach ($repoConfig['fields'] as $fieldName) {
@@ -128,9 +141,7 @@ class Quicklist
             $params[':lang'] = $language;
         }
 
-
-        $queryResults = $q->getQuery()->execute($params);
-        return $queryResults;
+        return $q->getQuery()->execute($params);
     }
 
     /**
