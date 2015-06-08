@@ -7,7 +7,7 @@ var ZichtQuicklistAutocomplete = (function($) {
     function initTextControl($hidden, $text, service_url, callback) {
         callback = callback || $.noop;
 
-        var language = $text.data('language') || false;
+        var language = $text.data('language') || '';
 
         $text
             .focus(function(){$text.select();})
