@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:list_string.html.twig' %}
+
+{% block field %}
+    {% if value|trim != '' %}
+        <a href="{{ value }}"><i class="fa fa-external-link"></i> {{ value }}</a>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
