@@ -31,5 +31,16 @@
         <service id="zicht_admin.form.tinymce" class="Zicht\Bundle\AdminBundle\Form\TinymceType">
             <tag name="form.type" alias="tinymce" />
         </service>
+
+        <service id="zicht_user.security.authorization.voter.admin_voter"
+                 class="Zicht\Bundle\AdminBundle\Security\Voter\AdminVoter"
+                 public="false">
+            <argument type="service" id="sonata.admin.pool"/>
+            <argument type="service" id="service_container"/>
+            <tag name="security.voter" />
+        </service>
+        <service id="zicht_admin.form.date_picker" class="Zicht\Bundle\AdminBundle\Form\DatePickerType">
+            <tag name="form.type" alias="zicht_date_picker" />
+        </service>
     </services>
 </container>

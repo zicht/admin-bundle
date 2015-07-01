@@ -1,0 +1,8 @@
+zicht_admin:            { resource: "@ZichtAdminBundle/Controller" }
+zicht_admin_redirect:
+    path: /admin
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /admin/dashboard
+        permanent: true
+

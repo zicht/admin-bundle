@@ -1,0 +1,14 @@
+<script src="{{ asset('bundles/zichtadmin/javascript/jquery-ui-timepicker-addon.js') }}"></script>
+<script>
+    /**
+     * Using http://trentrichardson.com/examples/timepicker/
+     */
+    $(function() {
+        $( ".zicht_date_picker" ).datetimepicker({
+            dateFormat: "dd-mm-yy",
+            altFormat: "dd-mm-yy",
+            defaultDate: 0,
+            separator: ' @ '
+        });
+    });
+</script>

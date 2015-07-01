@@ -7,13 +7,21 @@ var ZichtQuicklistAutocomplete = (function($) {
     function initTextControl($hidden, $text, service_url, callback) {
         callback = callback || $.noop;
 
+        var language = $text.data('language') || false,
+            params = {};
+
+        if ($text.data('language')) {
+            params = {language: language};
+        }
+
         $text
             .focus(function(){$text.select();})
             .autocomplete({
                 source: function(req, resp) {
+                    params.pattern = req.term;
                     $.get(
                         service_url,
-                        {'pattern': req.term},
+                        params,
                         resp
                     );
                 },

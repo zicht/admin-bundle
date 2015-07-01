@@ -8,6 +8,7 @@ namespace Zicht\Bundle\AdminBundle\Controller;
 
 use \Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
 use \Symfony\Component\HttpFoundation\RedirectResponse;
+use \Symfony\Component\HttpFoundation\Response;
 use \Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -127,7 +128,11 @@ class CRUDController extends BaseCRUDController
         $result = $repo->find($id);
         $repo->moveUp($result);
 
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        if ($referer = $this->getRequest()->headers->get('referer')) {
+            return $this->redirect($referer);
+        } else {
+            return new Response('<script>history.go(-1);</script>');
+        }
     }
 
 
@@ -143,7 +148,11 @@ class CRUDController extends BaseCRUDController
         $result = $repo->find($id);
         $repo->moveDown($result);
 
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        if ($referer = $this->getRequest()->headers->get('referer')) {
+            return $this->redirect($referer);
+        } else {
+            return new Response('<script>history.go(-1);</script>');
+        }
     }
 
 

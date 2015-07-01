@@ -28,14 +28,22 @@ class ZichtAdminExtension extends DIExtension
 
         if (isset($config['quicklist'])) {
             $loader->load('quicklist.xml');
-            foreach ($config['quicklist'] as $name => $config) {
+            foreach ($config['quicklist'] as $name => $quicklistConfig) {
                 $container->getDefinition('zicht_admin.quicklist')
-                    ->addMethodCall('addRepositoryConfig', array($name, $config));
+                    ->addMethodCall('addRepositoryConfig', array($name, $quicklistConfig));
 
                 $formResources = $container->getParameter('twig.form.resources');
                 $formResources[]= 'ZichtAdminBundle::form_theme.html.twig';
                 $container->setParameter('twig.form.resources', $formResources);
             }
+        }
+
+        if (isset($config['transactional_listener']) && $config['transactional_listener']['auto']) {
+            $loader->load('transactional_listener.xml');
+
+            $container->getDefinition('zicht_admin.transactional_listener')
+                ->addArgument($config['transactional_listener']['pattern'])
+            ;
         }
     }
 }

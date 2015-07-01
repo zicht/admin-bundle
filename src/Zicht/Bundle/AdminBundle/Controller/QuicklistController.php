@@ -29,7 +29,12 @@ class QuicklistController extends Controller
     {
         $quicklist = $this->get('zicht_admin.quicklist');
         if ($request->get('repo') && $request->get('pattern')) {
-            return new JsonResponse($quicklist->getResults($request->get('repo'), $request->get('pattern')));
+            if ($request->get('language')) {
+                $language = $request->get('language');
+            } else {
+                $language = null;
+            }
+            return new JsonResponse($quicklist->getResults($request->get('repo'), $request->get('pattern'), $language));
         }
 
         return array(

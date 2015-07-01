@@ -4,7 +4,7 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 namespace Zicht\Bundle\AdminBundle\Service;
- 
+
 use \Sonata\AdminBundle\Admin\Pool;
 use \Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -62,38 +62,37 @@ class Quicklist
      *
      * @param string $repository
      * @param string $pattern
+     * @param null|string $language
      * @return array
      */
-    public function getResults($repository, $pattern)
+    public function getResults($repository, $pattern, $language = null, $max = 15)
     {
-        $repoConfig = $this->repos[$repository];
-        /** @var $q \Doctrine\ORM\QueryBuilder */
-        $q = $this->doctrine
-            ->getRepository($repoConfig['repository'])
-            ->createQueryBuilder('i')
-            ->setMaxResults(10)
-        ;
-        $eb = $q->expr();
-        $expr = $eb->orX();
-        foreach ($repoConfig['fields'] as $fieldName) {
-            $expr->add($eb->like($eb->lower('i.' . $fieldName), $eb->lower(':pattern')));
-        }
-        $q->where($expr);
+        $queryResults = $this->findRecords($repository, $pattern, $language);
 
         $results = array();
-        foreach ($q->getQuery()->execute(array('pattern' => '%' . $pattern . '%')) as $record) {
+        foreach ($queryResults as $record) {
             $admin = $this->adminPool->getAdminByClass(get_class($record));
             if (!$admin) {
                 $admin = $this->adminPool->getAdminByClass(get_parent_class($record));
             }
-            $results[]= array(
-                'label' => (string)$record,
-                'value' => (string)$record,
-                'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
-                'id' => ($admin ? $admin->id($record) : null)
-            );
+            $resultRecord = $this->createResultRecord($record, $admin);
+            $results[] = $resultRecord;
         }
-        return $results;
+
+
+        // TODO do this sort in DQL. Unfortunately, doctrine is not too handy with this, so
+        // I'll keep it like this for a second. Note the the "setMaxResults()" should be reverted to $max
+        // and the slice can be removed
+        usort($results, function($a, $b) use ($pattern) {
+            $percentA = 0;
+            $percentB = 0;
+            similar_text($a['label'], $pattern, $percentA);
+            similar_text($b['label'], $pattern, $percentB);
+
+            return $percentB - $percentA;
+        });
+
+        return array_slice($results, 0, $max);
     }
 
 
@@ -111,6 +110,53 @@ class Quicklist
         return $this->doctrine
             ->getRepository($repoConfig['repository'])
             ->find($id)
-        ;
+            ;
+    }
+
+    /**
+     * @param $repository
+     * @param $pattern
+     * @param null|string $language
+     * @return mixed
+     */
+    private function findRecords($repository, $pattern, $language = null, $max = 15)
+    {
+        $repoConfig = $this->repos[$repository];
+        /** @var $q \Doctrine\ORM\QueryBuilder */
+        $q = $this->doctrine
+            ->getRepository($repoConfig['repository'])
+            ->createQueryBuilder('i')
+            ->setMaxResults(1500);
+        $eb = $q->expr();
+        $expr = $eb->orX();
+        foreach ($repoConfig['fields'] as $fieldName) {
+            $expr->add($eb->like($eb->lower('i.' . $fieldName), $eb->lower(':pattern')));
+        }
+        $q->where($expr);
+
+        $params = array('pattern' => '%' . $pattern . '%');
+
+        if (null !== $language) {
+            $q->andWhere('i.language = :lang');
+            $params[':lang'] = $language;
+        }
+
+        return $q->getQuery()->execute($params);
+    }
+
+    /**
+     * @param $record
+     * @param $admin
+     * @return array
+     */
+    public function createResultRecord($record, $admin)
+    {
+        $resultRecord = array(
+            'label' => (string)$record,
+            'value' => (string)$record,
+            'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
+            'id' => ($admin ? $admin->id($record) : null)
+        );
+        return $resultRecord;
     }
 }
