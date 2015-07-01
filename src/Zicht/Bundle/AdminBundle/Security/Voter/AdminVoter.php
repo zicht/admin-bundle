@@ -53,7 +53,7 @@ class AdminVoter implements VoterInterface
     public function supportsClass($class)
     {
         // support any class that has an associated sonata admin
-        return !!$this->pool->getAdminByClass($class);
+        return $this->pool->hasAdminByClass($class);
     }
 
     /**
