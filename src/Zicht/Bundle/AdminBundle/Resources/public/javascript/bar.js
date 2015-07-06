@@ -24,9 +24,10 @@
         veil.style.transition = 'all 0.3s ease-in-out';
         veil.style.MozTansition = 'all 0.3s ease-in-out';
         veil.style.webkitTransition = 'all 0.3s ease-in-out';
-        veil.style.display = 'block';
 
+        veil.style.display = 'none';
         menu.style.display = 'none';
+
         menu.appendChild(container);
 
         wrapper.appendChild(logo);
