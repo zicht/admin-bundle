@@ -1,5 +1,7 @@
 /* global: window, document */
 (function() {
+    'use strict';
+
     var logo_url = '/bundles/zichtadmin/images/zicht.png',
         container = document.getElementById('zicht_admin_menu'),
         links = container.getElementsByTagName('a'),
@@ -9,13 +11,9 @@
         menu = document.createElement('div'),
         proximity = false,
         isExpanded = false
-        ;
-
-    console.log(container);
+    ;
 
     wrapper.style.display = 'none';
-
-    //console.log(links);
 
     logo.setAttribute('src', logo_url);
 
