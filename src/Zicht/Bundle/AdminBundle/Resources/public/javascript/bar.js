@@ -1,58 +1,78 @@
+/* global: window, document */
 (function() {
-    if (typeof jQuery !== 'undefined') {
-        var $ = jQuery;
-        var logo_url = '/bundles/zichtadmin/images/zicht.png';
+    var logo_url = '/bundles/zichtadmin/images/zicht.png',
+        container = document.getElementById('zicht_admin_menu'),
+        links = container.getElementsByTagName('a'),
+        wrapper = document.createElement('div'),
+        logo = document.createElement('img'),
+        veil = document.createElement('div'),
+        menu = document.createElement('div'),
+        proximity = false,
+        isExpanded = false
+        ;
 
-        $(function() {
-            if ($('a', '#zicht_admin_menu').length > 0) {
-                var $wrapper = $('<div id="zicht_admin_menu_wrapper" />');
-                var $logo = $('<img class="logo" src="' + logo_url + '">');
-                var $veil = $('<div id="zicht_admin_menu_veil" />');
-                var $menu = $('<div />');
+    console.log(container);
 
-                $menu.hide().append($('#zicht_admin_menu'));
-                $wrapper
-                    .append($logo)
-                    .append($menu);
+    wrapper.style.display = 'none';
 
-                $(document.body)
-                    .append($wrapper)
-                    .append($veil)
-                ;
+    //console.log(links);
 
-                var proximity = false;
-                var isExpanded = false;
+    logo.setAttribute('src', logo_url);
 
-                $logo.on('click', function() {
-                    if (isExpanded) {
-                        $menu.fadeOut('fast');
-                        $veil.animate({opacity: 0}, function (){$veil.hide();});
-                        $wrapper.removeClass('enabled');
-                        isExpanded = false;
-                    } else {
-                        $veil.show();
-                        $veil.animate({opacity: 0.6});
-                        $menu.fadeIn('fast');
-                        $wrapper.addClass('enabled');
-                        isExpanded = true;
-                    }
-                });
-                $veil.on('click', function() {
-                    if (isExpanded) {
-                        $veil.hide();
-                    }
-                });
+    if (links.length) {
+        wrapper.setAttribute('id', 'zicht_admin_menu_wrapper');
+        veil.setAttribute('id', 'zicht_admin_menu_veil');
 
-                $(window).keyup(function(e) {
-                    if (isExpanded && e.keyCode === 27) {
-                        proximity = false;
-                        isExpanded = false;
-                        $menu.hide();
-                        $wrapper.removeClass('enabled');
-                        $veil.hide();
-                    }
-                });
+        veil.style.transition = 'all 0.3s ease-in-out';
+        veil.style.MozTansition = 'all 0.3s ease-in-out';
+        veil.style.webkitTransition = 'all 0.3s ease-in-out';
+        veil.style.display = 'block';
+
+        menu.style.display = 'none';
+        menu.appendChild(container);
+
+        wrapper.appendChild(logo);
+        wrapper.appendChild(menu);
+
+        document.body.appendChild(wrapper);
+        document.body.appendChild(veil);
+
+        logo.onclick = function() {
+            if (isExpanded) {
+                menu.style.display = 'none';
+                wrapper.className = '';
+                if ('addEventListener' in veil) {
+                    veil.addEventListener("transitionend", function() {
+                        veil.style.display = 'none';
+                    }, false);
+                }
+                veil.style.opacity = 0;
+                isExpanded = false;
+            } else {
+                wrapper.className = 'enabled';
+                menu.style.display = 'block';
+                veil.style.display = 'block';
+                veil.style.opacity = 0.6;
+                isExpanded = true;
             }
-        });
+        };
+        veil.onclick = function() {
+            if (isExpanded) {
+                veil.style.display = 'none';
+            }
+        };
+
+        window.onkeyup = function(e) {
+            if (isExpanded && e.keyCode === 27) {
+                proximity = false;
+                isExpanded = false;
+                wrapper.className = '';
+                menu.style.display = 'none';
+                veil.style.display = 'none';
+            }
+        };
     }
+
+    wrapper.style.display = 'block';
+    container.style.display = 'block';
 })();
