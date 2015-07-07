@@ -76,7 +76,11 @@ class TransactionalRequestListener implements EventSubscriberInterface
             && $this->wasTxStarted
             && $this->doctrine->getConnection()->getTransactionIsolation() > 0
         ) {
-            $this->doctrine->getConnection()->commit();
+            if ($this->doctrine->getConnection()->isRollbackOnly()) {
+                $this->doctrine->getConnection()->rollback();
+            } else {
+                $this->doctrine->getConnection()->commit();
+            }
             $this->wasTxStarted = false;
         }
     }
