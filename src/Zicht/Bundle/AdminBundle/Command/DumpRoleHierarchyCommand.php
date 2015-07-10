@@ -37,7 +37,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
                 . "    ROLE_QUX_ADMIN_ADMIN: [ROLE_FOO_ADMIN_ADMIN, ROLE_QUX_ADMIN_EDIT, ...]\n\n"
                 . "In addition, for each of the attributes, the attributes on the child admins is implied as well:\n\n"
                 . "    ROLE_QUX_ADMIN_DELETE: [ROLE_FOO_ADMIN_DELETE]\n\n"
-        )
+            )
         ;
     }
 
@@ -55,7 +55,13 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
         $handler = $this->getContainer()->get('sonata.admin.security.handler');
 
         $roleHierarchy = array();
-        foreach ($pool->getAdminClasses() as $class => $id) {
+        $adminClasses = $pool->getAdminClasses();
+
+        foreach ($adminClasses  as $class => $id) {
+            // New sonata
+            if (is_array($id)) {
+                $id = current($id);
+            }
             $admin = $pool->getAdminByAdminCode($id);
             $pattern   = $handler->getBaseRole($admin);
             $adminAttr = sprintf($pattern, 'ADMIN');
@@ -67,18 +73,37 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
 
         $inheritedAttributes = $attributes;
         $inheritedAttributes[]= 'ADMIN';
-        foreach ($pool->getAdminClasses() as $class => $id) {
-            while ($pool->hasAdminByClass(get_parent_class($class))) {
-                $parentAdmin = $pool->getAdminByClass(get_parent_class($class));
-                $childAdmin  = $pool->getAdminByAdminCode($id);
-                $pattern     = $handler->getBaseRole($parentAdmin);
+        foreach ($adminClasses as $class => $id) {
+            if (is_array($id)) {
+                foreach ($id as $i) {
+                    $childAdmin = $pool->getAdminByAdminCode($i);
+                    while ($pool->hasAdminByClass(get_parent_class($class))) {
+                        $parentClass = get_parent_class($class);
+                        foreach ($adminClasses[$parentClass] as $adminClass) {
+                            $parentAdmin = $pool->getInstance($adminClass);
+                            $pattern = $handler->getBaseRole($parentAdmin);
+                            // rights on the base class imply rights on the child classes:
+                            foreach ($inheritedAttributes as $attr) {
+                                $roleHierarchy[sprintf($pattern, $attr)][] = sprintf($handler->getBaseRole($childAdmin), $attr);
+                            }
+                        }
 
-                // rights on the base class imply rights on the child classes:
-                foreach ($inheritedAttributes as $attr) {
-                    $roleHierarchy[sprintf($pattern, $attr)][]= sprintf($handler->getBaseRole($childAdmin), $attr);
+                        $class = $parentClass;
+                    }
                 }
+            } else {
+                while ($pool->hasAdminByClass(get_parent_class($class))) {
+                    $parentAdmin = $pool->getAdminByClass($class);
+                    $childAdmin  = $pool->getAdminByAdminCode($id[0]);
+                    $pattern     = $handler->getBaseRole($parentAdmin);
 
-                $class = get_parent_class($class);
+                    // rights on the base class imply rights on the child classes:
+                    foreach ($inheritedAttributes as $attr) {
+                        $roleHierarchy[sprintf($pattern, $attr)][]= sprintf($handler->getBaseRole($childAdmin), $attr);
+                    }
+
+                    $class = get_parent_class($class);
+                }
             }
         }
 
