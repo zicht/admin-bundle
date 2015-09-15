@@ -56,9 +56,11 @@ class TreeAdmin extends Admin
     public function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('General')
-            ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
-            ->add('title', null, array('required' => true))
+            ->tab('General')
+                ->with('General')
+                    ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
+                    ->add('title', null, array('required' => true))
+                ->end()
             ->end()
         ;
     }
