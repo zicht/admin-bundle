@@ -88,13 +88,18 @@ class AdminVoter implements VoterInterface
     {
         /** @var \Sonata\AdminBundle\Security\Handler\RoleSecurityHandler */
         $roleSecurityHandler = $this->serviceContainer->get('sonata.admin.security.handler');
-        $admin = $this->pool->getAdminByClass($class);
-        $baseRole = $roleSecurityHandler->getBaseRole($admin);
 
         $mappedAttributes = array();
-        foreach ($attributes as $attr) {
-            if ($this->supportsAttribute($attr)) {
-                $mappedAttributes[]= sprintf($baseRole, $attr);
+        foreach ($this->pool->getAdminClasses() as $adminClass => $adminCodes) {
+            foreach ($adminCodes as $adminCode) {
+                $admin = $this->pool->getAdminByAdminCode($adminCode);
+                $baseRole = $roleSecurityHandler->getBaseRole($admin);
+
+                foreach ($attributes as $attr) {
+                    if ($this->supportsAttribute($attr)) {
+                        $mappedAttributes[]= sprintf($baseRole, $attr);
+                    }
+                }
             }
         }
 
