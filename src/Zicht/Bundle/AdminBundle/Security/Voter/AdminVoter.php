@@ -11,6 +11,7 @@ use \Symfony\Component\DependencyInjection\ContainerInterface;
 use \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use \Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use \Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 
 /**
@@ -91,13 +92,15 @@ class AdminVoter implements VoterInterface
 
         $mappedAttributes = array();
         foreach ($this->pool->getAdminClasses() as $adminClass => $adminCodes) {
-            foreach ($adminCodes as $adminCode) {
-                $admin = $this->pool->getAdminByAdminCode($adminCode);
-                $baseRole = $roleSecurityHandler->getBaseRole($admin);
+            if ($class instanceof $adminClass) {
+                foreach ($adminCodes as $adminCode) {
+                    $admin = $this->pool->getAdminByAdminCode($adminCode);
+                    $baseRole = $roleSecurityHandler->getBaseRole($admin);
 
-                foreach ($attributes as $attr) {
-                    if ($this->supportsAttribute($attr)) {
-                        $mappedAttributes[]= sprintf($baseRole, $attr);
+                    foreach ($attributes as $attr) {
+                        if ($this->supportsAttribute($attr)) {
+                            $mappedAttributes[]= sprintf($baseRole, $attr);
+                        }
                     }
                 }
             }
