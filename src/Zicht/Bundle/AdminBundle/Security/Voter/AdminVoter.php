@@ -92,7 +92,7 @@ class AdminVoter implements VoterInterface
 
         $mappedAttributes = array();
         foreach ($this->pool->getAdminClasses() as $adminClass => $adminCodes) {
-            if ($class instanceof $adminClass) {
+            if ($class === $adminClass || $class instanceof $adminClass) {
                 foreach ($adminCodes as $adminCode) {
                     $admin = $this->pool->getAdminByAdminCode($adminCode);
                     $baseRole = $roleSecurityHandler->getBaseRole($admin);
