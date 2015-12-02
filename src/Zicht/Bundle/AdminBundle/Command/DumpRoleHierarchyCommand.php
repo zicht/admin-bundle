@@ -45,7 +45,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $attributes = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE');
+        $attributes = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE', 'EXPORT');
 
         /** @var $pool \Sonata\AdminBundle\Admin\Pool */
         $pool = $this->getContainer()->get('sonata.admin.pool');
@@ -54,6 +54,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
         $handler = $this->getContainer()->get('sonata.admin.security.handler');
 
         $roleHierarchy = array();
+
         foreach ($pool->getAdminClasses() as $class => $id) {
             $admin = $pool->getAdminByAdminCode($id);
             $pattern = $handler->getBaseRole($admin);
@@ -63,6 +64,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
                 $roleHierarchy[$adminAttr][] = sprintf($pattern, $attr);
             }
         }
+
 
         $inheritedAttributes = $attributes;
         $inheritedAttributes[] = 'ADMIN';
