@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <title>Zicht CMS | login</title>
+
+        <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/zichtadmin/style/login.css') }}">
+    </head>
+    <body>
+    <div>
+        <form action="{{ path('zicht_admin_login_check') }}" method="post" class="c-loginform">
+            <div>
+                <h2>Zicht CMS | login</h2>
+                <div>
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                </div>
+
+                <input type="text" id="username" class="form-control" name="_username" placeholder="Gebruikersnaam" value="{{ last_username }}" />
+                <input type="password" id="password" name="_password" placeholder="Wachtwoord" class="form-control  c-loginform__field" /><br>
+
+                <input type="checkbox" value="remember-me" /> Onthoud mij<br>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
+            </div>
+        </form>
+    </body>
+</html>

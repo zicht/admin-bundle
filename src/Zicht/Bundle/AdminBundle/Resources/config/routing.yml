@@ -1,8 +1,22 @@
 zicht_admin:            { resource: "@ZichtAdminBundle/Controller" }
 zicht_admin_redirect:
     path: /admin
+    path: /admin/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /admin/dashboard
         permanent: true
 
+zicht_admin_login:
+    path:     /login
+    defaults: { _controller: ZichtAdminBundle:Security:login }
+
+zicht_admin_login_check:
+    path: /login_check
+    # no controller is bound to this route
+    # as it's handled by the Security system
+
+zicht_admin_logout:
+    path: /logout
+    # no controller is bound to this route
+    # as it's handled by the Security system
