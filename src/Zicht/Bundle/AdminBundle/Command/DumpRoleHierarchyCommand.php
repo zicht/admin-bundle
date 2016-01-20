@@ -45,7 +45,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $attributes = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE', 'EXPORT');
+        $attributes = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DUPLICATE', 'TRANSLATE', 'DELETE', 'EXPORT');
 
         /** @var $pool \Sonata\AdminBundle\Admin\Pool */
         $pool = $this->getContainer()->get('sonata.admin.pool');
