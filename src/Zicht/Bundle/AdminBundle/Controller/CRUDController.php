@@ -36,7 +36,7 @@ class CRUDController extends BaseCRUDController
         }
 
         if (false === $this->admin->isGranted('DUPLICATE', $object)) {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException(sprintf('Missing DUPLICATE permission for object %s', get_class($object)));
         }
 
         $newObject = clone $object;
@@ -180,7 +180,7 @@ class CRUDController extends BaseCRUDController
             }
 
             if (false === $this->admin->isGranted('EDIT', $object)) {
-                throw new AccessDeniedException();
+                throw new AccessDeniedException(sprintf('Missing EDIT permission for object %s', get_class($object)));
             }
         } else {
             $object = $this->admin->getNewInstance();
