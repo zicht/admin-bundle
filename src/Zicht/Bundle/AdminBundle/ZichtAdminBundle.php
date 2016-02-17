@@ -6,7 +6,6 @@
  * @copyright 2012 Gerard van Helden <http://melp.nl>
  */
 
-
 namespace Zicht\Bundle\AdminBundle;
 
 use \Symfony\Component\HttpKernel\Bundle\Bundle;

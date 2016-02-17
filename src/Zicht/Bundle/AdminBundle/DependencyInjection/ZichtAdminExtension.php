@@ -45,5 +45,11 @@ class ZichtAdminExtension extends DIExtension
                 ->addArgument($config['transactional_listener']['pattern'])
             ;
         }
+
+        if (isset($config['rc'])) {
+            $loader->load('rc.xml');
+
+            $container->getDefinition('zicht_admin.controller.rc')->replaceArgument(0, $config['rc']);
+        }
     }
 }

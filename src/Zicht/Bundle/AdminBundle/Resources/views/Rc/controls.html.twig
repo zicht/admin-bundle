@@ -1,0 +1,22 @@
+<div class="box">
+    <div class="box-header"><h3 class="box-title">{{ 'Remote control'|trans }}</h3></div>
+    <div class="box-body">
+        <table class="table table-bordered table-collapsed" id="_zicht_admin_rc">
+            <tbody>
+            {% for c in configs %}
+                <tr>
+                    <th>{{ c.title }}</th>
+                    <td>
+                        <form method="{{ c.method }}" action="{{ path(c.route, c.route_params) }}">
+                            <button class="btn btn-sm btn-default"><i class="glyphicon glyphicon-"></i> {{ c.button }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="{{ asset('bundles/zichtadmin/javascript/rc.js') }}"></script>
+<script>zicht_admin_rc(document.getElementById('_zicht_admin_rc'))</script>
