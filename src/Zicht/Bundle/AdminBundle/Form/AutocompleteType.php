@@ -13,6 +13,7 @@ use \Symfony\Component\Form\FormBuilderInterface;
 
 use \Zicht\Bundle\AdminBundle\DataTransformer\MultipleTransformer;
 use \Zicht\Bundle\AdminBundle\DataTransformer\ClassTransformer;
+use Zicht\Bundle\AdminBundle\DataTransformer\NoneTransformer;
 use \Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 /**
@@ -38,12 +39,27 @@ class AutocompleteType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        if ($options['multiple']) {
-            $builder->addViewTransformer(new MultipleTransformer(
-                new ClassTransformer($this->quicklist, $options['repo'])
-            ));
-        } else {
-            $builder->addViewTransformer(new ClassTransformer($this->quicklist, $options['repo']));
+        $transformerStrategy = $options['transformer'];
+        if ($transformerStrategy === 'auto') {
+            $transformerStrategy = $options['multiple'] ? 'multiple' : 'class';
+        }
+
+        switch ($transformerStrategy) {
+            case 'class':
+                $builder->addViewTransformer(new ClassTransformer($this->quicklist, $options['repo']));
+                break;
+
+            case 'none':
+                $builder->addViewTransformer(new NoneTransformer($this->quicklist, $options['repo']));
+                break;
+
+            case 'multiple':
+                $builder->addViewTransformer(new MultipleTransformer(new ClassTransformer($this->quicklist, $options['repo'])));
+                break;
+
+            case 'multiple_none':
+                $builder->addViewTransformer(new MultipleTransformer(new NoneTransformer($this->quicklist, $options['repo'])));
+                break;
         }
     }
 
@@ -66,6 +82,7 @@ class AutocompleteType extends AbstractType
             ->setRequired(array('repo'))
             ->setDefaults(array(
                 'multiple' => false,
+                'transformer' => 'auto',
                 'route' => 'zicht_admin_quicklist_quicklist',
                 'route_params' => array()
             ));
