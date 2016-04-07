@@ -6,6 +6,7 @@
 namespace Zicht\Bundle\AdminBundle\Command;
 
 use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
@@ -21,6 +22,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
         $this
             ->setName('zicht:admin:dump-role-hierarchy')
             ->setDescription('Dumps a security.role_hierarchy configuration for the available admins')
+            ->addArgument('attributes', InputArgument::IS_ARRAY, 'Additional attributes to append to each role', [])
             ->addOption(
                 'root', '', InputOption::VALUE_REQUIRED,
                 "Additionally generate a root admin role which implies all other admin roles"
@@ -37,6 +39,7 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
                 . "    ROLE_QUX_ADMIN_ADMIN: [ROLE_FOO_ADMIN_ADMIN, ROLE_QUX_ADMIN_EDIT, ...]\n\n"
                 . "In addition, for each of the attributes, the attributes on the child admins is implied as well:\n\n"
                 . "    ROLE_QUX_ADMIN_DELETE: [ROLE_FOO_ADMIN_DELETE]\n\n"
+                . "Optionally provide attributes that will be suffixed to each role"
             );
     }
 
@@ -45,7 +48,10 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $attributes = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE', 'EXPORT');
+        $attributes = array_merge(
+            array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE', 'EXPORT'),
+            $input->getArgument('attributes')
+        );
 
         /** @var $pool \Sonata\AdminBundle\Admin\Pool */
         $pool = $this->getContainer()->get('sonata.admin.pool');
