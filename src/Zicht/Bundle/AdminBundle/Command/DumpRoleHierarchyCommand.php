@@ -32,10 +32,6 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
                 'root', '', InputOption::VALUE_REQUIRED,
                 "Additionally generate a root admin role which implies all other admin roles"
             )
-            ->addOption(
-                'no-inherit', '', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                "Specify class names that should NOT be included in the inheritance chain"
-            )
             ->setHelp(
                 "This command generates a list usable by the sonata.admin.security.handler.role security strategy.\n\n"
                 . "By default, for all of the admins, a role with suffix _ADMIN is generated which implies the "
@@ -83,8 +79,6 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
             }
         }
 
-        $noInherit = $input->getOption('no-inherit');
-
         $inheritedAttributes = $attributes;
         $inheritedAttributes[] = 'ADMIN';
         foreach ($adminClasses as $class => $ids) {
@@ -96,11 +90,9 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
                         $parentAdmin = $pool->getInstance($adminClass);
                         $pattern = $handler->getBaseRole($parentAdmin);
 
-                        if (!in_array($parentClass, $noInherit)) {
-                            // rights on the base class imply rights on the child classes:
-                            foreach ($inheritedAttributes as $attr) {
-                                $roleHierarchy[sprintf($pattern, $attr)][] = sprintf($handler->getBaseRole($childAdmin), $attr);
-                            }
+                        // rights on the base class imply rights on the child classes:
+                        foreach ($inheritedAttributes as $attr) {
+                            $roleHierarchy[sprintf($pattern, $attr)][] = sprintf($handler->getBaseRole($childAdmin), $attr);
                         }
                     }
 
