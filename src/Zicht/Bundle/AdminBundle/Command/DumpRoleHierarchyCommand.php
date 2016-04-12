@@ -5,13 +5,18 @@
  */
 namespace Zicht\Bundle\AdminBundle\Command;
 
-use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
-use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Input\InputOption;
-use \Symfony\Component\Console\Output\OutputInterface;
-use \Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Helper command to generate a role-hierarchy yaml file that includes all sonata admin roles.
+ *
+ * Useful when using the role based security in Sonata
+ */
 class DumpRoleHierarchyCommand extends ContainerAwareCommand
 {
     /**
