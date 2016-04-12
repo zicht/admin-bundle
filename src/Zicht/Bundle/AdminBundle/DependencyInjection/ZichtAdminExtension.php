@@ -48,8 +48,9 @@ class ZichtAdminExtension extends DIExtension
 
         if (isset($config['rc'])) {
             $loader->load('rc.xml');
-
             $container->getDefinition('zicht_admin.controller.rc')->replaceArgument(0, $config['rc']);
         }
+
+        $container->getDefinition('zicht_admin.security.authorization.voter.admin_voter')->replaceArgument(2, $config['security']['mapped_attributes']);
     }
 }

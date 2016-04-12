@@ -6,12 +6,11 @@
 
 namespace Zicht\Bundle\AdminBundle\Security\Voter;
 
-use \Sonata\AdminBundle\Admin\Pool;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
-use \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use \Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use \Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Stopwatch\Stopwatch;
+use Sonata\AdminBundle\Admin\Pool;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 
 /**
@@ -34,10 +33,18 @@ class AdminVoter implements VoterInterface
      */
     private $serviceContainer;
 
-    function __construct(Pool $pool, ContainerInterface $serviceContainer)
+    /**
+     * Constructor. The passed attributes are mapped to ROLE_* attributes delegated to the authorization checker
+     *
+     * @param Pool $pool
+     * @param ContainerInterface $serviceContainer
+     * @param array $attributes
+     */
+    public function __construct(Pool $pool, ContainerInterface $serviceContainer, array $attributes)
     {
         $this->pool = $pool;
         $this->serviceContainer = $serviceContainer;
+        $this->attributes = $attributes;
     }
 
     /**
@@ -45,7 +52,7 @@ class AdminVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return in_array($attribute, array('EDIT', 'DELETE', 'VIEW', 'CREATE'));
+        return in_array($attribute, $this->attributes);
     }
 
     /**
