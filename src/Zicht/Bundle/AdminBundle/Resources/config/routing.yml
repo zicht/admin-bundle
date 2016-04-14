@@ -12,7 +12,7 @@ zicht_admin_login:
     defaults: { _controller: ZichtAdminBundle:Security:login }
 
 zicht_admin_login_check:
-    path: /login_check
+    path: /admin/login_check
     # no controller is bound to this route
     # as it's handled by the Security system
 
