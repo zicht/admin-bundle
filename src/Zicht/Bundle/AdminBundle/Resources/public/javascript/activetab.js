@@ -9,6 +9,16 @@ jQuery(function ($) {
         }
     }
 
+    function store_tab($selectedTab) {
+        var data  = {
+            uri: window.location.pathname,
+            index : $navTabs.find('li').index($selectedTab)
+        };
+
+        // Store tab index
+        localStorage.setItem("zicht_opened_tab", JSON.stringify(data));
+    }
+
     if (supports_html5_storage()) {
         var $navTabs = $('ul.nav-tabs'),
             openedTab = 0,
@@ -16,11 +26,14 @@ jQuery(function ($) {
             ;
 
         if (openedTab = localStorage.getItem("zicht_opened_tab")) {
-            // Trigger click on tab stored in local storage
-            $navTabs.find('li:eq(' + openedTab + ')').find('a').trigger('click');
+            openedTab = JSON.parse(openedTab);
 
-            // Remove value so it does not interfere when editing new pages etc..
-            localStorage.removeItem('zicht_opened_tab');
+            if (window.location.pathname == openedTab.uri) {
+                if ($navTabs.find('li:eq(' + openedTab.index + ')').find('a').length) {
+                    // Trigger click on tab stored in local storage
+                    $navTabs.find('li:eq(' + openedTab.index + ')').find('a').trigger('click');
+                }
+            }
         }
 
         $('[name^=btn_update_and_edit]').click(function (e) {
@@ -34,6 +47,10 @@ jQuery(function ($) {
 
             // Submit closest form
             $(this).closest('form').submit();
+        });
+
+        $navTabs.find('li').find('a').click(function (e) {
+            store_tab($(this).parent());
         });
     }
 });
