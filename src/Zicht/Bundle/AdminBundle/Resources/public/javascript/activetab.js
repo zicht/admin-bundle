@@ -21,9 +21,9 @@ jQuery(function ($) {
 
     if (supports_html5_storage()) {
         var $navTabs = $('ul.nav-tabs'),
-            openedTab = 0,
+            openedTab = null,
             $firstTab = null
-            ;
+        ;
 
         if (openedTab = localStorage.getItem("zicht_opened_tab")) {
             openedTab = JSON.parse(openedTab);
@@ -39,11 +39,8 @@ jQuery(function ($) {
         $('[name^=btn_update_and_edit]').click(function (e) {
             e.preventDefault();
 
-            // Get active tab
-            $firstTab = $navTabs.find('li.active');
-
             // Store tab index
-            localStorage.setItem("zicht_opened_tab", $navTabs.find('li').index($firstTab));
+            store_tab($navTabs.find('li.active'));
 
             // Submit closest form
             $(this).closest('form').submit();
