@@ -20,6 +20,8 @@ class AdminVoter implements VoterInterface
 {
     /**
      * The 'view' attribute
+     *
+     * @deprecated
      */
     const VIEW = 'VIEW';
 

@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('mapped_attributes')
                             ->prototype('scalar')->end()
-                            ->defaultValue(['EDIT', 'DELETE', 'VIEW', 'CREATE'])
+                            ->defaultValue(['EDIT', 'DELETE', 'VIEW', 'CREATE', 'ADMIN'])
                         ->end()
                     ->end()
                 ->end()

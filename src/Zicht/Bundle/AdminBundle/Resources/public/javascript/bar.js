@@ -10,7 +10,8 @@
         veil = document.createElement('div'),
         menu = document.createElement('div'),
         proximity = false,
-        isExpanded = false
+        isExpanded = false,
+        delegate = ('attachEvent' in document ? document.attachEvent : document.addEventListener)
     ;
 
     wrapper.style.display = 'none';
@@ -36,32 +37,36 @@
         document.body.appendChild(wrapper);
         document.body.appendChild(veil);
 
-        logo.onclick = function() {
-            if (isExpanded) {
-                menu.style.display = 'none';
-                wrapper.className = '';
-                if ('addEventListener' in veil) {
-                    veil.addEventListener("transitionend", function() {
-                        veil.style.display = 'none';
-                    }, false);
+        delegate('click', function(e) {
+            if (e.target == logo) {
+                if (isExpanded) {
+                    menu.style.display = 'none';
+                    wrapper.className = '';
+                    if ('addEventListener' in veil) {
+                        veil.addEventListener("transitionend", function() {
+                            veil.style.display = 'none';
+                        }, false);
+                    }
+                    veil.style.opacity = 0;
+                    isExpanded = false;
+                } else {
+                    wrapper.className = 'enabled';
+                    menu.style.display = 'block';
+                    veil.style.display = 'block';
+                    veil.style.opacity = 0.6;
+                    isExpanded = true;
                 }
-                veil.style.opacity = 0;
-                isExpanded = false;
-            } else {
-                wrapper.className = 'enabled';
-                menu.style.display = 'block';
-                veil.style.display = 'block';
-                veil.style.opacity = 0.6;
-                isExpanded = true;
+            } else if (e.target == veil) {
+                if (isExpanded) {
+                    veil.style.display = 'none';
+                }
             }
-        };
-        veil.onclick = function() {
-            if (isExpanded) {
-                veil.style.display = 'none';
-            }
-        };
+        });
 
-        window.onkeyup = function(e) {
+        wrapper.style.display = 'block';
+        container.style.display = 'block';
+
+        window.addEventListener('keyup', function(e) {
             if (isExpanded && e.keyCode === 27) {
                 proximity = false;
                 isExpanded = false;
@@ -69,9 +74,7 @@
                 menu.style.display = 'none';
                 veil.style.display = 'none';
             }
-        };
+        });
     }
 
-    wrapper.style.display = 'block';
-    container.style.display = 'block';
 })();

@@ -6,15 +6,18 @@
 
 namespace Zicht\Bundle\AdminBundle\Security\Handler;
 
-use \Sonata\AdminBundle\Admin\AdminInterface;
-use \Sonata\AdminBundle\Security\Handler\RoleSecurityHandler as BaseRoleSecurityHandler;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Security\Handler\RoleSecurityHandler as BaseRoleSecurityHandler;
 
 /**
- * Class RoleSecurityHandler
- * @package Zicht\Bundle\UserBundle\Security\Admin
+ * This class wraps the RoleSecurityHandler to allow the admin class to handle specific attributes for the admin
+ * so the it is compatible with voting for entities.
  */
 class RoleSecurityHandler extends BaseRoleSecurityHandler
 {
+    /**
+     * @{inheritDoc}
+     */
     public function isGranted(AdminInterface $admin, $attributes, $object = null)
     {
         if ($this->securityContext->isGranted($attributes, $object)) {
