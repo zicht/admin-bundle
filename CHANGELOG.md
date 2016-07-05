@@ -1,3 +1,13 @@
+## Version 3.0.0
+### Breaking Changes
+- login_check path needs to be prefixed with /admin/:
+
+    form_login:
+            login_path: /login
+            check_path: /admin/login_check #<--- this line is changed!
+
+    All the other paths are still the same (/login and /logout)
+
 ## Version 2.1.0
 ### New features
 - added login form
