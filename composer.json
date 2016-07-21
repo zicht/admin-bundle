@@ -10,18 +10,16 @@
         }
     ],
     "require": {
-        "php": ">=5.3"
+        "php": "^5.6",
+        "symfony/symfony": "^2.8",
+        "doctrine/doctrine-bundle": "^1.6",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.0"
     },
     "require-dev": {
-        "symfony/symfony": ">=2.1@stable",
-        "doctrine/orm": "*",
-        "twig/twig": "*@stable",
-        "doctrine/doctrine-bundle": "1.1.*@stable",
-        "sonata-project/admin-bundle": "*@stable,<2.2",
         "phpunit/phpunit": "^4"
     },
     "autoload": {
         "psr-0": { "": ["src/", "tests/"] }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
