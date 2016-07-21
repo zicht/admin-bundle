@@ -10,6 +10,7 @@ namespace Zicht\Bundle\AdminBundle\Twig;
 
 use \Sonata\AdminBundle\Admin\Pool;
 use \Doctrine\Bundle\DoctrineBundle\Registry;
+use Twig_SimpleFunction;
 
 
 /**
@@ -38,7 +39,7 @@ class Extension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'admin_url' => new \Twig_Function_Method($this, 'adminUrl')
+            'admin_url' => new Twig_SimpleFunction('admin_url', [$this, 'adminUrl'])
         );
     }
 
