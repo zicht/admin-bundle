@@ -51,7 +51,7 @@ class Propagator
     {
         if (isset($this->propagations[$eventName])) {
             foreach ($this->propagations[$eventName] as $builder) {
-                $builder->buildAndForwardEvent($anyEvent);
+                $builder->buildAndForwardEvent($anyEvent, $eventName, $dispatcher);
             }
         }
     }
