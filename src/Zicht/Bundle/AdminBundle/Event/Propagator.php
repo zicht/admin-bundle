@@ -6,6 +6,7 @@
 namespace Zicht\Bundle\AdminBundle\Event;
 
 use \Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
 /**
@@ -42,12 +43,14 @@ class Propagator
      * Builds and forwards the event for all progragations registered for the specified event type.
      *
      * @param \Symfony\Component\EventDispatcher\Event $anyEvent
+     * @param string $eventName
+     * @param EventDispatcherInterface $dispatcher
      * @return void
      */
-    public function onEvent(Event $anyEvent)
+    public function onEvent(Event $anyEvent, $eventName, EventDispatcherInterface $dispatcher)
     {
-        if (isset($this->propagations[$anyEvent->getName()])) {
-            foreach ($this->propagations[$anyEvent->getName()] as $builder) {
+        if (isset($this->propagations[$eventName])) {
+            foreach ($this->propagations[$eventName] as $builder) {
                 $builder->buildAndForwardEvent($anyEvent);
             }
         }
