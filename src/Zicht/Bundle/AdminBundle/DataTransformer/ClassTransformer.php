@@ -5,8 +5,8 @@
  */
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
-use \Symfony\Component\Form\DataTransformerInterface;
-use \Zicht\Bundle\AdminBundle\Service\Quicklist;
+use Symfony\Component\Form\DataTransformerInterface;
+use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 /**
  * Simple utility transformer used for the autocomplete using the Quicklist service.

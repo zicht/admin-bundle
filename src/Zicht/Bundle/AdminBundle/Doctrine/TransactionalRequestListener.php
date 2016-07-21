@@ -6,11 +6,11 @@
 
 namespace Zicht\Bundle\AdminBundle\Doctrine;
 
-use \Doctrine\Bundle\DoctrineBundle\Registry;
-use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use \Symfony\Component\HttpKernel\Event\KernelEvent;
-use \Symfony\Component\HttpKernel\HttpKernelInterface;
-use \Symfony\Component\HttpKernel\KernelEvents;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Makes sure the transaction is started on every admin url known to do writes.

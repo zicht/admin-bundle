@@ -5,11 +5,11 @@
  */
 namespace Zicht\Bundle\AdminBundle\Controller;
 
-use \Symfony\Component\HttpFoundation\JsonResponse;
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use \Symfony\Component\HttpFoundation\Request;
-use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Controls a quick list for configured entities.

@@ -5,7 +5,7 @@
  */
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
-use \Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 
 /**
  * Multiple transformer that delegates both the transform and the reverseTransform to the specified inner transformer

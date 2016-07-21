@@ -5,7 +5,7 @@
  */
 namespace Zicht\Bundle\AdminBundle\Event;
 
-use \Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

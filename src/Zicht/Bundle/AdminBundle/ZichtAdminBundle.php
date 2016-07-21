@@ -8,9 +8,9 @@
 
 namespace Zicht\Bundle\AdminBundle;
 
-use \Symfony\Component\HttpKernel\Bundle\Bundle;
-use \Symfony\Component\DependencyInjection\ContainerBuilder;
-use \Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
 /**
  * Bundle for the admin menu

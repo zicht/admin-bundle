@@ -6,7 +6,8 @@
 
 namespace Zicht\Bundle\AdminBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -16,7 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 /**
  * Provides a base class for easily providing admins for tree structures.
  */
-class TreeAdmin extends Admin
+class TreeAdmin extends AbstractAdmin
 {
     /**
      * Override the default query builder to utilize correct sorting
