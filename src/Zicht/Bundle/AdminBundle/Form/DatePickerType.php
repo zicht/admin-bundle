@@ -5,10 +5,10 @@
  */
 namespace Zicht\Bundle\AdminBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use \Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 
 /**
  * Custom  date time object for rendering of datePicker

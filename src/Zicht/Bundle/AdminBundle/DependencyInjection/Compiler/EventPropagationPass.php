@@ -6,9 +6,9 @@
 
 namespace Zicht\Bundle\AdminBundle\DependencyInjection\Compiler;
 
-use \Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use \Symfony\Component\DependencyInjection\ContainerBuilder;
-use \Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Compiler pass that registers the propagataor as a specified event for the specified propagation configuration.

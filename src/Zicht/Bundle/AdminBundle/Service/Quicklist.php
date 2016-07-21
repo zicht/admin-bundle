@@ -5,8 +5,8 @@
  */
 namespace Zicht\Bundle\AdminBundle\Service;
 
-use \Sonata\AdminBundle\Admin\Pool;
-use \Doctrine\Bundle\DoctrineBundle\Registry;
+use Sonata\AdminBundle\Admin\Pool;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
 /**
  * Quick list service

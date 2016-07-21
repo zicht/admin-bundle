@@ -6,11 +6,11 @@
 
 namespace Zicht\Bundle\AdminBundle\Controller;
 
-use \Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
-use \Symfony\Component\HttpFoundation\RedirectResponse;
-use \Symfony\Component\HttpFoundation\Response;
-use \Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
