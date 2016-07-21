@@ -60,7 +60,7 @@ class Subscriber implements EventSubscriberInterface
         $array = $e->getMenuConfig();
 
         $this->menu->addChild(
-            $this->factory->createItem($array['name'], $e->getMenuConfig())
+            $this->factory->createItem($array['name'], $array)
         );
     }
 }

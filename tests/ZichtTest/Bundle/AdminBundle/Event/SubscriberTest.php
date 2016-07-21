@@ -7,7 +7,6 @@
  */
 namespace ZichtTest\Bundle\AdminBundle\Event;
 
-use Zicht\Bundle\AdminBundle\Event\Propagator;
 use Zicht\Bundle\AdminBundle\Event\Subscriber;
 
 class SubscriberTest extends \PHPUnit_Framework_TestCase
@@ -21,23 +20,40 @@ class SubscriberTest extends \PHPUnit_Framework_TestCase
             Subscriber::getSubscribedEvents()
         );
     }
-
-
+    
     function testAddMenuItemWillAddItemToRootOfMenu()
     {
-        $root = $this->getMockBuilder('Knp\Menu\MenuItem')->disableOriginalConstructor()->setMethods(array('addChild'))->getMock();
-        $factory = $this->getMockBuilder('Knp\Menu\MenuFactory')->disableOriginalConstructor()->setMethods(array('createFromArray'))->getMock();
-        $item = $this->getMockBuilder('Zicht\Bundle\AdminBundle\Event\MenuEvent')->setMethods(array('getMenuConfig'))->disableOriginalConstructor()->getMock();
+        $root = $this->getMockBuilder('Knp\Menu\MenuItem')
+            ->disableOriginalConstructor()
+            ->setMethods(array('addChild'))
+            ->getMock();
+
+        $child = $this->getMockBuilder('Knp\Menu\MenuItem')
+            ->disableOriginalConstructor()
+            ->setMethods(array('addChild'))
+            ->getMock();
+
+        $factory = $this->getMockBuilder('Knp\Menu\MenuFactory')
+            ->disableOriginalConstructor()
+            ->setMethods(array('createItem'))
+            ->getMock();
+
+        $item = $this->getMockBuilder('Zicht\Bundle\AdminBundle\Event\MenuEvent')
+            ->setMethods(array('getMenuConfig'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $itemConfig = array(
+            'name' => 'name',
             'foo' => 'bar',
             'baz' => 'bat'
         );
-        $bogusItem = rand(1, 100);
+
         $item->expects($this->once())->method('getMenuConfig')->will($this->returnValue($itemConfig));
-        $factory->expects($this->once())->method('createFromArray')->with($itemConfig)->will($this->returnValue(
-            $bogusItem
+        $factory->expects($this->once())->method('createItem')->with('name', $itemConfig)->will($this->returnValue(
+            $child
         ));
-        $root->expects($this->once())->method('addChild')->with($bogusItem);
+        $root->expects($this->once())->method('addChild')->with($child);
 
         $subs = new Subscriber($root, $factory);
         $subs->addMenuItem($item);

@@ -17,11 +17,11 @@
         "doctrine/orm": "*",
         "twig/twig": "*@stable",
         "doctrine/doctrine-bundle": "1.1.*@stable",
-        "sonata-project/admin-bundle": "*@stable,<2.2"
+        "sonata-project/admin-bundle": "*@stable,<2.2",
+        "phpunit/phpunit": "^4"
     },
     "autoload": {
         "psr-0": { "": ["src/", "tests/"] }
     },
     "minimum-stability": "dev"
 }
-
