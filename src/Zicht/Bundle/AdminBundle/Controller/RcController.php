@@ -5,6 +5,8 @@
  */
 namespace Zicht\Bundle\AdminBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 class RcController
 {
     public function __construct($configs)
