@@ -13,17 +13,26 @@ use Sonata\AdminBundle\Admin\Pool;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Twig_SimpleFunction;
 
-
 /**
  * Extensions for twig
  */
 class Extension extends \Twig_Extension
 {
     /**
+     * @var Pool
+     */
+    private $sonata;
+
+    /**
+     * @var Registry
+     */
+    private $doctrine;
+
+    /**
      * Constructor.
      *
-     * @param \Sonata\AdminBundle\Admin\Pool $sonata
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+     * @param Pool $sonata
+     * @param Registry $doctrine
      */
     public function __construct(Pool $sonata, Registry $doctrine)
     {

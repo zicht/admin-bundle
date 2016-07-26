@@ -20,7 +20,7 @@ class QuicklistController extends Controller
      * Displays a quick list control for jumping to entries registered in the quick list service
      *
      * @param Request $request
-     * @return array
+     * @return array|JsonResponse
      *
      * @Template
      * @Route("quick-list")

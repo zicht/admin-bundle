@@ -14,6 +14,16 @@ use Zicht\Bundle\AdminBundle\Service\Quicklist;
 class ClassTransformer implements DataTransformerInterface
 {
     /**
+     * @var Quicklist
+     */
+    private $lister;
+
+    /**
+     * @var string
+     */
+    private $repo;
+
+    /**
      * Constructor
      *
      * @param \Zicht\Bundle\AdminBundle\Service\Quicklist $lister

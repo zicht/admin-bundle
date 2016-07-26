@@ -18,7 +18,9 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 class ZichtAdminBundle extends Bundle
 {
     /**
-     * @{inheritDoc}
+     * Build
+     *
+     * @param ContainerBuilder $container
      */
     public function build(ContainerBuilder $container)
     {

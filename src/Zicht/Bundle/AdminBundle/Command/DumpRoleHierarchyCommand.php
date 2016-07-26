@@ -29,7 +29,9 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
             ->setDescription('Dumps a security.role_hierarchy configuration for the available admins')
             ->addArgument('attributes', InputArgument::IS_ARRAY, 'Additional attributes to append to each role', [])
             ->addOption(
-                'root', '', InputOption::VALUE_REQUIRED,
+                'root',
+                '',
+                InputOption::VALUE_REQUIRED,
                 "Additionally generate a root admin role which implies all other admin roles"
             )
             ->setHelp(

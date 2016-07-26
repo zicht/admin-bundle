@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-
 /**
  * Delegates to the sonata ROLE_ voter based on an entity
  */
@@ -67,7 +66,12 @@ class AdminVoter implements VoterInterface
     }
 
     /**
-     * @{inheritDoc}
+     * Vote
+     *
+     * @param TokenInterface $token
+     * @param null|object $object
+     * @param array $attributes
+     * @return int
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
@@ -83,6 +87,7 @@ class AdminVoter implements VoterInterface
                 }
             }
         }
+
         return VoterInterface::ACCESS_ABSTAIN;
     }
 

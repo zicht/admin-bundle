@@ -16,7 +16,9 @@ use Symfony\Component\DependencyInjection\Reference;
 class EventPropagationPass implements CompilerPassInterface
 {
     /**
-     * @{inheritDoc}
+     * Process
+     *
+     * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
