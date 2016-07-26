@@ -17,7 +17,10 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 class ZichtAdminExtension extends DIExtension
 {
     /**
-     * @{inheritDoc}
+     * Load
+     *
+     * @param array $configs
+     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -42,8 +45,7 @@ class ZichtAdminExtension extends DIExtension
             $loader->load('transactional_listener.xml');
 
             $container->getDefinition('zicht_admin.transactional_listener')
-                ->addArgument($config['transactional_listener']['pattern'])
-            ;
+                ->addArgument($config['transactional_listener']['pattern']);
         }
 
         if (isset($config['rc'])) {
@@ -51,6 +53,7 @@ class ZichtAdminExtension extends DIExtension
             $container->getDefinition('zicht_admin.controller.rc')->replaceArgument(0, $config['rc']);
         }
 
-        $container->getDefinition('zicht_admin.security.authorization.voter.admin_voter')->replaceArgument(2, $config['security']['mapped_attributes']);
+        $container->getDefinition('zicht_admin.security.authorization.voter.admin_voter')
+            ->replaceArgument(2, $config['security']['mapped_attributes']);
     }
 }

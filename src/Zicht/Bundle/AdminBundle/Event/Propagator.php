@@ -8,7 +8,6 @@ namespace Zicht\Bundle\AdminBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-
 /**
  * Service that propagates events as other types, using PropagtionInterface instances
  */

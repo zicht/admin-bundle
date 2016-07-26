@@ -13,6 +13,21 @@ use Symfony\Component\EventDispatcher\Event;
 class MenuEvent extends Event
 {
     /**
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var array
+     */
+    private $options;
+
+    /**
      * Constructor.
      *
      * @param string $url

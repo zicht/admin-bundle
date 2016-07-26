@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-
 /**
  * Provides some basic utility functionality for admin controllers, to be supplied as an construction parameter
  */
@@ -55,7 +54,10 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * @{inheritDoc}
+     * Show action
+     *
+     * @param int|null $id
+     * @return RedirectResponse|Response
      */
     public function showAction($id = null)
     {
@@ -207,10 +209,13 @@ class CRUDController extends BaseCRUDController
         // set the theme for the current Admin Form
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
-        return $this->render($this->admin->getTemplate($templateKey), array(
-            'action' => $action,
-            'form'   => $view,
-            'object' => $object,
-        ));
+        return $this->render(
+            $this->admin->getTemplate($templateKey),
+            array(
+                'action' => $action,
+                'form'   => $view,
+                'object' => $object,
+            )
+        );
     }
 }

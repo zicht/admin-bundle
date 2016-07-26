@@ -38,9 +38,11 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('pattern')
                             ->defaultValue('!^/admin.*(edit|delete|create|move)!')
                             ->validate()
-                                ->ifTrue(function($p) {
-                                    return (false === preg_match($p, ''));
-                                })->thenInvalid("Invalid PCRE pattern")
+                                ->ifTrue(
+                                    function ($p) {
+                                        return (false === preg_match($p, ''));
+                                    }
+                                )->thenInvalid("Invalid PCRE pattern")
                             ->end()
                         ->end()
                     ->end()
@@ -71,8 +73,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->useAttributeAsKey('name')
                 ->end()
-            ->end()
-        ;
+            ->end();
+
         return $treeBuilder;
     }
 }
