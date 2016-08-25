@@ -10,17 +10,19 @@
  * @copyright Zicht online <http://zicht.nl>
  */
 var zicht_admin_rc = (function() {
+    var doRequest, setState;
 
     /**
-     * Send the form as an XHR and call callback after the response was received.
+     * Send an XHR and call callback after the response was received.
      *
-     * @param {HTMLFormElement} form
+     * @param {String} method
+     * @param {String} url
      * @param {function} callback
      */
-    function send(form, callback) {
+    doRequest = function (method, url, callback) {
         var xhr = new XMLHttpRequest();
 
-        xhr.open(form.getAttribute('method'), form.getAttribute('action'), true);
+        xhr.open(method, url, true);
         xhr.onreadystatechange = function() {
             var data = null;
 
@@ -35,8 +37,54 @@ var zicht_admin_rc = (function() {
             }
         };
         xhr.send();
-    }
+    };
 
+
+    /**
+     * Set element state
+     *
+     * @param {HTMLElement} el
+     * @param {String} state
+     * @param {String} text
+     */
+    setState = function (el, state, text) {
+        switch (state) {
+            case 'error':
+                el.setAttribute('class', 'glyphicon glyphicon-remove');
+                el.style.color = 'red';
+
+                break;
+            case 'ok':
+                el.setAttribute('class', 'glyphicon glyphicon-ok');
+                el.style.color = 'green';
+
+                break;
+            case 'on':
+                el.setAttribute('class', 'glyphicon glyphicon-ok');
+                el.style.color = 'green';
+
+                break;
+            case 'off':
+                el.setAttribute('className', 'glyphicon');
+
+                break;
+        }
+        el.setAttribute('title', text);
+    };
+
+
+    handleErrorResponse = function (el, response, responseTxt) {
+        var isError = false;
+
+        if (!response) {
+            setState(el, 'error', responseTxt);
+            isError = true;
+        } else if (typeof response.error !== 'undefined') {
+            setState(el, 'error', response.error);
+            isError = true;
+        }
+        return isError;
+    };
 
     /**
      * Registers a form as being an RC form
@@ -47,7 +95,6 @@ var zicht_admin_rc = (function() {
         var button = form.getElementsByTagName('button').item(0),
             state = form.ownerDocument.createElement('i');
 
-        state.setAttribute('className', 'glyphicon');
         state.style.paddingLeft = '14px';
         button.parentNode.insertBefore(state, button.nextSibling);
 
@@ -55,39 +102,76 @@ var zicht_admin_rc = (function() {
             e.preventDefault();
             return false;
         });
-        button.addEventListener('click', function(e) {
-            button.setAttribute('disabled', 'disabled');
 
-            state.setAttribute('class', 'glyphicon glyphicon-hourglass');
-            state.style.color = 'grey';
+        console.log(':)');
 
-            e.preventDefault();
+        if (form.getAttribute('data-mode') === 'toggle') {
+            doRequest(
+                'GET',
+                form.getAttribute('action'),
+                function (response, responseTxt) {
+                    var toggleStatus,
+                        updateStatus = function(response) {
+                            toggleStatus = response;
+                            if (toggleStatus.status) {
+                                setState(state, 'ok');
+                            } else {
+                                setState(state, 'off');
+                            }
+                        };
 
-            send(form, function(response, responseTxt) {
-                if (!response) {
-                    state.setAttribute('class', 'glyphicon glyphicon-remove');
-                    state.style.color = 'red';
-
-                    state.setAttribute('title', responseTxt);
-                } else if (typeof response.error !== 'undefined') {
-                    state.setAttribute('class', 'glyphicon glyphicon-remove');
-                    state.style.color = 'red';
-
-                    state.setAttribute('title', response.error);
-                } else {
-                    state.setAttribute('class', 'glyphicon glyphicon-ok');
-                    if (typeof response.message !== 'undefined') {
-                        state.setAttribute('title', response.message);
-                    } else {
-                        state.setAttribute('title', '');
+                    if (handleErrorResponse(state, response, responseTxt)) {
+                        return;
                     }
-                    state.style.color = 'green';
-                }
-                button.removeAttribute('disabled');
-            });
+                    updateStatus(response);
 
-            return false;
-        });
+                    button.addEventListener('click', function (e) {
+                        button.setAttribute('disabled', 'disabled');
+
+                        state.setAttribute('class', 'glyphicon glyphicon-hourglass');
+                        state.style.color = 'grey';
+
+                        doRequest(
+                            toggleStatus.status ? 'DELETE' : 'POST',
+                            form.getAttribute('action'),
+                            function (response, responseTxt) {
+                                if (handleErrorResponse(state, response, responseTxt)) {
+                                    return;
+                                }
+
+                                updateStatus(response);
+                            }
+                        );
+                        button.removeAttribute('disabled');
+                    });
+                }
+            );
+        } else {
+            button.addEventListener('click', function(e) {
+                button.setAttribute('disabled', 'disabled');
+
+                state.setAttribute('class', 'glyphicon glyphicon-hourglass');
+                state.style.color = 'grey';
+
+                e.preventDefault();
+
+                doRequest(
+                    form.getAttribute('method'),
+                    form.getAttribute('action'),
+                    function(response, responseTxt) {
+                        if (handleErrorResponse(state, response, responseTxt)) {
+                            return;
+                        }
+
+                        setState(state, 'ok', typeof response.message !== 'undefined' ? response.message : '');
+
+                        button.removeAttribute('disabled');
+                    }
+                );
+
+                return false;
+            });
+        }
     }
 
 
