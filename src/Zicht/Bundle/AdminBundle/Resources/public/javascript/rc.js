@@ -103,8 +103,6 @@ var zicht_admin_rc = (function() {
             return false;
         });
 
-        console.log(':)');
-
         if (form.getAttribute('data-mode') === 'toggle') {
             doRequest(
                 'GET',
