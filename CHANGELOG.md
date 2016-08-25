@@ -8,6 +8,10 @@
 
     All the other paths are still the same (/login and /logout)
 
+# 3.4.0 
+- Includes the 2.4.0 changes from 2.x 
+
+
 ## Version 2.1.0
 ### New features
 - added login form
