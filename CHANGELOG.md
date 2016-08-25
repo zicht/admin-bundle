@@ -37,5 +37,9 @@
         logout:
             path:   /logout
 
+
+# 2.4.0 #
+- Add feature in 'rc' component to toggle some configuration flag with DELETE and POST requests.
+
 ## Previous versions ##
 No idea what changed, check the svn logs ^^
