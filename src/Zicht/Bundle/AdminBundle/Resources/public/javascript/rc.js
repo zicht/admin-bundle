@@ -10,7 +10,7 @@
  * @copyright Zicht online <http://zicht.nl>
  */
 var zicht_admin_rc = (function() {
-    var doRequest, setState;
+    var doRequest, setState, handleErrorResponse;
 
     /**
      * Send an XHR and call callback after the response was received.
@@ -50,22 +50,32 @@ var zicht_admin_rc = (function() {
     setState = function (el, state, text) {
         switch (state) {
             case 'error':
-                el.setAttribute('class', 'glyphicon glyphicon-remove');
+                el.setAttribute('class', 'glyphicon glyphicon-ban-circle');
                 el.style.color = 'red';
 
                 break;
             case 'ok':
-                el.setAttribute('class', 'glyphicon glyphicon-ok');
+                el.setAttribute('class', 'glyphicon glyphicon-ok-circle');
                 el.style.color = 'green';
 
                 break;
             case 'on':
-                el.setAttribute('class', 'glyphicon glyphicon-ok');
+                el.setAttribute('class', 'glyphicon glyphicon-ok-circle');
                 el.style.color = 'green';
 
                 break;
             case 'off':
-                el.setAttribute('className', 'glyphicon');
+                el.setAttribute('class', 'glyphicon glyphicon-ban-circle');
+                el.style.color = 'orange';
+
+                break;
+            case 'loading':
+                el.setAttribute('class', 'glyphicon glyphicon-play-circle');
+                el.style.color = 'grey';
+
+                break;
+            case 'hide':
+                el.setAttribute('class', 'glyphicon');
 
                 break;
         }
@@ -95,8 +105,8 @@ var zicht_admin_rc = (function() {
         var button = form.getElementsByTagName('button').item(0),
             state = form.ownerDocument.createElement('i');
 
-        state.style.paddingLeft = '14px';
-        button.parentNode.insertBefore(state, button.nextSibling);
+        state.style.paddingRight = '4px';
+        button.insertBefore(state, button.firstChild);
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -112,10 +122,11 @@ var zicht_admin_rc = (function() {
                         updateStatus = function(response) {
                             toggleStatus = response;
                             if (toggleStatus.status) {
-                                setState(state, 'ok');
+                                setState(state, 'on');
                             } else {
                                 setState(state, 'off');
                             }
+                            button.removeAttribute('disabled');
                         };
 
                     if (handleErrorResponse(state, response, responseTxt)) {
@@ -124,10 +135,8 @@ var zicht_admin_rc = (function() {
                     updateStatus(response);
 
                     button.addEventListener('click', function (e) {
+                        setState(state, 'loading');
                         button.setAttribute('disabled', 'disabled');
-
-                        state.setAttribute('class', 'glyphicon glyphicon-hourglass');
-                        state.style.color = 'grey';
 
                         doRequest(
                             toggleStatus.status ? 'DELETE' : 'POST',
@@ -140,16 +149,16 @@ var zicht_admin_rc = (function() {
                                 updateStatus(response);
                             }
                         );
-                        button.removeAttribute('disabled');
                     });
                 }
             );
         } else {
+            setState(state, 'loading');
+
             button.addEventListener('click', function(e) {
                 button.setAttribute('disabled', 'disabled');
 
-                state.setAttribute('class', 'glyphicon glyphicon-hourglass');
-                state.style.color = 'grey';
+                setState(state, 'loading');
 
                 e.preventDefault();
 
