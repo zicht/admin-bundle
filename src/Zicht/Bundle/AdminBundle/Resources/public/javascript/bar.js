@@ -37,7 +37,7 @@
         document.body.appendChild(wrapper);
         document.body.appendChild(veil);
 
-        delegate('click', function(e) {
+        delegate.call(document, 'click', function (e) {
             if (e.target == logo) {
                 if (isExpanded) {
                     menu.style.display = 'none';
