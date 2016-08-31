@@ -1,3 +1,7 @@
+## Version 3.2.2
+
+- Bugfix: IE throws a JS error with delegate event attacher
+
 ## Version 3.0.0
 ### Breaking Changes
 - login_check path needs to be prefixed with /admin/:
