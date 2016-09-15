@@ -68,10 +68,26 @@ var ZichtQuicklistAutocomplete = (function($) {
         });
     }
 
+    /**
+     * Initialize the pre-submit hook
+     *
+     * @param {jQuery} $hidden
+     * @param {jQuery} $text
+     * @param {jQuery} $form
+     */
+    function initPreSubmitCheck($hidden, $text, $form) {
+        $form.on('submit', () => {
+            if ($text.val() === '') {
+                $hidden.val('');
+            }
+        });
+    }
+
     function initSingleAutocomplete($hidden, service_url, callback) {
         var $text = $hidden.siblings('input[type="text"]');
         initTextControl($hidden, $text, service_url, callback);
         initCheckboxControl($hidden, $text, $hidden.siblings('input[type="checkbox"]'));
+        initPreSubmitCheck($hidden, $text, $hidden.closest('form'));
     }
 
 
