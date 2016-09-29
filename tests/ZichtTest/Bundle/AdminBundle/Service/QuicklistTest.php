@@ -14,6 +14,14 @@ namespace ZichtTest\Bundle\AdminBundle {
                 ->setMethods(array('getRepository'))
                 ->disableOriginalConstructor()->getMock();
             $this->pool     = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')->disableOriginalConstructor()->getMock();
+            $this->pool->expects($this->any())->method('getAdminClasses')->will($this->returnValue(
+                [
+                    'Foo' => [
+                        'bar',
+                        'bar2'
+                    ]
+                ]
+            ));
         }
 
         public function testQuicklist()
