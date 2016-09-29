@@ -56,6 +56,27 @@ class Quicklist
         return $this->repos;
     }
 
+    /**
+     * Gets the first admin when there are multiple definitions.
+     *
+     * @param string  $class
+     * @return null|\Sonata\AdminBundle\Admin\AdminInterface
+     */
+    private function getFirstAdminPerClass($class)
+    {
+        $code = null;
+        $admins = $this->adminPool->getAdminClasses();
+
+        foreach ($admins as $key => $value) {
+            if ($key === $class) {
+                $code = current($value);
+                break;
+            }
+        }
+
+        return $code === null ?
+            $this->adminPool->getAdminByClass($class) : $this->adminPool->getAdminByAdminCode($code);
+    }
 
     /**
      * Get the result suggestions for the passed pattern
@@ -71,9 +92,9 @@ class Quicklist
 
         $results = array();
         foreach ($queryResults as $record) {
-            $admin = $this->adminPool->getAdminByClass(get_class($record));
+            $admin = $this->getFirstAdminPerClass(get_class($record));
             if (!$admin) {
-                $admin = $this->adminPool->getAdminByClass(get_parent_class($record));
+                $admin = $this->getFirstAdminPerClass(get_parent_class($record));
             }
             $resultRecord = $this->createResultRecord($record, $admin);
             $results[] = $resultRecord;
