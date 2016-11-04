@@ -14,7 +14,7 @@
         "symfony/symfony": "^2.7",
         "doctrine/doctrine-bundle": "^1",
         "sonata-project/doctrine-orm-admin-bundle": "^3 || ^2",
-        "zicht/framework-extra-bundle": "^4.1",
+        "zicht/framework-extra-bundle": "^4.1 || ^5",
         "sensio/framework-extra-bundle": "^3.0"
     },
     "require-dev": {
