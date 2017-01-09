@@ -2,7 +2,7 @@
     "name": "zicht/admin-bundle",
     "description": "Admin utilities for Symfony",
     "type": "symfony-bundle",
-    "repositories": { },
+    "repositories": [],
     "authors": [
         {
             "name": "Zicht online",
@@ -22,7 +22,13 @@
         "zicht/phpcs": "^2.2"
     },
     "autoload": {
-        "psr-0": { "": ["src/", "tests/"] }
+        "psr-0": {
+            "": [
+                "src/",
+                "tests/"
+            ]
+        }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "license": "MIT"
 }
