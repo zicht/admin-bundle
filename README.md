@@ -3,5 +3,6 @@
 Provides integration utilities for SonataAdminBundle.
 
 # Maintainer
+* Rik van der Kemp <rik@zicht.nl>
+* Muhammed Akbulut <muhammed@zicht.nl>
 
-* Gerard van Helden <gerard@zicht.nl>
