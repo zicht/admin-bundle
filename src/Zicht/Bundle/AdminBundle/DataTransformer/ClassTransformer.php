@@ -5,6 +5,7 @@
  */
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
@@ -43,10 +44,14 @@ class ClassTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        return array(
-            'id' => (null !== $value ? $value->getId() : null),
-            'value' => (null !== $value ? (string)$value : null)
-        );
+        try {
+            return array(
+                'id' => (null !== $value ? $value->getId() : null),
+                'value' => (null !== $value ? $value->__toString() : null)
+            );
+        } catch (EntityNotFoundException $e) {
+            return ['id' => null, 'value' => '-- ENTITY NOT FOUND --'];
+        }
     }
 
     /**

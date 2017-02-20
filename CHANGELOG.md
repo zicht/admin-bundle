@@ -1,8 +1,14 @@
-## Version 3.2.2
+## 3.4.8
+- Fix issue with an Exception being thrown when transforming an entity that didn't exsist anymore (no id or value)
+
+## 3.4.0 
+- Includes the 2.4.0 changes from 2.x
+
+## 3.2.2
 
 - Bugfix: IE throws a JS error with delegate event attacher
 
-## Version 3.0.0
+## 3.0.0
 ### Breaking Changes
 - login_check path needs to be prefixed with /admin/:
 
@@ -12,11 +18,10 @@
 
     All the other paths are still the same (/login and /logout)
 
-# 3.4.0 
-- Includes the 2.4.0 changes from 2.x 
+## 2.4.0
+- Add feature in 'rc' component to toggle some configuration flag with DELETE and POST requests.
 
-
-## Version 2.1.0
+## 2.1.0
 ### New features
 - added login form
   to configure, add the following to the security.yml:
@@ -45,9 +50,6 @@
         logout:
             path:   /logout
 
-
-# 2.4.0 #
-- Add feature in 'rc' component to toggle some configuration flag with DELETE and POST requests.
 
 ## Previous versions ##
 No idea what changed, check the svn logs ^^
