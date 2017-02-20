@@ -43,10 +43,14 @@ class ClassTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        return array(
-            'id' => (null !== $value ? $value->getId() : null),
-            'value' => (null !== $value ? (string)$value : null)
-        );
+        try {
+            return array(
+                'id' => (null !== $value ? $value->getId() : null),
+                'value' => (null !== $value ? $value->__toString() : null)
+            );
+        } catch (EntityNotFoundException $e) {
+            return ['id' => null, 'value' => '-- ENTITY NOT FOUND --'];
+        }
     }
 
     /**
