@@ -156,13 +156,13 @@ class TreeAdmin extends Admin
      */
     public function filterWithChildren($queryBuilder, $alias, $field, $value)
     {
-        if (!$value['value']) {
+        if (!($value['value'] && is_integer($value['value']))) {
             return null;
         }
 
         // Get the parent item, todo, check if necessary
         $parentQb = clone $queryBuilder;
-        $parentItem =  $parentQb->where(sprintf('%s.id = %s', $alias, $value['value']))->getQuery()->getResult();
+        $parentItem =  $parentQb->where(sprintf('%s.id = %d', $alias, $value['value']))->getQuery()->getResult();
         $currentItem = current($parentItem);
 
         $expr = $queryBuilder->expr();
