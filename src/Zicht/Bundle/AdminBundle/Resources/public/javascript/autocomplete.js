@@ -76,7 +76,7 @@ var ZichtQuicklistAutocomplete = (function($) {
      * @param {jQuery} $form
      */
     function initPreSubmitCheck($hidden, $text, $form) {
-        $form.on('submit', () => {
+        $form.on('submit', function() {
             if ($text.val() === '') {
                 $hidden.val('');
             }
