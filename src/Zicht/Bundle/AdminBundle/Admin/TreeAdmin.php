@@ -7,12 +7,12 @@
 namespace Zicht\Bundle\AdminBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 /**
  * Provides a base class for easily providing admins for tree structures.
@@ -58,10 +58,10 @@ class TreeAdmin extends Admin
     {
         $formMapper
             ->tab('General')
-                ->with('General')
-                    ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
-                    ->add('title', null, array('required' => true))
-                ->end()
+            ->with('General')
+            ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
+            ->add('title', null, array('required' => true))
+            ->end()
             ->end();
     }
 
@@ -117,13 +117,13 @@ class TreeAdmin extends Admin
                 'actions',
                 array(
                     'actions' => array(
-                        'filter'   => array(
+                        'filter' => array(
                             'template' => 'ZichtAdminBundle:CRUD:actions/filter.html.twig',
                         ),
-                        'move'   => array(
+                        'move' => array(
                             'template' => 'ZichtAdminBundle:CRUD:actions/move.html.twig',
                         ),
-                        'edit'   => array(),
+                        'edit' => array(),
                         'delete' => array(),
                     )
                 )
@@ -147,37 +147,46 @@ class TreeAdmin extends Admin
     /**
      * Get item plus children
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param \Doctrine\ORM\QueryBuilder $qb
      * @param string $alias
      * @param string $field
      * @param array $value
      *
      * @return bool|null
      */
-    public function filterWithChildren($queryBuilder, $alias, $field, $value)
+    public function filterWithChildren($qb, $alias, $field, $value)
     {
-        if (!($value['value'] && is_integer($value['value']))) {
+        // Check whether it is a numeric value because we could get a string number.
+        if (!($value['value'] && is_numeric($value['value']))) {
             return null;
         }
 
-        // Get the parent item, todo, check if necessary
-        $parentQb = clone $queryBuilder;
-        $parentItem =  $parentQb->where(sprintf('%s.id = %d', $alias, $value['value']))->getQuery()->getResult();
-        $currentItem = current($parentItem);
+        // Get the parent item
+        $parentQb = clone $qb;
+        $parentQb->where($parentQb->expr()->eq(sprintf('%s.id', $alias), ':id'));
+        $parentQb->setParameter('id', (int)$value['value']);
+        $currentItem = $parentQb->getQuery()->getOneOrNullResult();
 
-        $expr = $queryBuilder->expr();
-        $queryBuilder->where(
-            $expr->andX(
-                $expr->eq(sprintf('%s.root', $alias), $currentItem->getRoot()),
-                $expr->orX(
-                    $expr->andX(
-                        $expr->lt(sprintf('%s.lft', $alias), $currentItem->getLft()),
-                        $expr->gt(sprintf('%s.rgt', $alias), $currentItem->getRgt())
+        if ($currentItem === null) {
+            return null;
+        }
+
+        $qb->where(
+            $qb->expr()->andX(
+                $qb->expr()->eq(sprintf('%s.root', $alias), ':root'),
+                $qb->expr()->orX(
+                    $qb->expr()->andX(
+                        $qb->expr()->lt(sprintf('%s.lft', $alias), ':left'),
+                        $qb->expr()->gt(sprintf('%s.rgt', $alias), ':right')
                     ),
-                    $expr->between(sprintf('%s.lft', $alias), $currentItem->getLft(), $currentItem->getRgt())
+                    $qb->expr()->between(sprintf('%s.lft', $alias), ':left', ':right')
                 )
             )
         );
+
+        $qb->setParameter('root', $currentItem->getRoot());
+        $qb->setParameter('left', $currentItem->getLft());
+        $qb->setParameter('right', $currentItem->getRgt());
 
         return true;
     }
