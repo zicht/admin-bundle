@@ -1,4 +1,4 @@
-plugins: ['svn']
+plugins: ['git']
 
 vcs:
-    url: svn://zon/projecten/zicht-libraries/ZichtAdminBundle
+    url: git@github.com:zicht/admin-bundle.git
