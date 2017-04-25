@@ -104,7 +104,7 @@ class ExportSqlCommand extends ContainerAwareCommand
                 $this->getConnection(),
                 $input->getArgument('sql')
             ),
-            new $this->typeMapping[$type]($file)
+            new $this->typeMapping[$input->getOption('type')]($file)
         )
             ->export();
     }
