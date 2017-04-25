@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class ExportSqlCommand
  *
- * @package Zicht\Bundle\PameijerPortalBundle\Command
+ * @package Zicht\Bundle\AdminBundle\Command
  */
 class ExportSqlCommand extends ContainerAwareCommand
 {
