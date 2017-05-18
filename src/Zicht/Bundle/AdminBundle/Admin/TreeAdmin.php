@@ -7,11 +7,12 @@
 namespace Zicht\Bundle\AdminBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 /**
  * Provides a base class for easily providing admins for tree structures.
@@ -36,8 +37,8 @@ class TreeAdmin extends Admin
             $queryBuilder = $em->createQueryBuilder();
             $queryBuilder
                 ->select('n')
-                ->from($this->getClass(), 'n')
-            ;
+                ->from($this->getClass(), 'n');
+
             if ($cmd->hasField('root')) {
                 $queryBuilder->orderBy('n.root, n.lft');
             } else {
@@ -57,12 +58,11 @@ class TreeAdmin extends Admin
     {
         $formMapper
             ->tab('General')
-                ->with('General')
-                    ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
-                    ->add('title', null, array('required' => true))
-                ->end()
+            ->with('General')
+            ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
+            ->add('title', null, array('required' => true))
             ->end()
-        ;
+            ->end();
     }
 
 
@@ -77,32 +77,36 @@ class TreeAdmin extends Admin
                 'doctrine_orm_callback',
                 array(
                     'label' => 'Sectie',
-                    'callback' => function($qb, $alias, $f, $v) {
+                    'callback' => function ($qb, $alias, $f, $v) {
                         if ($v['value']) {
-                            $qb
-                                ->andWhere($alias . '.root=:root')
-                                ->setParameter(':root', $v['value'])
-                            ;
+                            $qb->andWhere($alias . '.root=:root')
+                                ->setParameter(':root', $v['value']);
                         }
                     },
                     'field_type' => 'entity',
                     'field_options' => array(
-                        'query_builder' => function($repo) {
+                        'query_builder' => function ($repo) {
                             return $repo->createQueryBuilder('t')->andWhere('t.parent IS NULL');
                         },
                         'class' => $this->getClass()
                     )
                 )
             )
-            ->add('id', 'doctrine_orm_callback', array(
-                'callback' => array($this, 'filterWithChildren')
-            ))
-        ;
+            ->add(
+                'id',
+                'doctrine_orm_callback',
+                array(
+                    'callback' => array($this, 'filterWithChildren')
+                )
+            );
     }
 
 
     /**
-     * @{inheritDoc}
+     * Configure list fields
+     *
+     * @param ListMapper $listMapper
+     * @return ListMapper
      */
     public function configureListFields(ListMapper $listMapper)
     {
@@ -113,22 +117,23 @@ class TreeAdmin extends Admin
                 'actions',
                 array(
                     'actions' => array(
-                        'filter'   => array(
+                        'filter' => array(
                             'template' => 'ZichtAdminBundle:CRUD:actions/filter.html.twig',
                         ),
-                        'move'   => array(
+                        'move' => array(
                             'template' => 'ZichtAdminBundle:CRUD:actions/move.html.twig',
                         ),
-                        'edit'   => array(),
+                        'edit' => array(),
                         'delete' => array(),
                     )
                 )
             );
     }
 
-
     /**
-     * @{inheritDoc}
+     * Configure route
+     *
+     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -142,37 +147,46 @@ class TreeAdmin extends Admin
     /**
      * Get item plus children
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param \Doctrine\ORM\QueryBuilder $qb
      * @param string $alias
      * @param string $field
      * @param array $value
      *
-     * @return bool
+     * @return bool|null
      */
-    public function filterWithChildren($queryBuilder, $alias, $field, $value)
+    public function filterWithChildren($qb, $alias, $field, $value)
     {
-        if (!$value['value']) {
-            return;
+        // Check whether it is a numeric value because we could get a string number.
+        if (!($value['value'] && is_numeric($value['value']))) {
+            return null;
         }
 
-        // Get the parent item, todo, check if necessary
-        $parentQb = clone $queryBuilder;
-        $parentItem =  $parentQb->where(sprintf('%s.id = %s', $alias, $value['value']))->getQuery()->getResult();
-        $currentItem = current($parentItem);
+        // Get the parent item
+        $parentQb = clone $qb;
+        $parentQb->where($parentQb->expr()->eq(sprintf('%s.id', $alias), ':id'));
+        $parentQb->setParameter('id', (int)$value['value']);
+        $currentItem = $parentQb->getQuery()->getOneOrNullResult();
 
-        $expr = $queryBuilder->expr();
-        $queryBuilder->where(
-            $expr->andX(
-                $expr->eq(sprintf('%s.root', $alias), $currentItem->getRoot()),
-                $expr->orX(
-                    $expr->andX(
-                        $expr->lt(sprintf('%s.lft', $alias), $currentItem->getLft()),
-                        $expr->gt(sprintf('%s.rgt', $alias), $currentItem->getRgt())
+        if ($currentItem === null) {
+            return null;
+        }
+
+        $qb->where(
+            $qb->expr()->andX(
+                $qb->expr()->eq(sprintf('%s.root', $alias), ':root'),
+                $qb->expr()->orX(
+                    $qb->expr()->andX(
+                        $qb->expr()->lt(sprintf('%s.lft', $alias), ':left'),
+                        $qb->expr()->gt(sprintf('%s.rgt', $alias), ':right')
                     ),
-                    $expr->between(sprintf('%s.lft', $alias), $currentItem->getLft(), $currentItem->getRgt())
+                    $qb->expr()->between(sprintf('%s.lft', $alias), ':left', ':right')
                 )
             )
         );
+
+        $qb->setParameter('root', $currentItem->getRoot());
+        $qb->setParameter('left', $currentItem->getLft());
+        $qb->setParameter('right', $currentItem->getRgt());
 
         return true;
     }

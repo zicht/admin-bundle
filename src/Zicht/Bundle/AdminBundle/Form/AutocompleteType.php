@@ -5,16 +5,16 @@
  */
 namespace Zicht\Bundle\AdminBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use \Symfony\Component\Form\FormInterface;
-use \Symfony\Component\Form\FormView;
-use \Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormBuilderInterface;
 
-use \Zicht\Bundle\AdminBundle\DataTransformer\MultipleTransformer;
-use \Zicht\Bundle\AdminBundle\DataTransformer\ClassTransformer;
+use Zicht\Bundle\AdminBundle\DataTransformer\MultipleTransformer;
+use Zicht\Bundle\AdminBundle\DataTransformer\ClassTransformer;
 use Zicht\Bundle\AdminBundle\DataTransformer\NoneTransformer;
-use \Zicht\Bundle\AdminBundle\Service\Quicklist;
+use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 /**
  * A type utilizing autocomplete functionality within the CMS.
@@ -22,18 +22,25 @@ use \Zicht\Bundle\AdminBundle\Service\Quicklist;
 class AutocompleteType extends AbstractType
 {
     /**
+     * @var Quicklist
+     */
+    private $quicklist;
+
+    /**
      * Constructor.
      *
-     * @param \Zicht\Bundle\AdminBundle\Service\Quicklist $quicklist
+     * @param Quicklist $quicklist
      */
     public function __construct(Quicklist $quicklist)
     {
         $this->quicklist = $quicklist;
     }
 
-
     /**
-     * @{inheritDoc}
+     * Build forms
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -80,12 +87,14 @@ class AutocompleteType extends AbstractType
     {
         $resolver
             ->setRequired(array('repo'))
-            ->setDefaults(array(
-                'multiple' => false,
-                'transformer' => 'auto',
-                'route' => 'zicht_admin_quicklist_quicklist',
-                'route_params' => array()
-            ));
+            ->setDefaults(
+                array(
+                    'multiple' => false,
+                    'transformer' => 'auto',
+                    'route' => 'zicht_admin_quicklist_quicklist',
+                    'route_params' => array()
+                )
+            );
     }
 
 

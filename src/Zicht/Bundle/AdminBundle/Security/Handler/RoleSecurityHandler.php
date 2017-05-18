@@ -23,6 +23,6 @@ class RoleSecurityHandler extends BaseRoleSecurityHandler
         if ($this->securityContext->isGranted($attributes, $object)) {
             return true;
         }
-        return parent::isGranted($admin, $attributes, $object); 
+        return parent::isGranted($admin, $attributes, $object);
     }
 }

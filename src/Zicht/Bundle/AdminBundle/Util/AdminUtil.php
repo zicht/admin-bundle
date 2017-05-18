@@ -82,7 +82,7 @@ final class AdminUtil
     /**
      * Add a field to the given formMapper
      *
-     * @param $name
+     * @param string $name
      * @param null $type
      * @param array $options
      * @param array $fieldDescriptionOptions
@@ -101,7 +101,9 @@ final class AdminUtil
     }
 
     /**
-     * @param $name
+     * Call function
+     *
+     * @param string $name
      * @param array $arguments
      * @return $this
      */

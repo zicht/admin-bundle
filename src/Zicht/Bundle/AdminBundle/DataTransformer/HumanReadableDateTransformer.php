@@ -6,7 +6,7 @@
 
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
-use \Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransformer;
+use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransformer;
 
 /**
  * Support transformer for ZichtDatePickerType

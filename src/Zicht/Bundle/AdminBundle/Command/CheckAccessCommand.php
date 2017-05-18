@@ -25,13 +25,11 @@ class CheckAccessCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this
-            ->setName('zicht:admin:check-access')
-            ->addArgument('role', InputArgument::REQUIRED, 'Check the rights for a specific role')
-            ->addArgument('attribute', InputArgument::REQUIRED, 'The attribute to check for')
-            ->addOption('entity', '', InputOption::VALUE_REQUIRED, 'Entity to check the specified attribute on')
-            ->addOption('id', '', InputOption::VALUE_REQUIRED, 'ID of the entity to check the specified attribute on')
-        ;
+        $this->setName('zicht:admin:check-access');
+        $this->addArgument('role', InputArgument::REQUIRED, 'Check the rights for a specific role');
+        $this->addArgument('attribute', InputArgument::REQUIRED, 'The attribute to check for');
+        $this->addOption('entity', '', InputOption::VALUE_REQUIRED, 'Entity to check the specified attribute on');
+        $this->addOption('id', '', InputOption::VALUE_REQUIRED, 'ID of the entity to check the specified attribute on');
     }
 
     /**

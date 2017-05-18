@@ -24,7 +24,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         );
 
         $fn = $e->getFunctions();
-        $this->assertInstanceOf('Twig_FunctionInterface', $fn['admin_url']);
+        $this->assertInstanceOf('Twig_SimpleFunction', $fn['admin_url']);
         $this->assertEquals('zicht_admin', $e->getName());
         return $e;
     }
