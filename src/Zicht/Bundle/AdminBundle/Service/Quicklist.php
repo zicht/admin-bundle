@@ -5,14 +5,29 @@
  */
 namespace Zicht\Bundle\AdminBundle\Service;
 
-use \Sonata\AdminBundle\Admin\Pool;
-use \Doctrine\Bundle\DoctrineBundle\Registry;
+use Sonata\AdminBundle\Admin\Pool;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
 /**
  * Quick list service
  */
 class Quicklist
 {
+    /**
+     * @var Registry
+     */
+    private $doctrine;
+
+    /**
+     * @var Pool
+     */
+    private $adminPool;
+
+    /**
+     * @var array
+     */
+    private $repos;
+
     /**
      * Constructor.
      *
@@ -25,7 +40,6 @@ class Quicklist
         $this->adminPool = $pool;
         $this->repos = array();
     }
-
 
     /**
      * Add a repository configuration
@@ -49,13 +63,37 @@ class Quicklist
     public function getRepositoryConfigs($exposedOnly = true)
     {
         if ($exposedOnly) {
-            return array_filter($this->repos, function($item) {
-                return isset($item['exposed']) && $item['exposed'] === true;
-            });
+            return array_filter(
+                $this->repos,
+                function ($item) {
+                    return isset($item['exposed']) && $item['exposed'] === true;
+                }
+            );
         }
         return $this->repos;
     }
 
+    /**
+     * Gets the first admin when there are multiple definitions.
+     *
+     * @param string  $class
+     * @return null|\Sonata\AdminBundle\Admin\AdminInterface
+     */
+    private function getFirstAdminPerClass($class)
+    {
+        $code = null;
+        $admins = $this->adminPool->getAdminClasses();
+
+        foreach ($admins as $key => $value) {
+            if ($key === $class) {
+                $code = current($value);
+                break;
+            }
+        }
+
+        return $code === null ?
+            $this->adminPool->getAdminByClass($class) : $this->adminPool->getAdminByAdminCode($code);
+    }
 
     /**
      * Get the result suggestions for the passed pattern
@@ -63,6 +101,7 @@ class Quicklist
      * @param string $repository
      * @param string $pattern
      * @param null|string $language
+     * @param int $max
      * @return array
      */
     public function getResults($repository, $pattern, $language = null, $max = 15)
@@ -71,9 +110,9 @@ class Quicklist
 
         $results = array();
         foreach ($queryResults as $record) {
-            $admin = $this->adminPool->getAdminByClass(get_class($record));
+            $admin = $this->getFirstAdminPerClass(get_class($record));
             if (!$admin) {
-                $admin = $this->adminPool->getAdminByClass(get_parent_class($record));
+                $admin = $this->getFirstAdminPerClass(get_parent_class($record));
             }
             $resultRecord = $this->createResultRecord($record, $admin);
             $results[] = $resultRecord;
@@ -83,14 +122,17 @@ class Quicklist
         // TODO do this sort in DQL. Unfortunately, doctrine is not too handy with this, so
         // I'll keep it like this for a second. Note the the "setMaxResults()" should be reverted to $max
         // and the slice can be removed
-        usort($results, function($a, $b) use ($pattern) {
-            $percentA = 0;
-            $percentB = 0;
-            similar_text($a['label'], $pattern, $percentA);
-            similar_text($b['label'], $pattern, $percentB);
+        usort(
+            $results,
+            function ($a, $b) use ($pattern) {
+                $percentA = 0;
+                $percentB = 0;
+                similar_text($a['label'], $pattern, $percentA);
+                similar_text($b['label'], $pattern, $percentB);
 
-            return $percentB - $percentA;
-        });
+                return $percentB - $percentA;
+            }
+        );
 
         return array_slice($results, 0, $max);
     }
@@ -109,17 +151,18 @@ class Quicklist
         /** @var $q \Doctrine\ORM\QueryBuilder */
         return $this->doctrine
             ->getRepository($repoConfig['repository'])
-            ->find($id)
-            ;
+            ->find($id);
     }
 
     /**
-     * @param $repository
-     * @param $pattern
+     * Find records
+     *
+     * @param string $repository
+     * @param string $pattern
      * @param null|string $language
      * @return mixed
      */
-    private function findRecords($repository, $pattern, $language = null, $max = 15)
+    private function findRecords($repository, $pattern, $language = null)
     {
         $repoConfig = $this->repos[$repository];
         /** @var $q \Doctrine\ORM\QueryBuilder */
@@ -145,8 +188,10 @@ class Quicklist
     }
 
     /**
-     * @param $record
-     * @param $admin
+     * Creates result record
+     *
+     * @param object $record
+     * @param object $admin
      * @return array
      */
     public function createResultRecord($record, $admin)

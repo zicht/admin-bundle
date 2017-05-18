@@ -5,13 +5,28 @@
  */
 namespace Zicht\Bundle\AdminBundle\Event;
 
-use \Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Event that adds an item to the admin menu
  */
 class MenuEvent extends Event
 {
+    /**
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var array
+     */
+    private $options;
+
     /**
      * Constructor.
      *

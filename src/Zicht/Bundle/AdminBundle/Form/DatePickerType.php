@@ -5,10 +5,10 @@
  */
 namespace Zicht\Bundle\AdminBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
-use \Symfony\Component\Form\FormBuilderInterface;
-use \Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use \Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 
 /**
  * Custom  date time object for rendering of datePicker
@@ -25,12 +25,14 @@ class DatePickerType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
-        $resolver->setDefaults(array(
-            'widget' => 'single_text',
-            'attr' => array(
-                'class' => 'zicht_date_picker'
+        $resolver->setDefaults(
+            array(
+                'widget' => 'single_text',
+                'attr' => array(
+                    'class' => 'zicht_date_picker'
+                )
             )
-        ));
+        );
     }
 
     /**
@@ -42,7 +44,10 @@ class DatePickerType extends AbstractType
     }
 
     /**
-     * @{inheritDoc}
+     * Build form
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

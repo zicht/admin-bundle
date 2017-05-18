@@ -7,6 +7,7 @@
 namespace Zicht\Bundle\AdminBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -36,8 +37,8 @@ class TreeAdmin extends Admin
             $queryBuilder = $em->createQueryBuilder();
             $queryBuilder
                 ->select('n')
-                ->from($this->getClass(), 'n')
-            ;
+                ->from($this->getClass(), 'n');
+
             if ($cmd->hasField('root')) {
                 $queryBuilder->orderBy('n.root, n.lft');
             } else {
@@ -61,8 +62,7 @@ class TreeAdmin extends Admin
                     ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
                     ->add('title', null, array('required' => true))
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
 
@@ -77,32 +77,36 @@ class TreeAdmin extends Admin
                 'doctrine_orm_callback',
                 array(
                     'label' => 'Sectie',
-                    'callback' => function($qb, $alias, $f, $v) {
+                    'callback' => function ($qb, $alias, $f, $v) {
                         if ($v['value']) {
-                            $qb
-                                ->andWhere($alias . '.root=:root')
-                                ->setParameter(':root', $v['value'])
-                            ;
+                            $qb->andWhere($alias . '.root=:root')
+                                ->setParameter(':root', $v['value']);
                         }
                     },
                     'field_type' => 'entity',
                     'field_options' => array(
-                        'query_builder' => function($repo) {
+                        'query_builder' => function ($repo) {
                             return $repo->createQueryBuilder('t')->andWhere('t.parent IS NULL');
                         },
                         'class' => $this->getClass()
                     )
                 )
             )
-            ->add('id', 'doctrine_orm_callback', array(
-                'callback' => array($this, 'filterWithChildren')
-            ))
-        ;
+            ->add(
+                'id',
+                'doctrine_orm_callback',
+                array(
+                    'callback' => array($this, 'filterWithChildren')
+                )
+            );
     }
 
 
     /**
-     * @{inheritDoc}
+     * Configure list fields
+     *
+     * @param ListMapper $listMapper
+     * @return ListMapper
      */
     public function configureListFields(ListMapper $listMapper)
     {
@@ -126,9 +130,10 @@ class TreeAdmin extends Admin
             );
     }
 
-
     /**
-     * @{inheritDoc}
+     * Configure route
+     *
+     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -147,17 +152,17 @@ class TreeAdmin extends Admin
      * @param string $field
      * @param array $value
      *
-     * @return bool
+     * @return bool|null
      */
     public function filterWithChildren($queryBuilder, $alias, $field, $value)
     {
-        if (!$value['value']) {
-            return;
+        if (!($value['value'] && is_integer($value['value']))) {
+            return null;
         }
 
         // Get the parent item, todo, check if necessary
         $parentQb = clone $queryBuilder;
-        $parentItem =  $parentQb->where(sprintf('%s.id = %s', $alias, $value['value']))->getQuery()->getResult();
+        $parentItem =  $parentQb->where(sprintf('%s.id = %d', $alias, $value['value']))->getQuery()->getResult();
         $currentItem = current($parentItem);
 
         $expr = $queryBuilder->expr();

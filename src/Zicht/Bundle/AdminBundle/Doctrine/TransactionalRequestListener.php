@@ -6,11 +6,11 @@
 
 namespace Zicht\Bundle\AdminBundle\Doctrine;
 
-use \Doctrine\Bundle\DoctrineBundle\Registry;
-use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use \Symfony\Component\HttpKernel\Event\KernelEvent;
-use \Symfony\Component\HttpKernel\HttpKernelInterface;
-use \Symfony\Component\HttpKernel\KernelEvents;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Makes sure the transaction is started on every admin url known to do writes.
@@ -18,16 +18,19 @@ use \Symfony\Component\HttpKernel\KernelEvents;
 class TransactionalRequestListener implements EventSubscriberInterface
 {
     /**
-     * @{inheritDoc}
+     * @var Registry
      */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            KernelEvents::REQUEST   => 'onKernelRequest',
-            KernelEvents::RESPONSE  => 'onKernelResponse'
-        );
-    }
+    private $doctrine;
 
+    /**
+     * @var string
+     */
+    private $pattern;
+
+    /**
+     * @var bool
+     */
+    private $wasTxStarted;
 
     /**
      * Construct the listener.
@@ -43,6 +46,16 @@ class TransactionalRequestListener implements EventSubscriberInterface
         $this->wasTxStarted = false;
     }
 
+    /**
+     * @{inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::REQUEST   => 'onKernelRequest',
+            KernelEvents::RESPONSE  => 'onKernelResponse'
+        );
+    }
 
     /**
      * Starts a transaction within any url matching the constructor's $pattern parameter
@@ -53,10 +66,9 @@ class TransactionalRequestListener implements EventSubscriberInterface
     public function onKernelRequest(KernelEvent $event)
     {
         // TODO explicit transaction management in stead of this. See ZICHTDEV-119 for ideas on this
-        if (
-            $event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
-            && preg_match($this->pattern, $event->getRequest()->getRequestUri())
-        ) {
+        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
+            && preg_match($this->pattern, $event->getRequest()->getRequestUri())) {
+
             $this->wasTxStarted = true;
             $this->doctrine->getConnection()->beginTransaction();
         }
@@ -71,11 +83,10 @@ class TransactionalRequestListener implements EventSubscriberInterface
      */
     public function onKernelResponse(KernelEvent $event)
     {
-        if (
-            $event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
+        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
             && $this->wasTxStarted
-            && $this->doctrine->getConnection()->getTransactionIsolation() > 0
-        ) {
+            && $this->doctrine->getConnection()->getTransactionIsolation() > 0) {
+
             if ($this->doctrine->getConnection()->isRollbackOnly()) {
                 $this->doctrine->getConnection()->rollback();
             } else {

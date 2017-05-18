@@ -7,7 +7,7 @@
                 <tr>
                     <th>{{ c.title }}</th>
                     <td>
-                        <form method="{{ c.method }}" action="{{ path(c.route, c.route_params) }}">
+                        <form data-mode="{{ c.mode }}" method="{{ c.method }}" action="{{ path(c.route, c.route_params) }}">
                             <button class="btn btn-sm btn-default"><i class="glyphicon glyphicon-"></i> {{ c.button }}</button>
                         </form>
                     </td>
