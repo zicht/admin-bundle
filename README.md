@@ -18,6 +18,4 @@ sonata_admin:
 ```
 
 # Maintainer
-* Rik van der Kemp <rik@zicht.nl>
 * Muhammed Akbulut <muhammed@zicht.nl>
-
