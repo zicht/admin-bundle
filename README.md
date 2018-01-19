@@ -17,5 +17,6 @@ sonata_admin:
         handler: sonata.admin.security.handler.role
 ```
 
-# Maintainer
-* Muhammed Akbulut <muhammed@zicht.nl>
+# Maintainers
+* Boudewijn Schoon <boudewijn@zicht.nl>
+* Erik Trapman <erik@zicht.nl>
