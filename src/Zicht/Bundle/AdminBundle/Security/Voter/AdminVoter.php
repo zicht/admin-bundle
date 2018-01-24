@@ -75,17 +75,11 @@ class AdminVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        if (null === $object) {
-            return VoterInterface::ACCESS_ABSTAIN;
-        }
-        
-        $class = get_class($object);
-
         // check if class of this object is supported by this voter
-        if ($this->supportsClass($class)) {
+        if ($this->supportsClass(get_class($object))) {
             /** @var AccessDecisionManagerInterface $accessDecisionManager */
             $accessDecisionManager = $this->serviceContainer->get('security.access.decision_manager');
-            foreach ($this->mapAttributesToRoles($class, $attributes) as $mappedAttr) {
+            foreach ($this->mapAttributesToRoles(get_class($object), $attributes) as $mappedAttr) {
                 if ($accessDecisionManager->decide($token, array($mappedAttr), $object)) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
