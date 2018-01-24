@@ -18,5 +18,6 @@ sonata_admin:
 ```
 
 # Maintainers
+* Philip Bergman <philip@zicht.nl>
 * Boudewijn Schoon <boudewijn@zicht.nl>
 * Erik Trapman <erik@zicht.nl>
