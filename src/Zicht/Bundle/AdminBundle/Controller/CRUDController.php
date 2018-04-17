@@ -200,8 +200,8 @@ class CRUDController extends BaseCRUDController
         $form = $this->admin->getForm();
         $form->setData($object);
 
-        if ($this->get('request')->getMethod() == 'POST') {
-            $form->bind($this->get('request'));
+        if ($this->getRequest()->getMethod() == 'POST') {
+            $form->handleRequest($this->getRequest());
         }
 
         $view = $form->createView();
