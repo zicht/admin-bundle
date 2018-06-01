@@ -20,17 +20,8 @@ class RoleSecurityHandler extends BaseRoleSecurityHandler
      */
     public function isGranted(AdminInterface $admin, $attributes, $object = null)
     {
-        // sonata-admin 2
-        if (isset($this->securityContext)) {
-            if ($this->securityContext->isGranted($attributes, $object)) {
-                return true;
-            }
-        }
-        // sonata admin 3
-        if (isset($this->authorizationChecker)) {
-            if ($this->authorizationChecker->isGranted($attributes, $object)) {
-                return true;
-            }
+        if ($this->authorizationChecker->isGranted($attributes, $object)) {
+            return true;
         }
         return parent::isGranted($admin, $attributes, $object);
     }

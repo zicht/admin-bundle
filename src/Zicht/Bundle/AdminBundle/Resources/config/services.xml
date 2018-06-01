@@ -10,7 +10,10 @@
     </parameters>
 -->
     <services>
-        <service id="zicht_admin.menu" class="Knp\Menu\MenuItem" factory-service="knp_menu.factory" factory-method="createItem">
+        <service id="zicht_admin.menu" class="Knp\Menu\MenuItem">
+            <factory service="knp_menu.factory"
+                     method="createItem"
+            />
             <argument type="string">zicht_admin.root</argument>
 
             <tag name="knp_menu.menu" alias="zicht_admin"/>
@@ -38,6 +41,7 @@
             <argument type="service" id="sonata.admin.pool"/>
             <argument type="service" id="service_container"/>
             <argument type="collection" /><!-- replaced by extension -->
+            <argument type="service" id="security.access.decision_manager"/>
             <tag name="security.voter" />
         </service>
         <service id="zicht_admin.form.date_picker" class="Zicht\Bundle\AdminBundle\Form\DatePickerType">

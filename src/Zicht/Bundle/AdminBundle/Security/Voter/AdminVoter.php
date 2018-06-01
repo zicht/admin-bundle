@@ -33,6 +33,10 @@ class AdminVoter implements VoterInterface
      * @var ContainerInterface
      */
     private $serviceContainer;
+    /**
+     * @var AccessDecisionManagerInterface
+     */
+    private $decisionManager;
 
     /**
      * Constructor. The passed attributes are mapped to ROLE_* attributes delegated to the authorization checker
@@ -41,11 +45,12 @@ class AdminVoter implements VoterInterface
      * @param ContainerInterface $serviceContainer
      * @param array $attributes
      */
-    public function __construct(Pool $pool, ContainerInterface $serviceContainer, array $attributes)
+    public function __construct(Pool $pool, ContainerInterface $serviceContainer, array $attributes, AccessDecisionManagerInterface $decisionManager)
     {
         $this->pool = $pool;
         $this->serviceContainer = $serviceContainer;
         $this->attributes = $attributes;
+        $this->decisionManager = $decisionManager;
     }
 
     /**
@@ -77,9 +82,10 @@ class AdminVoter implements VoterInterface
     {
         // check if class of this object is supported by this voter
         if (!is_null($object) && $this->supportsClass(get_class($object))) {
+            $class = get_class($object);
             /** @var AccessDecisionManagerInterface $accessDecisionManager */
-            $accessDecisionManager = $this->serviceContainer->get('security.access.decision_manager');
-            foreach ($this->mapAttributesToRoles(get_class($object), $attributes) as $mappedAttr) {
+            $accessDecisionManager = $this->decisionManager;
+            foreach ($this->mapAttributesToRoles($class, $attributes) as $mappedAttr) {
                 if ($accessDecisionManager->decide($token, array($mappedAttr), $object)) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
@@ -111,7 +117,7 @@ class AdminVoter implements VoterInterface
 
                     foreach ($attributes as $attr) {
                         if ($this->supportsAttribute($attr)) {
-                            $mappedAttributes[]= sprintf($baseRole, $attr);
+                            $mappedAttributes[] = sprintf($baseRole, $attr);
                         }
                     }
                 }
