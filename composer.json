@@ -13,7 +13,7 @@
         "php": "^7",
         "symfony/symfony": "^3.4",
         "doctrine/doctrine-bundle": "^1",
-        "sonata-project/doctrine-orm-admin-bundle": "^3 || ^2",
+        "sonata-project/doctrine-orm-admin-bundle": "^3",
         "zicht/framework-extra-bundle": ">=6.0",
         "sensio/framework-extra-bundle": "^3.0"
     },
