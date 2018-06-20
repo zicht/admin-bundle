@@ -7,6 +7,7 @@
 namespace Zicht\Bundle\AdminBundle\Security\Voter;
 
 use Sonata\AdminBundle\Admin\Pool;
+use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -30,27 +31,30 @@ class AdminVoter implements VoterInterface
     protected $pool;
 
     /**
-     * @var ContainerInterface
-     */
-    private $serviceContainer;
-    /**
      * @var AccessDecisionManagerInterface
      */
     private $decisionManager;
 
     /**
-     * Constructor. The passed attributes are mapped to ROLE_* attributes delegated to the authorization checker
-     *
-     * @param Pool $pool
-     * @param ContainerInterface $serviceContainer
-     * @param array $attributes
+     * @var SecurityHandlerInterface
      */
-    public function __construct(Pool $pool, ContainerInterface $serviceContainer, array $attributes, AccessDecisionManagerInterface $decisionManager)
+    private $securityHandler;
+
+    /**
+     * AdminVoter constructor.
+     * The passed attributes are mapped to ROLE_* attributes delegated to the authorization checker
+     *
+     * @param array $attributes
+     * @param Pool $pool
+     * @param AccessDecisionManagerInterface $decisionManager
+     * @param SecurityHandlerInterface $securityHandler
+     */
+    public function __construct(array $attributes, Pool $pool, AccessDecisionManagerInterface $decisionManager, SecurityHandlerInterface $securityHandler)
     {
-        $this->pool = $pool;
-        $this->serviceContainer = $serviceContainer;
         $this->attributes = $attributes;
+        $this->pool = $pool;
         $this->decisionManager = $decisionManager;
+        $this->securityHandler = $securityHandler;
     }
 
     /**
@@ -105,15 +109,12 @@ class AdminVoter implements VoterInterface
      */
     protected function mapAttributesToRoles($class, $attributes)
     {
-        /** @var \Sonata\AdminBundle\Security\Handler\RoleSecurityHandler */
-        $roleSecurityHandler = $this->serviceContainer->get('sonata.admin.security.handler');
-
         $mappedAttributes = array();
         foreach ($this->pool->getAdminClasses() as $adminClass => $adminCodes) {
             if ($class === $adminClass || $class instanceof $adminClass) {
                 foreach ($adminCodes as $adminCode) {
                     $admin = $this->pool->getAdminByAdminCode($adminCode);
-                    $baseRole = $roleSecurityHandler->getBaseRole($admin);
+                    $baseRole = $this->securityHandler->getBaseRole($admin);
 
                     foreach ($attributes as $attr) {
                         if ($this->supportsAttribute($attr)) {

@@ -14,12 +14,11 @@
         "symfony/symfony": "^3.4",
         "doctrine/doctrine-bundle": "^1",
         "sonata-project/doctrine-orm-admin-bundle": "^3 || ^2",
-        "zicht/framework-extra-bundle": "4 - 6",
+        "zicht/framework-extra-bundle": ">=6.0",
         "sensio/framework-extra-bundle": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4",
-        "zicht/phpcs": "^2.2"
+        "phpunit/phpunit": "^4"
     },
     "autoload": {
         "psr-0": {

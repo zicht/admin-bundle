@@ -3,12 +3,6 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-<!--
-    <parameters>
-        <parameter key="zicht_bhic_core.menu_entity">ZichtBhicCore:MenuItem</parameter>
-    </parameters>
--->
     <services>
         <service id="zicht_admin.menu" class="Knp\Menu\MenuItem">
             <factory service="knp_menu.factory"
@@ -20,32 +14,32 @@
         </service>
 
         <service id="zicht_admin.event_subscriber" class="Zicht\Bundle\AdminBundle\Event\Subscriber">
-            <argument type="service" id="zicht_admin.menu" />
-            <argument type="service" id="knp_menu.factory" />
-            <tag name="kernel.event_subscriber" />
+            <argument type="service" id="zicht_admin.menu"/>
+            <argument type="service" id="knp_menu.factory"/>
+            <tag name="kernel.event_subscriber"/>
         </service>
         <service id="zicht_admin.event_propagator" class="Zicht\Bundle\AdminBundle\Event\Propagator">
         </service>
         <service id="zicht_admin.twig_extension" class="Zicht\Bundle\AdminBundle\Twig\Extension">
-            <tag name="twig.extension" />
+            <tag name="twig.extension"/>
             <argument type="service" id="sonata.admin.pool"/>
             <argument type="service" id="doctrine"/>
         </service>
         <service id="zicht_admin.form.tinymce" class="Zicht\Bundle\AdminBundle\Form\TinymceType">
-            <tag name="form.type" alias="tinymce" />
+            <tag name="form.type" alias="tinymce"/>
         </service>
 
         <service id="zicht_admin.security.authorization.voter.admin_voter"
                  class="Zicht\Bundle\AdminBundle\Security\Voter\AdminVoter"
                  public="false">
+            <argument type="collection"/><!-- replaced by extension -->
             <argument type="service" id="sonata.admin.pool"/>
-            <argument type="service" id="service_container"/>
-            <argument type="collection" /><!-- replaced by extension -->
             <argument type="service" id="security.access.decision_manager"/>
-            <tag name="security.voter" />
+            <argument type="service" id="sonata.admin.security.handler"/>
+            <tag name="security.voter"/>
         </service>
         <service id="zicht_admin.form.date_picker" class="Zicht\Bundle\AdminBundle\Form\DatePickerType">
-            <tag name="form.type" alias="zicht_date_picker" />
+            <tag name="form.type" alias="zicht_date_picker"/>
         </service>
     </services>
 </container>

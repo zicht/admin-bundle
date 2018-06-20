@@ -54,6 +54,6 @@ class ZichtAdminExtension extends DIExtension
         }
 
         $container->getDefinition('zicht_admin.security.authorization.voter.admin_voter')
-            ->replaceArgument(2, $config['security']['mapped_attributes']);
+            ->replaceArgument(0, $config['security']['mapped_attributes']);
     }
 }
