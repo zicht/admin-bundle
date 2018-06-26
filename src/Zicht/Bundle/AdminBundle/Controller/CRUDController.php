@@ -27,7 +27,7 @@ class CRUDController extends BaseCRUDController
      */
     public function duplicateAction()
     {
-        $id     = $this->get('request')->get($this->admin->getIdParameter());
+        $id     = $this->getRequest()->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
         if (!$object) {
@@ -61,7 +61,7 @@ class CRUDController extends BaseCRUDController
      */
     public function showAction($id = null)
     {
-        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $id = $this->getRequest()->get($this->admin->getIdParameter());
         $obj = $this->admin->getObject($id);
         if ($this->container->has('zicht_url.provider') && $this->get('zicht_url.provider')->supports($obj)) {
             return $this->redirect($this->get('zicht_url.provider')->url($obj));
@@ -76,7 +76,7 @@ class CRUDController extends BaseCRUDController
      */
     public function editAction($id = null)
     {
-        if ($this->get('request')->get('__bind_only')) {
+        if ($this->getRequest()->get('__bind_only')) {
             return $this->bindAndRender('edit');
         }
 
@@ -110,7 +110,7 @@ class CRUDController extends BaseCRUDController
         }
 
 
-        if ($this->get('request')->get('__bind_only')) {
+        if ($this->getRequest()->get('__bind_only')) {
             return $this->bindAndRender('create');
         }
 
@@ -173,7 +173,7 @@ class CRUDController extends BaseCRUDController
         $templateKey = 'edit';
 
         if ($action == 'edit') {
-            $id = $this->get('request')->get($this->admin->getIdParameter());
+            $id = $this->getRequest()->get($this->admin->getIdParameter());
 
             $object = $this->admin->getObject($id);
 
@@ -200,8 +200,8 @@ class CRUDController extends BaseCRUDController
         $form = $this->admin->getForm();
         $form->setData($object);
 
-        if ($this->get('request')->getMethod() == 'POST') {
-            $form->bind($this->get('request'));
+        if ($this->getRequest()->getMethod() == 'POST') {
+            $form->handleRequest($this->getRequest());
         }
 
         $view = $form->createView();
