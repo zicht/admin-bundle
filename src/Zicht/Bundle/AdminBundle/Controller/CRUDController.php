@@ -7,6 +7,7 @@
 namespace Zicht\Bundle\AdminBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
+use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -207,7 +208,7 @@ class CRUDController extends BaseCRUDController
         $view = $form->createView();
 
         // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
+        $this->get('twig')->getRuntime(FormRenderer::class)->setTheme($view, $this->admin->getFormTheme());
 
         return $this->render(
             $this->admin->getTemplate($templateKey),
