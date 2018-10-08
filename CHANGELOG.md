@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 5.0.3 - 2018-10-08
+### Added
+- Add CSRF token to login screen
+
 ## 5.0.0 - 2018-06-26
 ### Added
 - Support for Symfony 3.x
