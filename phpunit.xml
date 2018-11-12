@@ -1,8 +1,3 @@
-<!--
-  ~ @author Muhammed Akbulut <muhammed@zicht.nl>
-  ~ @copyright Zicht Online <http://www.zicht.nl>
-  -->
-
 <phpunit
         bootstrap="vendor/autoload.php"
         convertWarningsToExceptions="true"
