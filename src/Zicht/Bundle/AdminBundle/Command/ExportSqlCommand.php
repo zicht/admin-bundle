@@ -29,7 +29,7 @@ class ExportSqlCommand extends ContainerAwareCommand
         'xmlexcel'  => 'Exporter\\Writer\\XmlExcelWriter',
         'json'      => 'Exporter\\Writer\\JsonWriter',
         'csv'       => 'Exporter\\Writer\\CsvWriter',
-        'twig'      => 'Zicht\Bundle\AdminBundle\Exporter\Writer\TwigWriter',
+        'twig'      => 'Zicht\\Bundle\\AdminBundle\\Exporter\\Writer\\TwigWriter',
     ];
 
     /**
@@ -310,11 +310,11 @@ Options:
     <info>template</info>        Set the output template <comment>[default: "{{ print()|raw }}"]</comment> 
     <info>no-eol</info>          Disable the extra EOL character after each row
    
-    the twig instance, will get to extra filter: 
+    the twig instance, will get two extra filter: 
         print       this will print the result row
         sql_escape  this will do an sql escape in the input
     
-    to us an template for printing the rows you could use the internal include from twig:       
+    to us a template for printing the rows you could use the internal include from twig:       
         
          --template "{% include '\$PWD/include.tmpl' %}"
         
