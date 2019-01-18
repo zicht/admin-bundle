@@ -1,37 +1,49 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <meta name="robots" content="noindex,nofollow"/>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="robots" content="noindex,nofollow"/>
+    <title>Zicht CMS | login</title>
+    <link rel="stylesheet" href="{{ asset('bundles/zichtadmin/style/login.css') }}">
+</head>
+<body class="z-cms">
+    <div class="login-page">
+        <div id="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+                <path fill="#004FFF" fill-rule="evenodd" d="M48 0C21.49 0 0 21.49 0 48s21.49 48 48 48 48-21.49 48-48S74.51 0 48 0zm0 8.37c21.852 0 39.63 17.778 39.63 39.63 0 21.852-17.778 39.63-39.63 39.63C26.148 87.63 8.37 69.852 8.37 48 8.37 26.148 26.148 8.37 48 8.37zm14.463 55.79H33.537v3.585a4.782 4.782 0 0 0 4.782 4.782h24.144V64.16zm-.962-32.693L48.384 47.268h14.079v4.404a4.171 4.171 0 0 1-4.171 4.171H33.537v-3.536c0-.981.346-1.931.978-2.682l13.613-16.18H37.959a4.166 4.166 0 0 1-4.166-4.166v-4.474h28.67v3.999c0 .973-.34 1.915-.962 2.663z"/>
+            </svg>
+        </div>
+        <div id="form">
+            <form class="login-form" action="{{ path('zicht_admin_login_check') }}" method="post">
+                <h1>Inloggen</h1>
+                {% if error %}
+                    <div class="error">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+                <label for="username">
+                    Gebruikersnaam
+                </label>
+                <input type="text" id="username" class="form-control" name="_username" placeholder="Vul uw gebruikersnaam in..." value="{{ last_username }}" autofocus/>
+                <label for="password">
+                    Wachtwoord
+                </label>
+                <input type="password" id="password" name="_password" placeholder="Wachtwoord" class="form-control" /><br>
 
-        <title>Zicht CMS | login</title>
-
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('bundles/zichtadmin/style/login.css') }}">
-    </head>
-    <body>
-    <div>
-        <form action="{{ path('zicht_admin_login_check') }}" method="post" class="c-loginform">
-            <div>
-                <h2>Zicht CMS | login</h2>
-                <div>
-                    {% if error %}
-                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+                <div id="rememberme" style="display: flex; margin-bottom: 10px;">
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                    <label for="remember_me">onthoud mij</label>
                 </div>
-
-                <input type="text" id="username" class="form-control" name="_username" placeholder="Gebruikersnaam" value="{{ last_username }}" />
-                <input type="password" id="password" name="_password" placeholder="Wachtwoord" class="form-control  c-loginform__field" /><br>
-
-                <input type="checkbox" id="remember_me" name="_remember_me" checked />
-                <label for="remember_me">Onthoud mij</label>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
-                <br><br>
-                <a href="/">&leftarrow;terug naar website</a>
-            </div>
-        </form>
-    </body>
+                <button type="submit">Inloggen</button>
+            </form>
+        </div>
+        <p class="message  has-hover-propagation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="v-hover--right  u-trans--transform" width="17" height="9" viewBox="0 0 25.5 11.25"><path fill="currentColor" d="M0 5.625L6.675 0v4.8H22.5v1.65H6.675v4.8z"/></svg>
+            <a class="v-hover--color" href="/">terug naar website</a>
+        </p>
+    </div>
+</body>
 </html>

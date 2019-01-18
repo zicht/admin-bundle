@@ -1,2 +1,43 @@
 {% extends 'SonataAdminBundle::standard_layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/zichtadmin/style/admin-cms.css') }}">
+
+    <style>
+
+        .logo svg {
+            display: inline;
+            padding-bottom: 4px;
+            max-height: 100%;
+            max-width: 60px;
+        }
+
+        .logo span {
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            width: 200px;
+        }
+
+        .logo span.cms_title {
+
+        }
+
+        .logo svg + img + span { width: 140px; }
+    </style>
+{% endblock %}
+
+{% block logo %}
+    {% spaceless %}
+        <div class="z-cms-admin">
+            <a href="{{ path('sonata_admin_dashboard') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                    <path fill="#77848a" fill-rule="evenodd" d="M16 1C7.716 1 1 7.716 1 16c0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15zm0 2.616c6.829 0 12.384 5.555 12.384 12.384 0 6.829-5.555 12.384-12.384 12.384C9.171 28.384 3.616 22.83 3.616 16 3.616 9.171 9.17 3.616 16 3.616zm4.52 17.434h-9.04v1.12a1.494 1.494 0 0 0 1.495 1.495h7.545zm-.3-10.217l-4.1 4.938h4.4v1.376a1.303 1.303 0 0 1-1.304 1.304H11.48v-1.105c0-.307.108-.604.306-.838l4.254-5.056h-3.178a1.302 1.302 0 0 1-1.302-1.302V8.752h8.96v1.25c0 .303-.107.598-.3.831z"/>
+                </svg>
+                <span class="cms-title">Zicht CMS</span>
+            </a>
+        </div>
+    {% endspaceless %}
+{% endblock %}
