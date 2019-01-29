@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Rik van der Kemp <rik@zicht.nl>
  * @copyright Zicht Online <http://www.zicht.nl>
  */
 
@@ -10,7 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 
 /**

@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 5.0.3 - 2018-10-08
+### Added
+- Add CSRF token to login screen
+
 ## 5.0.0 - 2018-06-26
 ### Added
 - Support for Symfony 3.x
 ### Removed
 - Support for Symfony 2.x
+
+## 3.4.9
+- Fix the translation for the duplicate flash_message
 
 ## 3.4.8
 - Fix issue with an Exception being thrown when transforming an entity that didn't exsist anymore (no id or value)
