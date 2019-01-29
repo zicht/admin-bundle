@@ -1,5 +1,4 @@
 /**
- * @author Gerard van Helden <gerard@zicht.nl>
  */
 var ZichtQuicklistAutocomplete = (function($) {
     'use strict';

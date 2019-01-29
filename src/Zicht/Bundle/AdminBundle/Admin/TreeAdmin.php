@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Gerard van Helden <gerard@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -13,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
 
 /**
  * Provides a base class for easily providing admins for tree structures.
@@ -59,7 +59,7 @@ class TreeAdmin extends Admin
         $formMapper
             ->tab('General')
             ->with('General')
-            ->add('parent', 'zicht_parent_choice', array('required' => false, 'class' => $this->getClass()))
+            ->add('parent', ParentChoiceType::class, array('required' => false, 'class' => $this->getClass()))
             ->add('title', null, array('required' => true))
             ->end()
             ->end();

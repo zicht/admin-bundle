@@ -26,6 +26,8 @@
                 <input type="checkbox" id="remember_me" name="_remember_me" checked />
                 <label for="remember_me">Onthoud mij</label>
 
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
                 <br><br>
                 <a href="/">&leftarrow;terug naar website</a>

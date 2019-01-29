@@ -6,7 +6,6 @@
  * This JS is included by the controls.html.twig template and runs stand-alone (vanilla), but it makes use of the
  * `glyphicons` class names to show a status indicator next to the button.
  *
- * @author Gerard van Helden <gerard@zicht.nl>
  * @copyright Zicht online <http://zicht.nl>
  */
 var zicht_admin_rc = (function() {

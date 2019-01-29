@@ -1,13 +1,14 @@
 <?php
 /**
- * @author Rik van der Kemp <rik@zicht.nl>
  * @copyright Zicht Online <http://www.zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 
 /**
@@ -20,11 +21,10 @@ use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 class DatePickerType extends AbstractType
 {
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             array(
                 'widget' => 'single_text',
@@ -35,10 +35,19 @@ class DatePickerType extends AbstractType
         );
     }
 
+
     /**
      * @{inheritDoc}
      */
     public function getName()
+    {
+        return 'zicht_date_picker';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBlockPrefix()
     {
         return 'zicht_date_picker';
     }
@@ -60,6 +69,6 @@ class DatePickerType extends AbstractType
      */
     public function getParent()
     {
-        return 'datetime';
+        return DateTimeType::class;
     }
 }
