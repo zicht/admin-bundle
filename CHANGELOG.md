@@ -18,6 +18,9 @@ Nothing so far
 ### Removed
 - Support for Symfony 2.x
 
+## 3.4.9
+- Fix the translation for the duplicate flash_message
+
 ## 3.4.8
 - Fix issue with an Exception being thrown when transforming an entity that didn't exsist anymore (no id or value)
 
