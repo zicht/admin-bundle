@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.0.0
+- bumped sensio framework extra-bundle
+
 ## 5.0.3 - 2018-10-08
 ### Added
 - Add CSRF token to login screen
