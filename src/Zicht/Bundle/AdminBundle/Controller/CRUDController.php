@@ -48,7 +48,10 @@ class CRUDController extends BaseCRUDController
         $objectManager->persist($newObject);
         $objectManager->flush();
 
-        $this->addFlash('sonata_flash_success', 'flash_duplicate_success');
+        $this->addFlash(
+            'sonata_flash_success',
+            $this->admin->trans('flash_duplicate_success')
+        );
 
         return new RedirectResponse($this->admin->generateObjectUrl('edit', $newObject));
     }
