@@ -1,7 +1,6 @@
 zicht_admin:            { resource: "@ZichtAdminBundle/Controller" }
 zicht_admin_redirect:
     path: /admin
-    path: /admin/
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /admin/dashboard

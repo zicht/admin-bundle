@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
-Nothing so far
+### Removed
+- Duplicate key for `path` in `zicht_admin_redirect`
 
 ## 5.0.3 - 2018-10-08
 ### Added
