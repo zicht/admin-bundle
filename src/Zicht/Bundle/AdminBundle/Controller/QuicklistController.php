@@ -21,7 +21,7 @@ class QuicklistController extends Controller
      * @param Request $request
      * @return array|JsonResponse
      *
-     * @Template
+     * @Template("@ZichtAdmin/Quicklist/quicklist.html.twig")
      * @Route("quick-list")
      */
     public function quicklistAction(Request $request)
