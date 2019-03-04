@@ -28,7 +28,7 @@ class RcController
      *
      * @return array
      *
-     * @Template
+     * @Template("@ZichtAdmin/Rc/controls.html.twig")
      */
     public function controlsAction()
     {
