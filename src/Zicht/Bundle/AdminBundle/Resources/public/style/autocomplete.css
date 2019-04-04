@@ -19,3 +19,7 @@ input[type=text].ui-autocomplete-input {
     display: inline;
     width: 95%;
 }
+.zicht-ui-autocompletecontainer_resultslist ul.ui-autocomplete {
+    overflow-y: scroll;
+    max-height: 300px;
+}

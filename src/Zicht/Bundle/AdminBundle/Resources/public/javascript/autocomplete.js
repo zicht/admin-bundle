@@ -16,6 +16,7 @@ var ZichtQuicklistAutocomplete = (function($) {
         $text
             .focus(function(){$text.select();})
             .autocomplete({
+                appendTo: ".zicht-ui-autocompletecontainer_" + $text.attr('id'),
                 source: function(req, resp) {
                     params.pattern = req.term;
                     $.get(

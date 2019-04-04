@@ -88,7 +88,9 @@ class AutocompleteType extends AbstractType
             ->setRequired(array('repo'))
             ->setDefaults(
                 array(
+                    'attr' => ['placeholder' => 'zicht_quicklist.autocomplete_type.search_placeholder'],
                     'multiple' => false,
+                    'translation_domain' => 'admin',
                     'transformer' => 'auto',
                     'route' => 'zicht_admin_quicklist_quicklist',
                     'route_params' => array()
