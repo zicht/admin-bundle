@@ -9,9 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Duplicate key for `path` in `zicht_admin_redirect`
 
-## 5.0.4 - 2019-04-04
+## 5.0.6 - 2019-04-04
 ### Changed
 - Tweaked the interface for initial state and searchresults with placeholder and scrollable results
+
+## 5.0.4, 5.0.5
+### Added
+- Keeping BC for sensio/framework-extra-bundle^5 where folder names are lowercased
+- Prevent sensio/framework-extra-bundle > 6
 
 ## 5.0.3 - 2018-10-08
 ### Added
