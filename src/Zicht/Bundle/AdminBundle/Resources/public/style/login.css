@@ -42,9 +42,8 @@
   color: #000000;
   font-family: campton-bold;
   font-size: 24px;
-  letter-spacing: 0.21px;
   line-height: 32px;
-  text-shadow: 1px 4px 0 0 #7A7A7A, 1px 10px 0 0 #00ADDE, 0 0 40px 0 rgba(0,0,0,0.4);
+  text-shadow: 1px 4px 0 0 #7A7A7A, 1px 10px 0 0 #00ADDE, 0 0 40px 0 rgba(0, 0, 0, 0.4);
   margin-bottom: 16px;
 }
 
@@ -69,7 +68,6 @@
   color: #7A7A7A;
   font-family: Poppins;
   font-size: 12px;
-  letter-spacing: 0.06px;
   line-height: 24px;
 }
 
@@ -85,8 +83,7 @@ label {
   -khtml-user-select: none; /* Konqueror HTML */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 #rememberme label {
@@ -149,12 +146,13 @@ label {
 .z-cms #form input:not([type='checkbox']):placeholder {
   color: #7a7a7a;
 }
+
 .z-cms #form input:not([type='checkbox']) {
   color: #000;
   border: 1px solid #FFFFFF;
   border-radius: 8px;
   background-color: #FFFFFF;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   outline: 0;
   width: 100%;
   margin: 0 0 15px;
@@ -163,7 +161,6 @@ label {
   height: 20px;
   font-family: Poppins;
   font-size: 14px;
-  letter-spacing: 0.17px;
   line-height: 21px;
 }
 
@@ -224,7 +221,6 @@ label {
   font-family: Poppins;
   font-size: 14px;
   font-weight: bold;
-  letter-spacing: 0.47px;
   line-height: 21px;
   text-decoration: none;
 }
