@@ -58,6 +58,10 @@
                     }
                 } else if (e.target == veil) {
                     if (isExpanded) {
+                        proximity = false;
+                        isExpanded = false;
+                        wrapper.className = '';
+                        menu.style.display = 'none';
                         veil.style.display = 'none';
                     }
                 }
