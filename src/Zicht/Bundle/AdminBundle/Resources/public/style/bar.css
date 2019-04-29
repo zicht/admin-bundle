@@ -1,18 +1,27 @@
 #zicht_admin_menu_wrapper {
+    cursor: pointer;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     position: fixed;
-    left: 5px;
-    top: 5px;
-    width: 27px;
-    height: 27px;
     z-index: 9999;
-    -webkit-border-radius: 14px 14px 0 0;
-    -moz-border-radius: 14px 14px 0 0;
-    -ms-border-radius: 14px 14px 0 0;
+    top: 5px;
+    left: 5px;
+    -webkit-border-radius: 30px 30px 0 0;
+    -moz-border-radius: 30px 30px 0 0;
+    -ms-border-radius: 30px 30px 0 0;
 }
 
 #zicht_admin_menu_wrapper.enabled {
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#zicht_admin_menu_wrapper:not(.enabled) img {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#zicht_admin_menu_wrapper img {
+    border: 6px solid rgba(0, 0, 0, 0.0);
+    border-radius: 28px;
+    max-width: inherit !important;
 }
 
 #zicht_admin_menu_wrapper img.logo {
@@ -29,7 +38,7 @@
     top: 0;
     bottom: 0;
     right: 0;
-    z-index: 100;
+    z-index: 1000;
 
     background-color: black;
     opacity: 0;
@@ -39,9 +48,10 @@
 
 #zicht_admin_menu {
     position: fixed;
-    top: 32px;
+    top: 60px;
     left: 5px;
     overflow: visible;
+    z-index: 999;
 
     background-color: white;
 

@@ -1,0 +1,57 @@
+
+@font-face {
+    font-family: poppins;
+    font-style: normal;
+    font-weight: 400;
+    src:
+        local("Poppins"),
+        local("Poppins-Regular"),
+        url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff2") format("woff2"),
+        url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff") format("woff");
+}
+
+@media only screen and (min-width: 768px) {
+    .z-cms-admin {
+        width: 230px;
+        float: left;
+    }
+}
+
+.z-cms-admin {
+    display: flex;
+    min-height: 50px;
+    background-color: #222d32;
+    justify-content: center;
+}
+
+
+.z-cms-admin a {
+    display: flex;
+    align-items: center;
+}
+
+.z-cms-admin span.cms-title {
+    font-family: poppins, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-left: 12px;
+    color: #77848a;
+    text-transform: uppercase;
+}
+
+.logo svg {
+    display: inline;
+    padding-bottom: 4px;
+    max-height: 100%;
+    max-width: 60px;
+}
+
+.logo span {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    width: 200px;
+}
+
+.logo svg + img + span { width: 140px; }

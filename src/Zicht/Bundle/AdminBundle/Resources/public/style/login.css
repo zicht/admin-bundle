@@ -1,16 +1,233 @@
-.c-loginform {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+@font-face {
+  font-family: poppins;
+  font-style: normal;
+  font-weight: 400;
+  src:
+          local("Poppins"),
+          local("Poppins-Regular"),
+          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff2") format("woff2"),
+          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff") format("woff");
 }
 
-.c-loginform .form-control {
+@font-face {
+  font-family: poppins;
+  font-style: normal;
+  font-weight: 700;
+  src:
+          local("Poppins Bold"),
+          local("Poppins Bold"),
+          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-700.woff2") format("woff2"),
+          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-700.woff2") format("woff");
+}
+
+@font-face {
+  font-family: campton-bold;
+  font-style: normal;
+  font-weight: 800;
+  src:
+          url("/bundles/zichtadmin/fonts/campton/36C641_0_unhinted_0.woff2") format("woff2"),
+          url("/bundles/zichtadmin/fonts/campton/36C641_0_unhinted_0.woff") format("woff");
+}
+
+#logo {
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.z-cms h1 {
+  color: #000000;
+  font-family: campton-bold;
+  font-size: 24px;
+  line-height: 32px;
+  text-shadow: 1px 4px 0 0 #7A7A7A, 1px 10px 0 0 #00ADDE, 0 0 40px 0 rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+}
+
+.z-cms .login-page {
+  width: 373px;
+  padding: 3% 0 0;
+  margin: auto;
+}
+
+.z-cms #form {
+  border-bottom-right-radius: 24px;
   position: relative;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 373px;
+  margin: 0 auto 15px;
+  padding: 30px  45px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05), 0 5px 5px 0 rgba(0, 0, 0, 0.09);
 }
 
-.c-loginform .form-control:focus {
-  z-index: 2;
+.z-cms #form label {
+  color: #7A7A7A;
+  font-family: Poppins;
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.z-cms #form input[type='checkbox'] {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+}
+
+label {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+#rememberme label {
+  position: relative;
+  display: inline-block;
+
+  /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+  padding-left: 22px;
+}
+
+#rememberme label::before,
+#rememberme label::after {
+  position: absolute;
+  content: "";
+
+  /*Needed for the line-height to take effect*/
+  display: inline-block;
+}
+
+/*Outer box of the fake checkbox*/
+#rememberme label::before{
+  height: 16px;
+  width: 16px;
+
+  border: 1px solid;
+  left: 0;
+
+  /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+   *to vertically center it.
+   */
+  top: 3px;
+}
+
+/*Checkmark of the fake checkbox*/
+#rememberme label::after {
+  height: 5px;
+  width: 9px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+  transform: rotate(-45deg);
+  left: 4px;
+  top: 7px;
+}
+
+/*Hide the checkmark by default*/
+#rememberme input[type="checkbox"] + label::after {
+  content: none;
+}
+
+/*Unhide on the checked state*/
+#rememberme input[type="checkbox"]:checked + label::after {
+  content: "";
+}
+
+/*Adding focus styles on the outer-box of the fake checkbox*/
+#rememberme input[type="checkbox"]:focus + label::before {
+  outline: rgb(59, 153, 252) auto 5px;
+}
+
+.z-cms #form input:not([type='checkbox']):placeholder {
+  color: #7a7a7a;
+}
+
+.z-cms #form input:not([type='checkbox']) {
+  color: #000;
+  border: 1px solid #FFFFFF;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  outline: 0;
+  width: 100%;
+  margin: 0 0 15px;
+  padding: 23px 15px;
+  box-sizing: border-box;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.z-cms #form input:not([type='checkbox']):last-child {
+  margin-bottom: 30px !important;
+}
+
+/* Chrome autofill color */
+.z-cms #form input:-webkit-autofill{
+  background-color: transparent!important;
+}
+
+.z-cms #form button {
+  font-family: campton-bold;
+  outline: 0;
+  background: #004fff;
+  width: 60%;
+  border-radius: 24px;
+  border: 0 solid;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 16px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.z-cms #form button:hover,#form button:active,#form button:focus {
+  background: #0047e8;
+}
+
+.z-cms .has-hover-propagation:hover .v-hover--right {
+  transform: translate(-20%);
+  color: #0047e8;
+}
+
+.z-cms .has-hover-propagation:hover .v-hover--color {
+  color: #0047e8;
+}
+
+.z-cms .u-trans--transform {
+  transition: transform .25s ease-in-out;
+}
+
+.z-cms form {
+  margin-bottom: 0;
+}
+
+.z-cms p.message {
+  margin: 25px 0 5px 0;
+}
+
+.z-cms #form .error {
+  margin: 0 0 20px 0;
+}
+
+.z-cms .message a {
+  color: #000000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 21px;
+  text-decoration: none;
+}
+
+body.z-cms {
+  background: #EDEBE6; /* fallback for old browsers */
+  font-family: Poppins;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
