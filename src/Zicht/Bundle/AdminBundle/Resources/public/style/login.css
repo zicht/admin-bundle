@@ -32,7 +32,6 @@
 }
 
 #logo {
-  display: inline-block;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -40,10 +39,9 @@
 
 .z-cms h1 {
   color: #000000;
-  font-family: campton-bold;
+  font-family: campton-bold, sans-serif;
   font-size: 24px;
   line-height: 32px;
-  text-shadow: 1px 4px 0 0 #7A7A7A, 1px 10px 0 0 #00ADDE, 0 0 40px 0 rgba(0, 0, 0, 0.4);
   margin-bottom: 16px;
 }
 
@@ -66,7 +64,7 @@
 
 .z-cms #form label {
   color: #7A7A7A;
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   font-size: 12px;
   line-height: 24px;
 }
@@ -156,10 +154,9 @@ label {
   outline: 0;
   width: 100%;
   margin: 0 0 15px;
-  padding: 23px 15px;
+  padding: 15px;
   box-sizing: border-box;
-  height: 20px;
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   font-size: 14px;
   line-height: 21px;
 }
@@ -174,7 +171,7 @@ label {
 }
 
 .z-cms #form button {
-  font-family: campton-bold;
+  font-family: campton-bold, sans-serif;
   outline: 0;
   background: #004fff;
   width: 60%;
@@ -218,7 +215,7 @@ label {
 
 .z-cms .message a {
   color: #000000;
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   font-size: 14px;
   font-weight: bold;
   line-height: 21px;
@@ -227,7 +224,7 @@ label {
 
 body.z-cms {
   background: #EDEBE6; /* fallback for old browsers */
-  font-family: Poppins;
+  font-family: Poppins, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
