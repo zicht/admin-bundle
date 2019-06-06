@@ -38,7 +38,7 @@
 }
 
 .z-cms h1 {
-  color: #000000;
+  color: #201747;
   font-family: campton-bold, sans-serif;
   font-size: 24px;
   line-height: 32px;
@@ -138,7 +138,7 @@ label {
 
 /*Adding focus styles on the outer-box of the fake checkbox*/
 #rememberme input[type="checkbox"]:focus + label::before {
-  outline: rgb(59, 153, 252) auto 5px;
+  outline: rgb(32, 23, 71) auto 5px;
 }
 
 .z-cms #form input:not([type='checkbox']):placeholder {
@@ -146,7 +146,7 @@ label {
 }
 
 .z-cms #form input:not([type='checkbox']) {
-  color: #000;
+  color: #201747;
   border: 1px solid #FFFFFF;
   border-radius: 8px;
   background-color: #FFFFFF;
@@ -173,7 +173,7 @@ label {
 .z-cms #form button {
   font-family: campton-bold, sans-serif;
   outline: 0;
-  background: #004fff;
+  background: #201747;
   width: 60%;
   border-radius: 24px;
   border: 0 solid;
@@ -185,16 +185,16 @@ label {
   cursor: pointer;
 }
 .z-cms #form button:hover,#form button:active,#form button:focus {
-  background: #0047e8;
+  filter: brightness(120%);
 }
 
 .z-cms .has-hover-propagation:hover .v-hover--right {
   transform: translate(-20%);
-  color: #0047e8;
+  filter: brightness(120%);
 }
 
 .z-cms .has-hover-propagation:hover .v-hover--color {
-  color: #0047e8;
+  filter: brightness(120%);
 }
 
 .z-cms .u-trans--transform {
@@ -214,7 +214,8 @@ label {
 }
 
 .z-cms .message a {
-  color: #000000;
+  color: #201747;
+  filter: brightness(100%);
   font-family: Poppins, sans-serif;
   font-size: 14px;
   font-weight: bold;
