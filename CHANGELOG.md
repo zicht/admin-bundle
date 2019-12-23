@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
+
+## 5.1.0 - 2019-12-23
+### Added
+- `AdminMenu::EventPropagationBuilder` copied from `ZichtDevBundle`. With this builder it is possible to add a link to the same page on different hosts.
 ### Removed
 - Duplicate key for `path` in `zicht_admin_redirect`
 

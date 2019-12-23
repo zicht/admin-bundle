@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension as DIExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Zicht\Bundle\AdminBundle\AdminMenu\EventPropagationBuilder;
 
 /**
  * Provides the admin services
@@ -25,7 +26,7 @@ class ZichtAdminExtension extends DIExtension
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         if (isset($config['quicklist'])) {
@@ -35,7 +36,7 @@ class ZichtAdminExtension extends DIExtension
                     ->addMethodCall('addRepositoryConfig', array($name, $quicklistConfig));
 
                 $formResources = $container->getParameter('twig.form.resources');
-                $formResources[]= 'ZichtAdminBundle::form_theme.html.twig';
+                $formResources[] = 'ZichtAdminBundle::form_theme.html.twig';
                 $container->setParameter('twig.form.resources', $formResources);
             }
         }
@@ -54,5 +55,8 @@ class ZichtAdminExtension extends DIExtension
 
         $container->getDefinition('zicht_admin.security.authorization.voter.admin_voter')
             ->replaceArgument(0, $config['security']['mapped_attributes']);
+
+        $definition = $container->getDefinition(EventPropagationBuilder::class);
+        $definition->replaceArgument(1, $config['menu']['hosts']);
     }
 }
