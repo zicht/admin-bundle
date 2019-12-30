@@ -21,6 +21,14 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('zicht_admin');
         $rootNode
             ->children()
+                ->arrayNode('menu')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('hosts')
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
+                ->end()
                 ->arrayNode('security')
                     ->addDefaultsIfNotSet()
                     ->children()

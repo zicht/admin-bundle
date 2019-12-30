@@ -3,7 +3,6 @@
 [![Build Status](https://scrutinizer-ci.com/g/zicht/admin-bundle/badges/build.png?b=3.5.x)](https://scrutinizer-ci.com/g/zicht/admin-bundle/build-status/3.5.x)
 
 # `zicht/admin-bundle`
-
 Provides integration utilities for SonataAdminBundle.
 
 ## Enable dump-role-hierarchy
@@ -17,7 +16,19 @@ sonata_admin:
         handler: sonata.admin.security.handler.role
 ```
 
+## Override Menu-events to supply other hosts
+Add the following configuration to `config/zicht_admin.yml` to override the `AdminEvents::MENU_EVENT` 
+and alter the url to a match in the list.
+
+```yaml
+zicht_admin
+    menu:
+        hosts:
+            - site.nl.dev
+            - site.nl.dev3.zicht.intern
+            - a.site.nl
+```
+
 # Maintainers
-* Philip Bergman <philip@zicht.nl>
 * Boudewijn Schoon <boudewijn@zicht.nl>
 * Erik Trapman <erik@zicht.nl>

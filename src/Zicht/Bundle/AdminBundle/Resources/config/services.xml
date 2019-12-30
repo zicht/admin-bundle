@@ -41,5 +41,13 @@
         <service id="zicht_admin.form.date_picker" class="Zicht\Bundle\AdminBundle\Form\DatePickerType">
             <tag name="form.type" alias="zicht_date_picker"/>
         </service>
+
+        <service id="Zicht\Bundle\AdminBundle\AdminMenu\EventPropagationBuilder">
+            <argument type="service" id="request_stack"/>
+            <argument/> <!-- added by Extension -->
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="zicht_admin.event_propagation" event="zicht_page.view"/>
+        </service>
+
     </services>
 </container>
