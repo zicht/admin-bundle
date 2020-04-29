@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
 
 /**
@@ -83,7 +84,7 @@ class TreeAdmin extends Admin
                                 ->setParameter(':root', $v['value']);
                         }
                     },
-                    'field_type' => 'entity',
+                    'field_type' => EntityType::class,
                     'field_options' => array(
                         'query_builder' => function ($repo) {
                             return $repo->createQueryBuilder('t')->andWhere('t.parent IS NULL');
