@@ -1,4 +1,7 @@
-zicht_admin:            { resource: "@ZichtAdminBundle/Controller" }
+zicht_admin:
+    resource: "@ZichtAdminBundle/Controller"
+    prefix: /admin
+
 zicht_admin_redirect:
     path: /admin
     defaults:

@@ -36,6 +36,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Support for Symfony 2.x
 
+## 4.1.0 - 2020-05-04
+- Fix quick list admin route (merged in from v3.4.10)
+- fix the flash_message translation so we can change the default message in ZHL (merged in from 3.5.6)
+- Export: add support for twig for writer and extra options for exporters
+
+## 4.0.4
+- Fix translation domain
+
+## 4.0.3
+- Update composer.json
+
+## 4.0.2
+- BC fix for allowing both sonata-admin 2 and 3
+
+## 4.0.1
+- fix for php > 7.1
+
+## 3.5.7 - 2020-05-04
+- Prefixed the Admin bundle Controller routes with /admin to place /quick-list within the admin path and prevent unauthorised user to request the quick list
+
 ## 3.4.9
 - Fix the translation for the duplicate flash_message
 
