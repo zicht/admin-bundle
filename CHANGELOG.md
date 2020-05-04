@@ -1,3 +1,6 @@
+## 3.4.10 - 2020-05-04
+- Prefixed the Admin bundle Controller routes with /admin to place /quick-list within the admin path and prevent unauthorised user to request the quick list
+
 ## 3.4.9
 - Fix the translation for the duplicate flash_message
 
