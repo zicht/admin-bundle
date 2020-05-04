@@ -5,14 +5,15 @@
 
 namespace Zicht\Bundle\AdminBundle\Admin;
 
+use Doctrine\Common\Collections\Criteria;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Zicht\Bundle\AdminBundle\Sonata\Datagrid\CustomSortProxyQuery;
 use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
 
 /**
@@ -41,12 +42,13 @@ class TreeAdmin extends AbstractAdmin
                 ->from($this->getClass(), 'n');
 
             if ($cmd->hasField('root')) {
-                $queryBuilder->orderBy('n.root, n.lft');
+                $queryBuilder->orderBy('n.root', Criteria::ASC);
+                $queryBuilder->addOrderBy('n.lft', Criteria::ASC);
             } else {
-                $queryBuilder->orderBy('n.lft');
+                $queryBuilder->orderBy('n.lft', Criteria::ASC);
             }
 
-            return new ProxyQuery($queryBuilder);
+            return new CustomSortProxyQuery($queryBuilder);
         }
         return parent::createQuery($context);
     }
