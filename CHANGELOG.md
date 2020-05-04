@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 5.1.2 - 2020-05-04
+### Fixed
+- Prefixed the Admin bundle Controller routes with /admin to place /quick-list within the admin path and prevent unauthorised user to request the quick list
+
 ## 5.1.1 - 2020-04-29
 ### Changed
 - Use FQCN for form types
