@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 6.0.0
+### Added
+- Support for Symfony 4.x
+### Removed
+- Support for Symfony 3.x
+
 ## 5.2.0 - 2020-05-14
 ### Fixed
 - Fixed composer.json (psr-4 autoloader, dependencies), fixed linter errors, fixed tests

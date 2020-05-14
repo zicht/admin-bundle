@@ -2,9 +2,12 @@
 /**
  * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Sonata\AdminBundle\Admin\Pool;
+use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,15 +19,30 @@ use Symfony\Component\Yaml\Yaml;
  *
  * Useful when using the role based security in Sonata
  */
-class DumpRoleHierarchyCommand extends ContainerAwareCommand
+class DumpRoleHierarchyCommand extends Command
 {
+    /** @var string */
+    protected static $defaultName = 'zicht:admin:dump-role-hierarchy';
+
+    /** @var Pool */
+    private $pool;
+
+    /** @var SecurityHandlerInterface */
+    private $securityHandler;
+
+    public function __construct(Pool $pool, SecurityHandlerInterface $securityHandler, string $name = null)
+    {
+        parent::__construct($name);
+        $this->pool = $pool;
+        $this->securityHandler = $securityHandler;
+    }
+
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
         $this
-            ->setName('zicht:admin:dump-role-hierarchy')
             ->setDescription('Dumps a security.role_hierarchy configuration for the available admins')
             ->addArgument('attributes', InputArgument::IS_ARRAY, 'Additional attributes to append to each role', [])
             ->addOption(
@@ -59,11 +77,8 @@ class DumpRoleHierarchyCommand extends ContainerAwareCommand
             $input->getArgument('attributes')
         );
 
-        /** @var $pool \Sonata\AdminBundle\Admin\Pool */
-        $pool = $this->getContainer()->get('sonata.admin.pool');
-
-        /** @var $handler \Sonata\AdminBundle\Security\Handler\RoleSecurityHandler */
-        $handler = $this->getContainer()->get('sonata.admin.security.handler');
+        $pool = $this->pool;
+        $handler = $this->securityHandler;
 
         $roleHierarchy = [];
         $adminClasses = $pool->getAdminClasses();

@@ -8,12 +8,13 @@ namespace Zicht\Bundle\AdminBundle\Twig;
 use InvalidArgumentException;
 use Sonata\AdminBundle\Admin\Pool;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Extensions for twig
  */
-class Extension extends \Twig_Extension
+class Extension extends AbstractExtension
 {
     /**
      * @var Pool
@@ -44,7 +45,7 @@ class Extension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'admin_url' => new Twig_SimpleFunction('admin_url', [$this, 'adminUrl']),
+            'admin_url' => new TwigFunction('admin_url', [$this, 'adminUrl']),
         ];
     }
 

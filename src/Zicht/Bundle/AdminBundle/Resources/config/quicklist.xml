@@ -10,7 +10,7 @@
     </parameters>
     <services>
 
-        <service id="zicht_admin.quicklist" class="%zicht_admin.quicklist.class%">
+        <service id="zicht_admin.quicklist" class="%zicht_admin.quicklist.class%" public="true">
             <argument type="service" id="doctrine"/>
             <argument type="service" id="sonata.admin.pool"/>
         </service>

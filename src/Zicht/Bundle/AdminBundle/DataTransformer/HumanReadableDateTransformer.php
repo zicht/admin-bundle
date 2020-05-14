@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransforme
 
 /**
  * Support transformer for ZichtDatePickerType
+ *
  */
 class HumanReadableDateTransformer extends BaseDateTimeTransformer
 {

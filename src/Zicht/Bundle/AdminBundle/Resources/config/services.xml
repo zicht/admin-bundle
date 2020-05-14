@@ -49,5 +49,24 @@
             <tag name="zicht_admin.event_propagation" event="zicht_page.view"/>
         </service>
 
+        <service id="Zicht\Bundle\AdminBundle\Command\CheckAccessCommand">
+            <tag name="console.command"/>
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="security.authorization_checker"/>
+        </service>
+
+        <service id="Zicht\Bundle\AdminBundle\Command\DumpRoleHierarchyCommand">
+            <tag name="console.command"/>
+            <argument type="service" id="sonata.admin.pool"/>
+            <argument type="service" id="sonata.admin.security.handler"/>
+        </service>
+
+        <service id="Zicht\Bundle\AdminBundle\Command\ExportSqlCommand">
+            <tag name="console.command"/>
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="twig"/>
+        </service>
+
     </services>
 </container>
