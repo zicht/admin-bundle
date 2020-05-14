@@ -34,7 +34,7 @@ class ZichtAdminExtension extends DIExtension
                     ->addMethodCall('addRepositoryConfig', [$name, $quicklistConfig]);
 
                 $formResources = $container->getParameter('twig.form.resources');
-                $formResources[] = 'ZichtAdminBundle::form_theme.html.twig';
+                $formResources[] = '@ZichtAdmin/form_theme.html.twig';
                 $container->setParameter('twig.form.resources', $formResources);
             }
         }

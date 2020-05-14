@@ -18,7 +18,7 @@ class PropagatorTest extends \PHPUnit_Framework_TestCase
         $impl->expects($this->once())->method('buildAndForwardEvent');
         $propagator->registerPropagation('some.event', $impl);
 
-        $event = $this->createMock('Symfony\Component\EventDispatcher\Event');
+        $event = $this->createMock('Symfony\Contracts\EventDispatcher\Event');
         $propagator->onEvent($event, 'some.event', $dispatcher);
     }
 }

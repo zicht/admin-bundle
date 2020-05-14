@@ -103,7 +103,7 @@ class CRUDController extends BaseCRUDController
             }
 
             if (count($delegates)) {
-                return $this->render(
+                return $this->renderWithExtraParams(
                     'ZichtAdminBundle:CRUD:create-subclass.html.twig',
                     ['admins' => $delegates]
                 );
@@ -210,7 +210,7 @@ class CRUDController extends BaseCRUDController
         // set the theme for the current Admin Form
         $this->get('twig')->getRuntime(FormRenderer::class)->setTheme($view, $this->admin->getFormTheme());
 
-        return $this->render(
+        return $this->renderWithExtraParams(
             $this->admin->getTemplate($templateKey),
             [
                 'action' => $action,

@@ -36,14 +36,6 @@ class DatePickerType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function getName()
-    {
-        return 'zicht_date_picker';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix()
     {
         return 'zicht_date_picker';

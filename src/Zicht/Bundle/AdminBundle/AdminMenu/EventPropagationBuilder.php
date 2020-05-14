@@ -5,10 +5,10 @@
 
 namespace Zicht\Bundle\AdminBundle\AdminMenu;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\EventDispatcher\Event;
 use Zicht\Bundle\AdminBundle\Event\AdminEvents;
 use Zicht\Bundle\AdminBundle\Event\MenuEvent;
 use Zicht\Bundle\AdminBundle\Event\PropagationInterface;

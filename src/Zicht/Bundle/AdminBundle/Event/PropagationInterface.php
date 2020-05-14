@@ -5,7 +5,7 @@
 
 namespace Zicht\Bundle\AdminBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Interface for services that listen to one event and send out another based on that event.

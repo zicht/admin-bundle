@@ -10,14 +10,21 @@ use Exporter\Handler;
 use Doctrine\DBAL\Driver\Connection;
 use Exporter\Source\SourceIteratorInterface;
 use Exporter\Writer\WriterInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Twig\Environment;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class ExportSqlCommand extends ContainerAwareCommand
+class ExportSqlCommand extends Command
 {
+    /** @var string */
+    protected static $defaultName = 'zicht:export:sql';
+
     /** @var string[] */
     protected $typeMapping = [
         'xls' => 'Exporter\\Writer\\XlsWriter',
@@ -27,6 +34,19 @@ class ExportSqlCommand extends ContainerAwareCommand
         'csv' => 'Exporter\\Writer\\CsvWriter',
         'twig' => 'Zicht\\Bundle\\AdminBundle\\Exporter\\Writer\\TwigWriter',
     ];
+
+    /** @var ManagerRegistry */
+    private $doctrine;
+
+    /** @var Environment */
+    private $twig;
+
+    public function __construct(ManagerRegistry $doctrine, Environment $twig, string $name = null)
+    {
+        parent::__construct($name);
+        $this->doctrine = $doctrine;
+        $this->twig = $twig;
+    }
 
     /**
      * {@inheritDoc}
@@ -139,7 +159,7 @@ class ExportSqlCommand extends ContainerAwareCommand
      */
     private function getConnection()
     {
-        return $this->getContainer()->get('doctrine')->getConnection();
+        return $this->doctrine->getConnection();
     }
 
     /**
@@ -198,21 +218,21 @@ class ExportSqlCommand extends ContainerAwareCommand
      */
     private function getTwig()
     {
-        $twig = $this->getContainer()->get('twig');
+        $twig = $this->twig;
 
         $twig->addFilter(
-            new \Twig_SimpleFilter(
+            new TwigFilter(
                 'sql_escape',
                 function ($line) {
-                    return $this->getContainer()->get('doctrine.dbal.default_connection')->quote($line);
+                    return $this->doctrine->getConnection()->quote($line);
                 }
             )
         );
 
         $twig->addFunction(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'print',
-                function (\Twig_Environment $env, $context) {
+                function (Environment $env, $context) {
                     $globals = array_keys($env->getGlobals());
                     return print_r(
                         array_filter(

@@ -6,10 +6,12 @@
 namespace Zicht\Bundle\AdminBundle\Exporter\Writer;
 
 use Exporter\Writer\TypedWriterInterface;
+use Twig\Environment;
+use Twig\Template;
 
 class TwigWriter implements TypedWriterInterface
 {
-    /** @var \Twig_Environment */
+    /** @var Environment */
     protected $twig;
 
     /** @var resource */
@@ -30,7 +32,7 @@ class TwigWriter implements TypedWriterInterface
      * @param string $template
      * @param bool $addEol
      */
-    public function __construct($file, \Twig_Environment $twig, $template, $addEol = true)
+    public function __construct($file, Environment $twig, $template, $addEol = true)
     {
         $this->filename = $file;
         $this->template = $template;
@@ -67,7 +69,7 @@ class TwigWriter implements TypedWriterInterface
      */
     public function write(array $data)
     {
-        /** @var \Twig_Template $template */
+        /** @var Template $template */
         static $template;
 
         if (!$template) {
