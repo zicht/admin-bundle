@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -17,12 +18,9 @@ class Propagator
      */
     protected $propagations;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->propagations = array();
+        $this->propagations = [];
     }
 
     /**
@@ -34,7 +32,7 @@ class Propagator
      */
     public function registerPropagation($eventType, $builder)
     {
-        $this->propagations[$eventType][]= $builder;
+        $this->propagations[$eventType][] = $builder;
     }
 
     /**

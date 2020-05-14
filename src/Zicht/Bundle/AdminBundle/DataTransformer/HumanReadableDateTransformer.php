@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://www.zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
@@ -9,13 +9,11 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransforme
 
 /**
  * Support transformer for ZichtDatePickerType
- *
- * @package Zicht\Bundle\AdminBundle\DataTransformer
  */
 class HumanReadableDateTransformer extends BaseDateTimeTransformer
 {
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function transform($value)
     {
@@ -27,7 +25,7 @@ class HumanReadableDateTransformer extends BaseDateTimeTransformer
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function reverseTransform($value)
     {

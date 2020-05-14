@@ -1,58 +1,67 @@
 <?php
+// phpcs:disable Zicht.Commenting.FunctionComment.Missing,Zicht.NamingConventions.Functions.NestedDefinition,PSR1.Classes.ClassDeclaration.MultipleClasses
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace ZichtTest\Bundle\AdminBundle {
+
+use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
     class QuicklistTest extends \PHPUnit_Framework_TestCase
     {
         public function setUp()
         {
             $this->doctrine = $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
-                ->setMethods(array('getRepository'))
+                ->setMethods(['getRepository'])
                 ->disableOriginalConstructor()->getMock();
-            $this->pool     = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')->disableOriginalConstructor()->getMock();
-            $this->pool->expects($this->any())->method('getAdminClasses')->will($this->returnValue(
-                [
-                    'Foo' => [
-                        'bar',
-                        'bar2'
+            $this->pool = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')->disableOriginalConstructor()->getMock();
+            $this->pool->expects($this->any())->method('getAdminClasses')->will(
+                $this->returnValue(
+                    [
+                        'Foo' => [
+                            'bar',
+                            'bar2',
+                        ],
                     ]
-                ]
-            ));
+                )
+            );
         }
 
         public function testQuicklist()
         {
-            $q = new \Zicht\Bundle\AdminBundle\Service\Quicklist($this->doctrine, $this->pool);
+            $q = new Quicklist($this->doctrine, $this->pool);
 
-            $q->addRepositoryConfig('a', array('repository' => array('b' => 'c')));
-            $this->assertEquals(array('a' => array('repository' => array('b' => 'c'))), $q->getRepositoryConfigs(false));
-            $this->assertEquals(array(), $q->getRepositoryConfigs(true));
+            $q->addRepositoryConfig('a', ['repository' => ['b' => 'c']]);
+            $this->assertEquals(['a' => ['repository' => ['b' => 'c']]], $q->getRepositoryConfigs(false));
+            $this->assertEquals([], $q->getRepositoryConfigs(true));
         }
 
 
         public function testGetResults()
         {
-            $q = new \Zicht\Bundle\AdminBundle\Service\Quicklist($this->doctrine, $this->pool);
+            $q = new Quicklist($this->doctrine, $this->pool);
 
             $q->addRepositoryConfig(
                 'foo',
-                array(
+                [
                     'repository' => 'Foo',
-                    'fields'     => array('title')
-                )
+                    'fields' => ['title'],
+                ]
             );
             $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
                 ->disableOriginalConstructor()
-                ->setMethods(array('createQueryBuilder'))
+                ->setMethods(['createQueryBuilder'])
                 ->getMock();
 
-            $repo->expects($this->once())->method('createQueryBuilder')->will($this->returnValue(new M\Qb(array(
-                $r1 = new M\A(),
-                $r2 = new M\B()
-            ))));
+            $repo->expects($this->once())->method('createQueryBuilder')->will(
+                $this->returnValue(
+                    new M\Qb([
+                        $r1 = new M\A(),
+                        $r2 = new M\B(),
+                    ])
+                )
+            );
 
             $this->doctrine->expects($this->once())->method('getRepository')->with('Foo')->will(
                 $this->returnValue(
@@ -64,13 +73,12 @@ namespace ZichtTest\Bundle\AdminBundle {
     }
 }
 
-
 namespace ZichtTest\Bundle\AdminBundle\M {
     class Eb
     {
-        function __call($method, $args)
+        public function __call($method, $args)
         {
-            $this->calls[] = array($method, $args);
+            $this->calls[] = [$method, $args];
 
             return $this;
         }
@@ -78,6 +86,7 @@ namespace ZichtTest\Bundle\AdminBundle\M {
 
     class Qb
     {
+        /** @var array */
         public $calls;
 
         public function __construct($results)
@@ -85,21 +94,21 @@ namespace ZichtTest\Bundle\AdminBundle\M {
             $this->results = $results;
         }
 
-        function expr()
+        public function expr()
         {
             return new Eb();
         }
 
 
-        function __call($method, $args)
+        public function __call($method, $args)
         {
-            $this->calls[] = array($method, $args);
+            $this->calls[] = [$method, $args];
 
             return $this;
         }
 
 
-        function getQuery()
+        public function getQuery()
         {
             return new Q($this->results);
         }
@@ -113,7 +122,7 @@ namespace ZichtTest\Bundle\AdminBundle\M {
             $this->results = $results;
         }
 
-        function execute()
+        public function execute()
         {
             return $this->results;
         }
@@ -121,16 +130,17 @@ namespace ZichtTest\Bundle\AdminBundle\M {
 
     class A
     {
-        function __toString() {
+        public function __toString()
+        {
             return __CLASS__;
         }
     }
 
     class B
     {
-        function __toString() {
+        public function __toString()
+        {
             return __CLASS__;
         }
     }
-
 }

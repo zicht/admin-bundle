@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
 use Doctrine\ORM\EntityNotFoundException;
@@ -24,8 +25,6 @@ class ClassTransformer implements DataTransformerInterface
     private $repo;
 
     /**
-     * Constructor
-     *
      * @param \Zicht\Bundle\AdminBundle\Service\Quicklist $lister
      * @param string $repo
      */
@@ -44,10 +43,10 @@ class ClassTransformer implements DataTransformerInterface
     public function transform($value)
     {
         try {
-            return array(
+            return [
                 'id' => (null !== $value ? $value->getId() : null),
-                'value' => (null !== $value ? $value->__toString() : null)
-            );
+                'value' => (null !== $value ? $value->__toString() : null),
+            ];
         } catch (EntityNotFoundException $e) {
             return ['id' => null, 'value' => '-- ENTITY NOT FOUND --'];
         }

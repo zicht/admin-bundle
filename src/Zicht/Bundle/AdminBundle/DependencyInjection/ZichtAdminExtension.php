@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\DependencyInjection;
@@ -17,8 +17,6 @@ use Zicht\Bundle\AdminBundle\AdminMenu\EventPropagationBuilder;
 class ZichtAdminExtension extends DIExtension
 {
     /**
-     * Load
-     *
      * @param array $configs
      * @param ContainerBuilder $container
      */
@@ -33,7 +31,7 @@ class ZichtAdminExtension extends DIExtension
             $loader->load('quicklist.xml');
             foreach ($config['quicklist'] as $name => $quicklistConfig) {
                 $container->getDefinition('zicht_admin.quicklist')
-                    ->addMethodCall('addRepositoryConfig', array($name, $quicklistConfig));
+                    ->addMethodCall('addRepositoryConfig', [$name, $quicklistConfig]);
 
                 $formResources = $container->getParameter('twig.form.resources');
                 $formResources[] = 'ZichtAdminBundle::form_theme.html.twig';

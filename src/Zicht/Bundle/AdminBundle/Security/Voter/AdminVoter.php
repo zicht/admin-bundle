@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://www.zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Security\Voter;
@@ -57,7 +57,7 @@ class AdminVoter implements VoterInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function supportsAttribute($attribute)
     {
@@ -65,7 +65,7 @@ class AdminVoter implements VoterInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function supportsClass($class)
     {
@@ -74,8 +74,6 @@ class AdminVoter implements VoterInterface
     }
 
     /**
-     * Vote
-     *
      * @param TokenInterface $token
      * @param null|object $object
      * @param array $attributes
@@ -89,7 +87,7 @@ class AdminVoter implements VoterInterface
             /** @var AccessDecisionManagerInterface $accessDecisionManager */
             $accessDecisionManager = $this->decisionManager;
             foreach ($this->mapAttributesToRoles($class, $attributes) as $mappedAttr) {
-                if ($accessDecisionManager->decide($token, array($mappedAttr), $object)) {
+                if ($accessDecisionManager->decide($token, [$mappedAttr], $object)) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
             }
@@ -108,7 +106,7 @@ class AdminVoter implements VoterInterface
      */
     protected function mapAttributesToRoles($class, $attributes)
     {
-        $mappedAttributes = array();
+        $mappedAttributes = [];
         foreach ($this->pool->getAdminClasses() as $adminClass => $adminCodes) {
             if ($class === $adminClass || $class instanceof $adminClass) {
                 foreach ($adminCodes as $adminCode) {

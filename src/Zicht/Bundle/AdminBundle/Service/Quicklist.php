@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Service;
 
 use Sonata\AdminBundle\Admin\Pool;
@@ -28,8 +29,6 @@ class Quicklist
     private $repos;
 
     /**
-     * Constructor.
-     *
      * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
      * @param \Sonata\AdminBundle\Admin\Pool $pool
      */
@@ -37,7 +36,7 @@ class Quicklist
     {
         $this->doctrine = $doctrine;
         $this->adminPool = $pool;
-        $this->repos = array();
+        $this->repos = [];
     }
 
     /**
@@ -75,7 +74,7 @@ class Quicklist
     /**
      * Gets the first admin when there are multiple definitions.
      *
-     * @param string  $class
+     * @param string $class
      * @return null|\Sonata\AdminBundle\Admin\AdminInterface
      */
     private function getFirstAdminPerClass($class)
@@ -107,7 +106,7 @@ class Quicklist
     {
         $queryResults = $this->findRecords($repository, $pattern, $language);
 
-        $results = array();
+        $results = [];
         foreach ($queryResults as $record) {
             $admin = $this->getFirstAdminPerClass(get_class($record));
             if (!$admin) {
@@ -154,8 +153,6 @@ class Quicklist
     }
 
     /**
-     * Find records
-     *
      * @param string $repository
      * @param string $pattern
      * @param null|string $language
@@ -176,7 +173,7 @@ class Quicklist
         }
         $q->where($expr);
 
-        $params = array('pattern' => '%' . $pattern . '%');
+        $params = ['pattern' => '%' . $pattern . '%'];
 
         if (null !== $language) {
             $q->andWhere('i.language = :lang');
@@ -187,20 +184,18 @@ class Quicklist
     }
 
     /**
-     * Creates result record
-     *
      * @param object $record
      * @param object $admin
      * @return array
      */
     public function createResultRecord($record, $admin)
     {
-        $resultRecord = array(
+        $resultRecord = [
             'label' => (string)$record,
             'value' => (string)$record,
             'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
             'id' => ($admin ? $admin->id($record) : null)
-        );
+        ];
         return $resultRecord;
     }
 }

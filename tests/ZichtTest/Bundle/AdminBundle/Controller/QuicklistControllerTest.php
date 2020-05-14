@@ -1,26 +1,28 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace ZichtTest\Bundle\AdminBundle\Controller;
- 
+
 use Zicht\Bundle\AdminBundle\Controller\QuicklistController;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Request;
 
 class QuicklistControllerTest extends \PHPUnit_Framework_TestCase
 {
-    function setUp()
+    protected function setUp()
     {
         $ql = $this->getMockBuilder('Zicht\Bundle\AdminBundle\Service\Quicklist')
             ->disableOriginalConstructor()
-            ->setMethods(array('getRepositoryConfigs', 'getResults'))
-            ->getMock()
-        ;
+            ->setMethods(['getRepositoryConfigs', 'getResults'])
+            ->getMock();
 
-        $ql->expects($this->any())->method('getRepositoryConfigs')->will($this->returnValue(array(
-            'foo' => 'bar'
-        )));
+        $ql->expects($this->any())->method('getRepositoryConfigs')->will(
+            $this->returnValue([
+                'foo' => 'bar',
+            ])
+        );
 
         $container = new Container();
         $container->set('zicht_admin.quicklist', $ql);
@@ -31,22 +33,21 @@ class QuicklistControllerTest extends \PHPUnit_Framework_TestCase
         $this->ql = $ql;
     }
 
-    function testQuickListAction()
+    public function testQuickListAction()
     {
-
-        $req = new \Symfony\Component\HttpFoundation\Request();
+        $req = new Request();
         $res = $this->controller->quicklistAction($req);
 
-        $this->assertEquals(array('repos' => array('foo' => 'bar')), $res);
+        $this->assertEquals(['repos' => ['foo' => 'bar']], $res);
     }
 
 
-    function testQuickListActionJson()
+    public function testQuickListActionJson()
     {
-        $req2 = new \Symfony\Component\HttpFoundation\Request(array(
+        $req2 = new Request([
             'repo' => 'bat',
-            'pattern' => 'qux'
-        ));
+            'pattern' => 'qux',
+        ]);
 
         $this->ql->expects($this->once())->method('getResults')->with('bat', 'qux');
         $res2 = $this->controller->quicklistAction($req2);

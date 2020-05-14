@@ -1,18 +1,20 @@
 <?php
 /**
- * @copyright 2012 Gerard van Helden <http://melp.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace ZichtTest\Bundle\AdminBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Zicht\Bundle\AdminBundle\DependencyInjection\ZichtAdminExtension;
 
 class ZichtAdminExtensionTest extends \PHPUnit_Framework_TestCase
 {
-    function testLoadWillLoadXmlFile()
+    public function testLoadWillLoadXmlFile()
     {
-        $e = new \Zicht\Bundle\AdminBundle\DependencyInjection\ZichtAdminExtension();
-        $builder = new \Symfony\Component\DependencyInjection\ContainerBuilder();
-        $e->load(array(), $builder);
+        $e = new ZichtAdminExtension();
+        $builder = new ContainerBuilder();
+        $e->load([], $builder);
 
         $this->assertTrue($builder->hasDefinition('zicht_admin.menu'));
         $this->assertTrue($builder->hasDefinition('zicht_admin.event_subscriber'));

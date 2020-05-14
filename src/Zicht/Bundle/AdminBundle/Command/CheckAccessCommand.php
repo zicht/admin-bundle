@@ -1,10 +1,9 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Command;
-
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
@@ -20,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 class CheckAccessCommand extends ContainerAwareCommand
 {
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -32,7 +31,7 @@ class CheckAccessCommand extends ContainerAwareCommand
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -46,9 +45,9 @@ class CheckAccessCommand extends ContainerAwareCommand
             if ($entityId) {
                 $object = $this->getContainer()->get('doctrine')->getManager()->find($entity, $entityId);
                 if (!$object) {
-                    $output->writeln('<error>Object not found: '. $entity . ':' . $entityId);
+                    $output->writeln('<error>Object not found: ' . $entity . ':' . $entityId);
                 } else {
-                    $objects[]= $object;
+                    $objects[] = $object;
                 }
             } else {
                 $objects = $this->getContainer()->get('doctrine')->getRepository($entity)->findAll();
@@ -69,7 +68,7 @@ class CheckAccessCommand extends ContainerAwareCommand
                     $this->getContainer()->get('security.authorization_checker')->isGranted(
                         [$input->getArgument('attribute')],
                         $object
-                    ) ? 'GRANTED' : 'DENIED'
+                    ) ? 'GRANTED' : 'DENIED',
                 ]
             );
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
@@ -24,8 +24,6 @@ class NoneTransformer implements DataTransformerInterface
     private $repo;
 
     /**
-     * Constructor
-     *
      * @param \Zicht\Bundle\AdminBundle\Service\Quicklist $lister
      * @param string $repo
      */
@@ -43,10 +41,10 @@ class NoneTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        return array(
+        return [
             'id' => $value,
             'value' => $value,
-        );
+        ];
     }
 
     /**

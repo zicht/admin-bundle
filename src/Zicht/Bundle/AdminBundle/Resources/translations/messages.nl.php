@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
-return array(
+return [
     'Quicklist' => 'Snel naar ...',
     'flash_duplicate_success' => 'Het dupliceren is gelukt.',
-);
+];

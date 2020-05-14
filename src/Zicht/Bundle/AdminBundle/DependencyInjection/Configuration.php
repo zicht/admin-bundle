@@ -1,15 +1,13 @@
 <?php
 /**
- * @copyright Zicht online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * Configuration
- */
 class Configuration implements ConfigurationInterface
 {
     /**
@@ -49,7 +47,7 @@ class Configuration implements ConfigurationInterface
                                     function ($p) {
                                         return (false === preg_match($p, ''));
                                     }
-                                )->thenInvalid("Invalid PCRE pattern")
+                                )->thenInvalid('Invalid PCRE pattern')
                             ->end()
                         ->end()
                     ->end()
@@ -71,7 +69,7 @@ class Configuration implements ConfigurationInterface
                         ->addDefaultsIfNotSet()
                         ->children()
                             ->scalarNode('name')->end()
-                            ->scalarNode('mode')->defaultValue("trigger")->end()
+                            ->scalarNode('mode')->defaultValue('trigger')->end()
                             ->scalarNode('route')->end()
                             ->arrayNode('route_params')->prototype('variable')->end()->defaultValue([])->end()
                             ->scalarNode('method')->defaultValue(null)->end()

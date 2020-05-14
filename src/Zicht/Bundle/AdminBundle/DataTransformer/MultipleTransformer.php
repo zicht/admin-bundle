@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -17,8 +18,6 @@ class MultipleTransformer implements DataTransformerInterface
     private $innerTransformer;
 
     /**
-     * Constructor.
-     *
      * @param DataTransformerInterface $innerTransformer
      */
     public function __construct(DataTransformerInterface $innerTransformer)
@@ -27,29 +26,29 @@ class MultipleTransformer implements DataTransformerInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function transform($values)
     {
-        $ret = array();
+        $ret = [];
         if ($values === null) {
             return $values;
         }
         foreach ($values as $item) {
-            $ret[]= $this->innerTransformer->transform($item);
+            $ret[] = $this->innerTransformer->transform($item);
         }
         return $ret;
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function reverseTransform($values)
     {
-        $ret = array();
+        $ret = [];
         foreach ((array)$values as $item) {
             if ($value = $this->innerTransformer->reverseTransform($item)) {
-                $ret[]= $value;
+                $ret[] = $value;
             }
         }
         return $ret;

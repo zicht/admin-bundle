@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,19 +26,17 @@ class Subscriber implements EventSubscriberInterface
     private $factory;
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            AdminEvents::MENU_EVENT => 'addMenuItem'
-        );
+        return [
+            AdminEvents::MENU_EVENT => 'addMenuItem',
+        ];
     }
 
 
     /**
-     * Constructor
-     *
      * @param \Knp\Menu\MenuItem $root
      * @param \Knp\Menu\FactoryInterface $factory
      */

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://www.zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Form;
@@ -12,11 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 
 /**
- * Custom  date time object for rendering of datePicker
+ * Custom date time object for rendering of datePicker
  *
  * Make sure you include both ZichtAdminBundle:Views:Admin:includes:zicht_date_picker* files in your admin theme
- *
- * @package Zicht\Bundle\AdminBundle\Form
  */
 class DatePickerType extends AbstractType
 {
@@ -26,18 +24,17 @@ class DatePickerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'widget' => 'single_text',
-                'attr' => array(
-                    'class' => 'zicht_date_picker'
-                )
-            )
+                'attr' => [
+                    'class' => 'zicht_date_picker',
+                ]
+            ]
         );
     }
 
-
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -53,8 +50,6 @@ class DatePickerType extends AbstractType
     }
 
     /**
-     * Build form
-     *
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -63,9 +58,8 @@ class DatePickerType extends AbstractType
         $builder->addViewTransformer(new HumanReadableDateTransformer($options['model_timezone'], $options['view_timezone']));
     }
 
-
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function getParent()
     {

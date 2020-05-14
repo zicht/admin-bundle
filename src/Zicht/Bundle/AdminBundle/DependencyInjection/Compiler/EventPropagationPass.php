@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\DependencyInjection\Compiler;
@@ -15,8 +15,6 @@ use Symfony\Component\DependencyInjection\Reference;
 class EventPropagationPass implements CompilerPassInterface
 {
     /**
-     * Process
-     *
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
@@ -25,8 +23,8 @@ class EventPropagationPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds('zicht_admin.event_propagation') as $id => $attributes) {
             foreach ($attributes as $attribute) {
-                $def->addTag('kernel.event_listener', array('event' => $attribute['event'], 'method' => 'onEvent'));
-                $def->addMethodCall('registerPropagation', array($attribute['event'], new Reference($id)));
+                $def->addTag('kernel.event_listener', ['event' => $attribute['event'], 'method' => 'onEvent']);
+                $def->addMethodCall('registerPropagation', [$attribute['event'], new Reference($id)]);
             }
         }
     }

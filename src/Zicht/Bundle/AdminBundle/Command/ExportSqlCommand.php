@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://www.zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Command;
 
 use Exporter\Source\DoctrineDBALConnectionSourceIterator;
@@ -15,38 +16,33 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class ExportSqlCommand
- *
- * @package Zicht\Bundle\AdminBundle\Command
- */
 class ExportSqlCommand extends ContainerAwareCommand
 {
+    /** @var string[] */
     protected $typeMapping = [
-        'xls'       => 'Exporter\\Writer\\XlsWriter',
-        'xml'       => 'Exporter\\Writer\\XmlWriter',
-        'xmlexcel'  => 'Exporter\\Writer\\XmlExcelWriter',
-        'json'      => 'Exporter\\Writer\\JsonWriter',
-        'csv'       => 'Exporter\\Writer\\CsvWriter',
-        'twig'      => 'Zicht\\Bundle\\AdminBundle\\Exporter\\Writer\\TwigWriter',
+        'xls' => 'Exporter\\Writer\\XlsWriter',
+        'xml' => 'Exporter\\Writer\\XmlWriter',
+        'xmlexcel' => 'Exporter\\Writer\\XmlExcelWriter',
+        'json' => 'Exporter\\Writer\\JsonWriter',
+        'csv' => 'Exporter\\Writer\\CsvWriter',
+        'twig' => 'Zicht\\Bundle\\AdminBundle\\Exporter\\Writer\\TwigWriter',
     ];
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     protected function configure()
     {
         $this
-            ->setName('zicht:export:sql')
-            ->addArgument("sql", InputArgument::REQUIRED, 'The raw SELECT query.')
-            ->addOption("file", "f", InputOption::VALUE_REQUIRED, "File to write to, if none given it will use stdout.")
-            ->addOption("type", "t", InputOption::VALUE_REQUIRED, "The export type.", 'xls')
-            ->addOption("option", "o", InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, "Extra options given to the exporter.")
+            ->addArgument('sql', InputArgument::REQUIRED, 'The raw SELECT query.')
+            ->addOption('file', 'f', InputOption::VALUE_REQUIRED, 'File to write to, if none given it will use stdout.')
+            ->addOption('type', 't', InputOption::VALUE_REQUIRED, 'The export type.', 'xls')
+            ->addOption('option', 'o', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Extra options given to the exporter.')
             ->setDescription('Will export all sql result from given sql select query.');
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
@@ -93,7 +89,7 @@ class ExportSqlCommand extends ContainerAwareCommand
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -105,6 +101,7 @@ class ExportSqlCommand extends ContainerAwareCommand
     }
 
     /**
+     * @param string $file
      * @param InputInterface $input
      * @return Handler
      */
@@ -118,8 +115,8 @@ class ExportSqlCommand extends ContainerAwareCommand
 
 
     /**
-     * @param $type
-     * @param $file
+     * @param string $type
+     * @param string $file
      * @param InputInterface $input
      * @return WriterInterface
      */
@@ -129,6 +126,7 @@ class ExportSqlCommand extends ContainerAwareCommand
     }
 
     /**
+     * @param string $sql
      * @return SourceIteratorInterface
      */
     private function getSourceIteratorInter($sql)
@@ -183,7 +181,6 @@ class ExportSqlCommand extends ContainerAwareCommand
                 break;
             default:
                 return [];
-
         }
     }
 
@@ -206,7 +203,7 @@ class ExportSqlCommand extends ContainerAwareCommand
         $twig->addFilter(
             new \Twig_SimpleFilter(
                 'sql_escape',
-                function($line) {
+                function ($line) {
                     return $this->getContainer()->get('doctrine.dbal.default_connection')->quote($line);
                 }
             )
@@ -215,12 +212,12 @@ class ExportSqlCommand extends ContainerAwareCommand
         $twig->addFunction(
             new \Twig_SimpleFunction(
                 'print',
-                function(\Twig_Environment $env, $context) {
+                function (\Twig_Environment $env, $context) {
                     $globals = array_keys($env->getGlobals());
                     return print_r(
                         array_filter(
                             $context,
-                            function($key) use ($globals) {
+                            function ($key) use ($globals) {
                                 return !in_array($key, $globals);
                             },
                             ARRAY_FILTER_USE_KEY
@@ -239,7 +236,7 @@ class ExportSqlCommand extends ContainerAwareCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function run(InputInterface $input, OutputInterface $output)
     {
@@ -277,7 +274,7 @@ class ExportSqlCommand extends ContainerAwareCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function getHelp()
     {

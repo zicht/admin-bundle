@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,8 +37,8 @@ class QuicklistController extends Controller
             return new JsonResponse($quicklist->getResults($request->get('repo'), $request->get('pattern'), $language));
         }
 
-        return array(
-            'repos' => $quicklist->getRepositoryConfigs()
-        );
+        return [
+            'repos' => $quicklist->getRepositoryConfigs(),
+        ];
     }
 }

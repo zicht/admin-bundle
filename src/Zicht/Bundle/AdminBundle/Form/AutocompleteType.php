@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -27,8 +28,6 @@ class AutocompleteType extends AbstractType
     private $quicklist;
 
     /**
-     * Constructor.
-     *
      * @param Quicklist $quicklist
      */
     public function __construct(Quicklist $quicklist)
@@ -37,8 +36,6 @@ class AutocompleteType extends AbstractType
     }
 
     /**
-     * Build forms
-     *
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -72,7 +69,7 @@ class AutocompleteType extends AbstractType
 
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function getParent()
     {
@@ -85,35 +82,34 @@ class AutocompleteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array('repo'))
+            ->setRequired(['repo'])
             ->setDefaults(
-                array(
+                [
                     'attr' => ['placeholder' => 'zicht_quicklist.autocomplete_type.search_placeholder'],
                     'multiple' => false,
                     'translation_domain' => 'admin',
                     'transformer' => 'auto',
                     'route' => 'zicht_admin_quicklist_quicklist',
-                    'route_params' => array()
-                )
+                    'route_params' => []
+                ]
             );
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['route'] = $options['route'];
-        $view->vars['route_params'] = $options['route_params'] + array(
-            'repo' => $options['repo']
-        );
+        $view->vars['route_params'] = $options['route_params'] + [
+                'repo' => $options['repo'],
+            ];
         $view->vars['multiple'] = $options['multiple'];
 
         if ($options['multiple']) {
             $view->vars['full_name'] = $view->vars['full_name'] . '[]';
         }
     }
-
 
     /**
      * Returns the name of this type.

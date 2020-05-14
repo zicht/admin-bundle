@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2012 Gerard van Helden <http://melp.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle;
@@ -15,8 +15,6 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 class ZichtAdminBundle extends Bundle
 {
     /**
-     * Build
-     *
      * @param ContainerBuilder $container
      */
     public function build(ContainerBuilder $container)

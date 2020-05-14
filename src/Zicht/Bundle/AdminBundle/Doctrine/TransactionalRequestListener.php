@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Doctrine;
@@ -32,8 +32,6 @@ class TransactionalRequestListener implements EventSubscriberInterface
     private $wasTxStarted;
 
     /**
-     * Construct the listener.
-     *
      * @param Registry $doctrine
      * @param string $pattern A Regular expression matching a url
      */
@@ -46,14 +44,14 @@ class TransactionalRequestListener implements EventSubscriberInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            KernelEvents::REQUEST   => 'onKernelRequest',
-            KernelEvents::RESPONSE  => 'onKernelResponse'
-        );
+        return [
+            KernelEvents::REQUEST => 'onKernelRequest',
+            KernelEvents::RESPONSE => 'onKernelResponse',
+        ];
     }
 
     /**
@@ -67,7 +65,6 @@ class TransactionalRequestListener implements EventSubscriberInterface
         // TODO explicit transaction management in stead of this. See ZICHTDEV-119 for ideas on this
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
             && preg_match($this->pattern, $event->getRequest()->getRequestUri())) {
-
             $this->wasTxStarted = true;
             $this->doctrine->getConnection()->beginTransaction();
         }
@@ -85,7 +82,6 @@ class TransactionalRequestListener implements EventSubscriberInterface
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST
             && $this->wasTxStarted
             && $this->doctrine->getConnection()->getTransactionIsolation() > 0) {
-
             if ($this->doctrine->getConnection()->isRollbackOnly()) {
                 $this->doctrine->getConnection()->rollback();
             } else {

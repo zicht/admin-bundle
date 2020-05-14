@@ -1,21 +1,19 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class SecurityController
- *
- * @package Zicht\Bundle\AdminBundle\Controller
- */
 class SecurityController extends Controller
 {
     /**
      * The login handling, rendering of the login form etc
+     *
+     * @return Response
      */
     public function loginAction()
     {
@@ -29,11 +27,11 @@ class SecurityController extends Controller
 
         return $this->render(
             'ZichtAdminBundle:Security:login.html.twig',
-            array(
+            [
                 // last username entered by the user
                 'last_username' => $lastUsername,
-                'error'         => $error,
-            )
+                'error' => $error,
+            ]
         );
     }
 }

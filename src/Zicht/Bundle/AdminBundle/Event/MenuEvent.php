@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -27,14 +28,12 @@ class MenuEvent extends Event
     private $options;
 
     /**
-     * Constructor.
-     *
      * @param string $url
      * @param string $title
      * @param array $options
      * s
      */
-    public function __construct($url, $title, $options = array())
+    public function __construct($url, $title, $options = [])
     {
         $this->url = $url;
         $this->title = $title;
@@ -71,7 +70,7 @@ class MenuEvent extends Event
     public function getMenuConfig()
     {
         return
-            array('name' => $this->getTitle(), 'uri' => $this->getUrl())
+            ['name' => $this->getTitle(), 'uri' => $this->getUrl()]
             + $this->options;
     }
 }

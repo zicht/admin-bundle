@@ -1,31 +1,30 @@
 <?php
 /**
- * @copyright Zicht Online <http://www.zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
+
 namespace Zicht\Bundle\AdminBundle\Exporter\Writer;
 
 use Exporter\Writer\TypedWriterInterface;
 
-/**
- * Class TwigWriter
- *
- * @package Zicht\Bundle\AdminBundle\Exporter\Writer
- */
 class TwigWriter implements TypedWriterInterface
 {
-    /** @var \Twig_Environment  */
+    /** @var \Twig_Environment */
     protected $twig;
-    /** @var resource  */
+
+    /** @var resource */
     protected $file;
+
     /** @var string */
     protected $template;
-    /** @var string  */
+
+    /** @var string */
     protected $filename;
-    /** @var bool  */
+
+    /** @var bool */
     protected $addEol;
 
     /**
-     * TwigWriter constructor.
      * @param string $file
      * @param \Twig_Environment $twig
      * @param string $template
@@ -39,9 +38,8 @@ class TwigWriter implements TypedWriterInterface
         $this->addEol = $addEol;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function getDefaultMimeType()
     {
@@ -49,7 +47,7 @@ class TwigWriter implements TypedWriterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function getFormat()
     {
@@ -57,7 +55,7 @@ class TwigWriter implements TypedWriterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function open()
     {
@@ -84,7 +82,7 @@ class TwigWriter implements TypedWriterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function close()
     {

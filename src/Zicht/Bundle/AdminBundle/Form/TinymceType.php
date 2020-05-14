@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Form;
@@ -11,11 +11,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class TinymceType
- *
- * @package Zicht\Bundle\AdminBundle\Form
- */
 class TinymceType extends AbstractType
 {
     /**
@@ -41,12 +36,10 @@ class TinymceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('theme' => 'regular'));
+        $resolver->setDefaults(['theme' => 'regular']);
     }
 
     /**
-     * Finish
-     *
      * @param FormView $view
      * @param FormInterface $form
      * @param array $options

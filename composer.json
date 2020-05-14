@@ -18,16 +18,37 @@
         "sensio/framework-extra-bundle": ">=3.0 <6"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4"
+        "phpunit/phpunit": "^5",
+        "zicht/standards-php": "^4"
     },
     "autoload": {
-        "psr-0": {
-            "": [
-                "src/",
-                "tests/"
+        "psr-4": {
+            "Zicht\\Bundle\\AdminBundle\\": [
+                "src/Zicht/Bundle/AdminBundle/"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZichtTest\\Bundle\\AdminBundle\\": [
+                "tests/ZichtTest/Bundle/AdminBundle/"
             ]
         }
     },
     "minimum-stability": "stable",
-    "license": "MIT"
+    "license": "MIT",
+    "scripts": {
+        "lint": [
+            "phpcs --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
+        ],
+        "lint-no-warn": [
+            "phpcs -n --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
+        ],
+        "lint-fix": [
+            "phpcbf --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
+        ],
+        "test": [
+            "phpunit tests/"
+        ]
+    }
 }

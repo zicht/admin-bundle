@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Util;
@@ -9,21 +9,20 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Exception\LogicException;
 
 /**
- * Class AdminUtil
- *
  * @method $this tab($name, array $options = array())
  * @method $this with($name, array $options = array())
  * @method $this end()
  * @method $this remove($key)
- * @package Zicht\Bundle\AdminBundle\Util
  */
 final class AdminUtil
 {
-    /**
-     * @var FormMapper
-     */
+    /** @var FormMapper */
     protected $formMapper = null;
+
+    /** @var null|string */
     protected $helpPrefix;
+
+    /** @var bool */
     protected $addHelp = false;
 
     /**
@@ -87,7 +86,7 @@ final class AdminUtil
      * @param array $fieldDescriptionOptions
      * @return $this
      */
-    public function add($name, $type = null, array $options = array(), array $fieldDescriptionOptions = array())
+    public function add($name, $type = null, array $options = [], array $fieldDescriptionOptions = [])
     {
         if (null === $this->formMapper) {
             throw new LogicException('No FormMapper to add fields to, please make sure you start with AdminUtil->map');
@@ -100,8 +99,6 @@ final class AdminUtil
     }
 
     /**
-     * Call function
-     *
      * @param string $name
      * @param array $arguments
      * @return $this

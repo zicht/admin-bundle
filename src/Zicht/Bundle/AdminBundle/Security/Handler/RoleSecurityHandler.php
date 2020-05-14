@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Security\Handler;
@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Security\Handler\RoleSecurityHandler as BaseRoleSecurityH
 class RoleSecurityHandler extends BaseRoleSecurityHandler
 {
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function isGranted(AdminInterface $admin, $attributes, $object = null)
     {

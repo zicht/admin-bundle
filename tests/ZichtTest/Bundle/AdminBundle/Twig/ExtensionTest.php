@@ -1,6 +1,7 @@
 <?php
+// phpcs:disable Zicht.Commenting.FunctionComment.Missing,PSR1.Classes.ClassDeclaration.MultipleClasses
 /**
- * @copyright 2012 Gerard van Helden <http://melp.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace ZichtTest\Bundle\AdminBundle\Twig;
@@ -13,7 +14,7 @@ class MyModel
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
-    function testExtensionConfiguration()
+    public function testExtensionConfiguration()
     {
         $e = new Extension(
             $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')->disableOriginalConstructor()->getMock(),
@@ -27,19 +28,18 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    function testAdminUrlForModelObject()
+    public function testAdminUrlForModelObject()
     {
         $e = new Extension(
             $sonata = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()
-                ->setMethods(array('getAdminByClass', 'getAdminByAdminCode'))
-                ->getMock()
-            ,
+                ->setMethods(['getAdminByClass', 'getAdminByAdminCode'])
+                ->getMock(),
             $doctrine = $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
                 ->disableOriginalConstructor()
                 ->getMock()
         );
-        $admin = $this->getMockBuilder('Sonata\AdminBundle\Admin\Admin')->disableOriginalConstructor()->setMethods(array('generateObjectUrl'))->getMock();
+        $admin = $this->getMockBuilder('Sonata\AdminBundle\Admin\Admin')->disableOriginalConstructor()->setMethods(['generateObjectUrl'])->getMock();
         $sonata->expects($this->once())
             ->method('getAdminByClass')
             ->with('ZichtTest\Bundle\AdminBundle\Twig\MyModel')
@@ -50,19 +50,18 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    function testAdminUrlForString()
+    public function testAdminUrlForString()
     {
         $e = new Extension(
             $sonata = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()
-                ->setMethods(array('getAdminByClass', 'getAdminByAdminCode'))
-                ->getMock()
-            ,
+                ->setMethods(['getAdminByClass', 'getAdminByAdminCode'])
+                ->getMock(),
             $doctrine = $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
                 ->disableOriginalConstructor()
                 ->getMock()
         );
-        $admin = $this->getMockBuilder('Sonata\AdminBundle\Admin\Admin')->disableOriginalConstructor()->setMethods(array('generateUrl'))->getMock();
+        $admin = $this->getMockBuilder('Sonata\AdminBundle\Admin\Admin')->disableOriginalConstructor()->setMethods(['generateUrl'])->getMock();
         $sonata->expects($this->once())
             ->method('getAdminByAdminCode')
             ->with('my_model')
@@ -74,14 +73,13 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    function testAdminUrlForUnsupportedObjectWillThrowInvalidArgumentException()
+    public function testAdminUrlForUnsupportedObjectWillThrowInvalidArgumentException()
     {
         $e = new Extension(
             $sonata = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()
-                ->setMethods(array('getAdminByClass', 'getAdminByAdminCode'))
-                ->getMock()
-            ,
+                ->setMethods(['getAdminByClass', 'getAdminByAdminCode'])
+                ->getMock(),
             $doctrine = $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
                 ->disableOriginalConstructor()
                 ->getMock()
@@ -94,24 +92,20 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    /**
-     *
-     */
-    function testAdminUrlSupportsDoctrineNamespaces()
+    public function testAdminUrlSupportsDoctrineNamespaces()
     {
         $e = new Extension(
             $sonata = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()
-                ->setMethods(array('getAdminByClass', 'getAdminByAdminCode'))
-                ->getMock()
-            ,
+                ->setMethods(['getAdminByClass', 'getAdminByAdminCode'])
+                ->getMock(),
             $doctrine = $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
                 ->disableOriginalConstructor()
-                ->setMethods(array('getAliasNamespace'))
+                ->setMethods(['getAliasNamespace'])
                 ->getMock()
         );
         $doctrine->expects($this->once())->method('getAliasNamespace')->with('My')->will($this->returnValue('ZichtTest\Bundle\AdminBundle\Twig'));
-        $admin = $this->getMockBuilder('Sonata\AdminBundle\Admin\Admin')->disableOriginalConstructor()->setMethods(array('generateUrl'))->getMock();
+        $admin = $this->getMockBuilder('Sonata\AdminBundle\Admin\Admin')->disableOriginalConstructor()->setMethods(['generateUrl'])->getMock();
         $sonata->expects($this->once())
             ->method('getAdminByClass')
             ->with('ZichtTest\Bundle\AdminBundle\Twig\MyModel')
@@ -124,13 +118,12 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    function testAdminUrlWithAnythingElseThrowsInvalidArgumentException()
+    public function testAdminUrlWithAnythingElseThrowsInvalidArgumentException()
     {
         $e = new Extension(
             $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()
-                ->getMock()
-            ,
+                ->getMock(),
             $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
                 ->disableOriginalConstructor()
                 ->getMock()

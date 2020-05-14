@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2012 Gerard van Helden <http://melp.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Twig;
@@ -26,8 +26,6 @@ class Extension extends \Twig_Extension
     private $doctrine;
 
     /**
-     * Constructor.
-     *
      * @param Pool $sonata
      * @param Registry $doctrine
      */
@@ -45,9 +43,9 @@ class Extension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            'admin_url' => new Twig_SimpleFunction('admin_url', [$this, 'adminUrl'])
-        );
+        return [
+            'admin_url' => new Twig_SimpleFunction('admin_url', [$this, 'adminUrl']),
+        ];
     }
 
 
@@ -60,7 +58,7 @@ class Extension extends \Twig_Extension
      * @return string
      * @throws InvalidArgumentException
      */
-    public function adminUrl($subject, $action, $parameters = array())
+    public function adminUrl($subject, $action, $parameters = [])
     {
         if (is_object($subject)) {
             $className = get_class($subject);
@@ -71,7 +69,7 @@ class Extension extends \Twig_Extension
                 $className = $this->doctrine->getAliasNamespace($namespace) . '\\' . $entity;
             }
         } else {
-            throw new InvalidArgumentException("Unsupported subject, need either an object or a string");
+            throw new InvalidArgumentException('Unsupported subject, need either an object or a string');
         }
 
         /** @var $admin \Sonata\AdminBundle\Admin\Admin */

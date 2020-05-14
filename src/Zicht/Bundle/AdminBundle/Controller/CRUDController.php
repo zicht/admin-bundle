@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Controller;
@@ -27,7 +27,7 @@ class CRUDController extends BaseCRUDController
      */
     public function duplicateAction()
     {
-        $id     = $this->getRequest()->get($this->admin->getIdParameter());
+        $id = $this->getRequest()->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
         if (!$object) {
@@ -57,8 +57,6 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * Show action
-     *
      * @param int|null $id
      * @return RedirectResponse|Response
      */
@@ -75,7 +73,7 @@ class CRUDController extends BaseCRUDController
 
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function editAction($id = null)
     {
@@ -88,13 +86,13 @@ class CRUDController extends BaseCRUDController
 
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function createAction()
     {
         $refl = new \ReflectionClass($this->admin->getClass());
         if ($refl->isAbstract() && !$this->getRequest()->get('subclass')) {
-            $delegates = array();
+            $delegates = [];
             $classMetadata = $this->getDoctrine()->getManager()->getClassMetadata($this->admin->getClass());
             foreach ($classMetadata->subClasses as $subClass) {
                 if ($admin = $this->get('sonata.admin.pool')->getAdminByClass($subClass)) {
@@ -107,7 +105,7 @@ class CRUDController extends BaseCRUDController
             if (count($delegates)) {
                 return $this->render(
                     'ZichtAdminBundle:CRUD:create-subclass.html.twig',
-                    array('admins' => $delegates)
+                    ['admins' => $delegates]
                 );
             }
         }
@@ -129,7 +127,7 @@ class CRUDController extends BaseCRUDController
      */
     public function moveUpAction($id)
     {
-        $repo   = $this->getDoctrine()->getManager()->getRepository($this->admin->getClass());
+        $repo = $this->getDoctrine()->getManager()->getRepository($this->admin->getClass());
         $result = $repo->find($id);
         $repo->moveUp($result);
 
@@ -149,7 +147,7 @@ class CRUDController extends BaseCRUDController
      */
     public function moveDownAction($id)
     {
-        $repo   = $this->getDoctrine()->getManager()->getRepository($this->admin->getClass());
+        $repo = $this->getDoctrine()->getManager()->getRepository($this->admin->getClass());
         $result = $repo->find($id);
         $repo->moveDown($result);
 
@@ -214,11 +212,11 @@ class CRUDController extends BaseCRUDController
 
         return $this->render(
             $this->admin->getTemplate($templateKey),
-            array(
+            [
                 'action' => $action,
-                'form'   => $view,
+                'form' => $view,
                 'object' => $object,
-            )
+            ]
         );
     }
 }

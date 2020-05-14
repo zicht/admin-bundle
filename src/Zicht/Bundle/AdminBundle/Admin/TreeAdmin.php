@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace Zicht\Bundle\AdminBundle\Admin;
@@ -53,22 +53,22 @@ class TreeAdmin extends Admin
 
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->tab('General')
             ->with('General')
-            ->add('parent', ParentChoiceType::class, array('required' => false, 'class' => $this->getClass()))
-            ->add('title', null, array('required' => true))
+            ->add('parent', ParentChoiceType::class, ['required' => false, 'class' => $this->getClass()])
+            ->add('title', null, ['required' => true])
             ->end()
             ->end();
     }
 
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
@@ -76,7 +76,7 @@ class TreeAdmin extends Admin
             ->add(
                 'root',
                 'doctrine_orm_callback',
-                array(
+                [
                     'label' => 'Sectie',
                     'callback' => function ($qb, $alias, $f, $v) {
                         if ($v['value']) {
@@ -85,49 +85,47 @@ class TreeAdmin extends Admin
                         }
                     },
                     'field_type' => EntityType::class,
-                    'field_options' => array(
+                    'field_options' => [
                         'query_builder' => function ($repo) {
                             return $repo->createQueryBuilder('t')->andWhere('t.parent IS NULL');
                         },
                         'class' => $this->getClass()
-                    )
-                )
+                    ],
+                ]
             )
             ->add(
                 'id',
                 'doctrine_orm_callback',
-                array(
-                    'callback' => array($this, 'filterWithChildren')
-                )
+                [
+                    'callback' => [$this, 'filterWithChildren'],
+                ]
             );
     }
 
 
     /**
-     * Configure list fields
-     *
      * @param ListMapper $listMapper
      * @return ListMapper
      */
     public function configureListFields(ListMapper $listMapper)
     {
         return $listMapper
-            ->addIdentifier('title', null, array('template' => 'ZichtAdminBundle:CRUD:tree_title.html.twig'))
+            ->addIdentifier('title', null, ['template' => 'ZichtAdminBundle:CRUD:tree_title.html.twig'])
             ->add(
                 '_action',
                 'actions',
-                array(
-                    'actions' => array(
-                        'filter' => array(
+                [
+                    'actions' => [
+                        'filter' => [
                             'template' => 'ZichtAdminBundle:CRUD:actions/filter.html.twig',
-                        ),
-                        'move' => array(
+                        ],
+                        'move' => [
                             'template' => 'ZichtAdminBundle:CRUD:actions/move.html.twig',
-                        ),
-                        'edit' => array(),
-                        'delete' => array(),
-                    )
-                )
+                        ],
+                        'edit' => [],
+                        'delete' => [],
+                    ],
+                ]
             );
     }
 
