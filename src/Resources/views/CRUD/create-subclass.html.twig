@@ -1,0 +1,13 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block sonata_admin_content %}
+    <p>Kies een type:</p>
+    {% for admin in admins %}
+        <p>
+        <a class="btn btn-small" href="{{ admin.generateUrl('create')}}">
+            <i class="icon-plus"></i>
+            {{ admin.label }}
+        </a>
+        </p>
+    {% endfor %}
+{% endblock %}
