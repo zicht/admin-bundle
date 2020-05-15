@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for Symfony 3.x
 ### Fixed
 - Fixed custom sorting issue in Tree Admin caused by sonata-project/doctrine-orm-admin-bundle 3.15
+### Changed
+- Removed Zicht(Test)/Bundle/AdminBundle/ directory depth: moved all code up directly into src/ and test/
 
 ## 5.2.0 - 2020-05-14
 ### Fixed
