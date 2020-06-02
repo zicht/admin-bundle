@@ -34,6 +34,7 @@ class ExportSqlCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
+            ->setName('zicht:export:sql')
             ->addArgument('sql', InputArgument::REQUIRED, 'The raw SELECT query.')
             ->addOption('file', 'f', InputOption::VALUE_REQUIRED, 'File to write to, if none given it will use stdout.')
             ->addOption('type', 't', InputOption::VALUE_REQUIRED, 'The export type.', 'xls')
