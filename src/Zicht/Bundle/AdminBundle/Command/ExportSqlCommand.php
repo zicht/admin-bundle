@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportSqlCommand extends ContainerAwareCommand
 {
+    /** @var string */
+    protected static $defaultName = 'zicht:export:sql';
+
     /** @var string[] */
     protected $typeMapping = [
         'xls' => 'Exporter\\Writer\\XlsWriter',

@@ -5,7 +5,7 @@
 
 namespace Zicht\Bundle\AdminBundle\Exporter\Writer;
 
-use Exporter\Writer\TypedWriterInterface;
+use Sonata\Exporter\Writer\TypedWriterInterface;
 
 class TwigWriter implements TypedWriterInterface
 {
@@ -41,7 +41,7 @@ class TwigWriter implements TypedWriterInterface
     /**
      * {@inheritDoc}
      */
-    public function getDefaultMimeType()
+    public function getDefaultMimeType(): string
     {
         return 'text/plain';
     }
@@ -49,7 +49,7 @@ class TwigWriter implements TypedWriterInterface
     /**
      * {@inheritDoc}
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return 'text';
     }
