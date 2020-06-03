@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 6.0.1 - 2020-06-03
+### Fixed
+- Forward merge of 5.2.1
+
 ## 6.0.0 - 2020-05-15
 ### Added
 - Support for Symfony 4.x
@@ -16,6 +20,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed custom sorting issue in Tree Admin caused by sonata-project/doctrine-orm-admin-bundle 3.15
 ### Changed
 - Removed Zicht(Test)/Bundle/AdminBundle/ directory depth: moved all code up directly into src/ and test/
+
+## 5.2.1 - 2020-06-03
+### Fixed
+- Fixed missing name for ExportSqlCommand
+- Fixed `Sonata\Export\Writer\TypedWriterInterface` use statement in `src/Zicht/Bundle/AdminBundle/Exporter/Writer/TwigWriter.php`
 
 ## 5.2.0 - 2020-05-14
 ### Fixed
