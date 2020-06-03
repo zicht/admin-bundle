@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportSqlCommand extends ContainerAwareCommand
 {
+    /** @var string */
+    protected static $defaultName = 'zicht:export:sql';
+
     /** @var string[] */
     protected $typeMapping = [
         'xls' => 'Exporter\\Writer\\XlsWriter',
@@ -34,7 +37,6 @@ class ExportSqlCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('zicht:export:sql')
             ->addArgument('sql', InputArgument::REQUIRED, 'The raw SELECT query.')
             ->addOption('file', 'f', InputOption::VALUE_REQUIRED, 'File to write to, if none given it will use stdout.')
             ->addOption('type', 't', InputOption::VALUE_REQUIRED, 'The export type.', 'xls')

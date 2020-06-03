@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 5.2.1 - 2020-06-03
 ### Fixed
 - Fixed missing name for ExportSqlCommand
+- Fixed `Sonata\Export\Writer\TypedWriterInterface` use statement in `src/Zicht/Bundle/AdminBundle/Exporter/Writer/TwigWriter.php`
 
 ## 5.2.0 - 2020-05-14
 ### Fixed
