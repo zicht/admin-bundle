@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 5.2.2 - 2020-07-10
+### Fixed
+- Added missing translations
+
 ## 5.2.1 - 2020-06-03
 ### Fixed
 - Fixed missing name for ExportSqlCommand
