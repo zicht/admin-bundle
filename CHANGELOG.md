@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 6.0.2 - 2020-07-13
+### Fixed
+- Merge from 5.2.2.
+
 ## 6.0.1 - 2020-06-03
 ### Fixed
 - Forward merge of 5.2.1
@@ -20,6 +24,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed custom sorting issue in Tree Admin caused by sonata-project/doctrine-orm-admin-bundle 3.15
 ### Changed
 - Removed Zicht(Test)/Bundle/AdminBundle/ directory depth: moved all code up directly into src/ and test/
+
+## 5.2.2 - 2020-07-10
+### Fixed
+- Added missing translations
 
 ## 5.2.1 - 2020-06-03
 ### Fixed
