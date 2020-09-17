@@ -1,0 +1,15 @@
+admin:
+    duplicate:
+        title_format: '[COPY] - %title%'
+    help:
+        override: Click on the button above to override the original entity <strong>%copied_from%</strong> with the current entity
+    override:
+        text_button: Override
+    sonata_flash:
+        duplicate_success: The entity has been successfully duplicated
+        override_success: The entity has been successfully overwritten
+form:
+    label_copied_from: Override entity
+zicht_quicklist:
+    autocomplete_type:
+        search_placeholder: Search...

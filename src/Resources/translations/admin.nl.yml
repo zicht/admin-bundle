@@ -1,3 +1,15 @@
+admin:
+    duplicate:
+        title_format: '[KOPIE] - %title%'
+    help:
+        override: Klik op bovenstaande button om de originele entiteit <strong>%copied_from%</strong> te overschrijven met de huidige entiteit
+    override:
+        text_button: Overschrijven
+    sonata_flash:
+        duplicate_success: De entiteit is succesvol gedupliceerd
+        override_success: De entiteit is succesvol overschreven
+form:
+    label_copied_from: Entiteit overschrijven
 zicht_quicklist:
     autocomplete_type:
         search_placeholder: Zoeken...

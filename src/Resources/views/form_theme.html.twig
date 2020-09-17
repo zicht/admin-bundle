@@ -1,3 +1,5 @@
+{% trans_default_domain 'admin' %}
+
 {% block zicht_quicklist_autocomplete_widget %}
     {# TODO make sure somehow that this script gets loaded only once #}
     <script type="text/javascript" src="{{ asset('bundles/zichtadmin/javascript/autocomplete.js') }}"></script>
@@ -70,4 +72,8 @@
             </script>
         </li>
     </ul>
+{% endblock %}
+
+{% block zicht_override_object_widget %}
+    <a class="btn btn-info" href="{{ sonata_admin.admin.generateObjectUrl('override', object) }}">{{ 'admin.override.text_button'|trans }}</a>
 {% endblock %}

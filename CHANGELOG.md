@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
+Nothing so far
+
+## 6.1.0 - 2020-10-29
+### Added
+- Added the ObjectDuplicateEvent (as a service) in order for other bundles to listen to this event (dipatched in the CRUDController)
+- Added an overrideAction in the CRUDController to override content of one object to another
+- Added a new form type: OverrideObjectType.php
 
 ## 6.0.4 - 2020-10-20
 ### Removed
