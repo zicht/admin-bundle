@@ -6,6 +6,7 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Twig;
 
+use Twig\TwigFunction;
 use Zicht\Bundle\AdminBundle\Twig\Extension;
 
 class MyModel
@@ -22,7 +23,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         );
 
         $fn = $e->getFunctions();
-        $this->assertInstanceOf('Twig_SimpleFunction', $fn['admin_url']);
+        $this->assertInstanceOf(TwigFunction::class, $fn['admin_url']);
         $this->assertEquals('zicht_admin', $e->getName());
         return $e;
     }
