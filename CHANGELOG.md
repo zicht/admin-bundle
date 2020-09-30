@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
-## 6.0.2 - 2020-09-30
+## 6.0.3 - 2020-09-30
 ### Fixed
 - Merge from 5.2.3
 
