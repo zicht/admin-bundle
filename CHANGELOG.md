@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 6.0.4 - 2020-10-20
+### Removed
+- Unneeded dependency declaration for `doctrine/doctrine-bundle`.
+### Changed
+- Allow `zicht_admin.controller.rc` to be a public service.
+
 ## 6.0.3 - 2020-09-30
 ### Fixed
 - Merge from 5.2.3

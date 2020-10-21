@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="zicht_admin.controller.rc" class="Zicht\Bundle\AdminBundle\Controller\RcController">
+        <service id="zicht_admin.controller.rc" class="Zicht\Bundle\AdminBundle\Controller\RcController" public="true">
             <argument /><!-- replaced by extension -->
         </service>
     </services>

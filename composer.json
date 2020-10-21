@@ -12,7 +12,6 @@
     "require": {
         "php": "^7",
         "symfony/console": "^4.4",
-        "doctrine/doctrine-bundle": "^1",
         "sonata-project/doctrine-orm-admin-bundle": "^3.15",
         "zicht/framework-extra-bundle": "^9",
         "sensio/framework-extra-bundle": "^5",
