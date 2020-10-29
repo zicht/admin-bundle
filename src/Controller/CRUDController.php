@@ -5,18 +5,86 @@
 
 namespace Zicht\Bundle\AdminBundle\Controller;
 
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Zicht\Bundle\AdminBundle\Event\AdminEvents;
+use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
 /**
  * Provides some basic utility functionality for admin controllers, to be supplied as an construction parameter
  */
 class CRUDController extends BaseCRUDController
 {
+    /** @var string[] */
+    protected $overrideExcludedProperties = ['copiedFrom'];
+
+    /**
+     * Override content of an original page with content of a new page and remove new page
+     *
+     * @return RedirectResponse
+     */
+    public function overrideAction()
+    {
+        $id = $this->getRequest()->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+        $originalObject = $object->getCopiedFrom();
+
+        // Override properties without association mapping/relations (like title, introduction etc)
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $classMetadata = $this->getDoctrine()->getManager()->getClassMetadata(get_class($object));
+
+        $fieldMappings = $classMetadata->getFieldNames();
+
+        foreach ($fieldMappings as $property) {
+            if (in_array($property, $this->overrideExcludedProperties)) {
+                continue;
+            }
+            $value = $propertyAccessor->getValue($object, $property);
+
+            $propertyAccessor->setValue($originalObject, $property, $value);
+        }
+
+        // Override properties with association mapping/relations: meaning the property is also an object and there's an oneToOne, oneToMany or manyToMany relation
+        // between the object and the property. To override properties in case of an oneToMany relation (e.g. one page can have many contentitems) the contentitems
+        // have to be cloned and set to the "receiving" page before the "providing" page gets deleted, because of the cascade remove option.
+        $associationMappings = $classMetadata->getAssociationNames();
+
+        foreach ($associationMappings as $property) {
+            if (in_array($property, $this->overrideExcludedProperties)) {
+                continue;
+            }
+            $values = $propertyAccessor->getValue($object, $property);
+            $mappingType = $classMetadata->getAssociationMappings()[$property]['type'];
+
+            if ($mappingType === ClassMetadata::ONE_TO_MANY) {
+                $clonedValues = [];
+                foreach ($values as $value) {
+                    $clonedValues[] = clone $value;
+                }
+                $propertyAccessor->setValue($originalObject, $property, $clonedValues);
+            } else {
+                $propertyAccessor->setValue($originalObject, $property, $values);
+            }
+        }
+
+        $objectManager = $this->getDoctrine()->getManager();
+        $objectManager->persist($originalObject);
+        $objectManager->remove($object);
+        $objectManager->flush();
+
+        $this->addFlash('sonata_flash_success', $this->get('translator')->trans('admin.sonata_flash.override_success', [], 'admin'));
+
+        return new RedirectResponse($this->admin->generateObjectUrl('edit', $originalObject));
+    }
+
     /**
      * Duplicate pages
      *
@@ -41,17 +109,21 @@ class CRUDController extends BaseCRUDController
         $newObject = clone $object;
 
         if (method_exists($newObject, 'setTitle')) {
-            $newObject->setTitle('[COPY] - ' . $newObject->getTitle());
+            $newObject->setTitle($this->get('translator')->trans('admin.duplicate.title_format', ['%title%' => $newObject->getTitle()], 'admin'));
         }
+
+        if (method_exists($newObject, 'setCopiedFrom')) {
+            $newObject->setCopiedFrom($object);
+        }
+        
+        // dispatching an event in order for other bundles to listen to this event and do extra stuff for specific entities for example
+        $this->get('event_dispatcher')->dispatch(new ObjectDuplicateEvent($object, $newObject), AdminEvents::OBJECT_DUPLICATE_EVENT);
 
         $objectManager = $this->getDoctrine()->getManager();
         $objectManager->persist($newObject);
         $objectManager->flush();
 
-        $this->addFlash(
-            'sonata_flash_success',
-            $this->admin->trans('flash_duplicate_success')
-        );
+        $this->addFlash('sonata_flash_success', $this->get('translator')->trans('admin.sonata_flash.duplicate_success', [], 'admin'));
 
         return new RedirectResponse($this->admin->generateObjectUrl('edit', $newObject));
     }

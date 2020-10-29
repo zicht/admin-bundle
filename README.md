@@ -29,6 +29,70 @@ zicht_admin
             - a.site.nl
 ```
 
+## Duplicate entities
+To duplicate an entity, add the following code:
+1. In the admin of the entity you want to duplicate, add the route:
+    ```
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('duplicate');
+    }
+    ```
+
+2. In `templates/bundles/SonataAdminBundle/CRUD/edit.html.twig` add the duplicate button:
+    ```
+    {% if admin.hasroute('duplicate') %}
+        <a class="btn btn-info" href="{{ admin.generateObjectUrl('duplicate', object) }}">{{ 'admin.duplicate.text_button'|trans }}</a>
+    {% endif %}
+    ```
+For an example, see https://github.com/zicht/zestor.nl/pull/155/files
+
+## Override entities
+To also override the entities content (after duplication, see section above), add the following code:
+1. Add the route in the admin so the configureRoute method becomes:
+   ```
+   /**
+    * {@inheritDoc}
+    */
+   protected function configureRoutes(RouteCollection $collection)
+   {
+       $collection->add('duplicate');
+       $collection->add('override');
+   }
+   ```
+2. In the entity create the field `copiedFrom` (and its getter and setter).
+   ```
+   /**
+    * @var Page
+    * @ORM\ManyToOne(targetEntity="App\Entity\Page")
+    * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
+    */
+   private $copiedFrom;
+   ```
+3. In the admin of the entity, add the override-button:
+    ```
+    if ($this->getSubject()->getCopiedFrom()) {
+        $formMapper
+            ->tab('admin.tab.schedule_publication')
+                ->add(
+                    'copiedFrom',
+                    OverrideObjectType::class,
+                    [
+                        'required' => false, 
+                        'object' => $this->getSubject(),
+                        'help' => $this->trans('admin.help.override', ['%copied_from%' => $this->getSubject()->getCopiedFrom()])
+                    ]
+                )
+                ->end()
+            ->end();
+    }
+    ```
+
+For an example, see https://github.com/zicht/zestor.nl/pull/155/files
+
 # Maintainers
 * Boudewijn Schoon <boudewijn@zicht.nl>
 * Erik Trapman <erik@zicht.nl>
