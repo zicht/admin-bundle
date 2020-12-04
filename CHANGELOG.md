@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.1.1 - 2020-04-12
+### Fixed
+- Missing `{{ block('form_help') }}` in `form_theme.html.twig`.
+
 ## 6.1.0 - 2020-10-29
 ### Added
 - Added the ObjectDuplicateEvent (as a service) in order for other bundles to listen to this event (dipatched in the CRUDController)
