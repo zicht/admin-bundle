@@ -49,12 +49,11 @@ class TinymceType extends AbstractType
         return TextareaType::class;
     }
 
-    private function appendClassVar(array $attr)
+    private function appendClassVar(array $attr): string
     {
         if (array_key_exists('class', $attr)) {
             return $attr['class'] .= ' tinymce';
         }
         return 'tinymce';
     }
-
 }
