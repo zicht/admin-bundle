@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.1.2 - 2021-01-08
+### Fixed
+- Prevent an error when class does not exist while appending in 'TinyMceType'
+
 ## 6.1.1 - 2020-04-12
 ### Fixed
 - Missing `{{ block('form_help') }}` in `form_theme.html.twig`.
@@ -132,7 +136,7 @@ app/console --env=development zicht:admin:dump-role-hierarchy DUPLICATE TRANSLAT
 ## 3.4.8
 - Fix issue with an Exception being thrown when transforming an entity that didn't exsist anymore (no id or value)
 
-## 3.4.0 
+## 3.4.0
 - Includes the 2.4.0 changes from 2.x
 
 ## 3.2.2
