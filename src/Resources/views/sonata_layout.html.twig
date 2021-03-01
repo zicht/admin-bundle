@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block logo %}
-    {% spaceless %}
+    {% apply spaceless %}
         <div class="z-cms-admin">
             <a href="{{ path('sonata_admin_dashboard') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -16,5 +16,5 @@
                 <span class="cms-title">Zicht CMS</span>
             </a>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
