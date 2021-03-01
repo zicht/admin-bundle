@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Changed deprecated `spaceless` into `apply spaceless` in Twig template
 ### Added|Changed|Deprecated|Removed|Fixed|Security
-Nothing so far
+Nothing else so far
 
 ## 6.1.2 - 2021-01-08
 ### Fixed
