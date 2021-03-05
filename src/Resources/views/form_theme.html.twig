@@ -75,6 +75,47 @@
     </ul>
 {% endblock %}
 
-{% block zicht_override_object_widget %}
-    <a class="btn btn-info" href="{{ sonata_admin.admin.generateObjectUrl('override', object) }}">{{ 'admin.override.text_button'|trans }}</a>
+{% block zicht_override_object_widget -%}
+    {%- deprecated 'The OverrideObjectType form type is deprecated, use the ButtonsType instead.' -%}
+    {#- @see \Zicht\Bundle\AdminBundle\Form\OverrideObjectType -#}
+    {%- with {
+        admin: sonata_admin.admin,
+        buttons: {
+            'admin.override.text_button': {
+                style: 'info',
+                route: 'override',
+            },
+        }
+    } -%}
+        {{- block('zicht_admin_buttons_widget') -}}
+    {%- endwith -%}
+{%- endblock %}
+
+{% block zicht_admin_buttons_widget %}
+    {%- apply spaceless %}
+        {# @see \Zicht\Bundle\AdminBundle\Form\ButtonsType #}
+        {# @var admin \Sonata\AdminBundle\Admin\AbstractAdmin #}
+        <div class="btn-group">
+            {% for key, button in buttons %}
+                {% if (not admin.subject or admin.subject.id is empty) and not button.url|default %}
+                    {# We should create a URL through de subject, but there's no subject, so disable the button #}
+                    {% set button = button|merge({ disabled: true }) %}
+                {% endif %}
+                {% set label = button.label|default(key)|trans({}, (button.label_translation_domain|default(admin.translationDomain|default('SonataAdminBundle')))) %}
+                <a class="btn{{ button.size|default ? ' btn-' ~ button.size }} btn-{{ button.style|default('default') }}" title="{{ label }}"
+                    {%- if not button.disabled|default(false) %}
+                        {{- ' ' }}href="{{ button.url|default ?: admin.generateObjectUrl(button.route, admin.subject) }}"
+                    {%- endif -%}
+                    {%- if button.disabled|default(false) %}
+                        {{- ' ' }}disabled aria-disabled="true"
+                    {%- endif -%}
+                >
+                    {%- if button.icon|default -%}
+                        <i class="fa fa-{{ button.icon }}" aria-hidden="true"></i>&nbsp;
+                    {%- endif -%}
+                    {{- label -}}
+                </a>
+            {% endfor %}
+        </div>
+    {% endapply -%}
 {% endblock %}
