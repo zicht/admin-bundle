@@ -44,6 +44,9 @@
         <service id="zicht_admin.form.override_object" class="Zicht\Bundle\AdminBundle\Form\OverrideObjectType">
             <tag name="form.type" alias="zicht_override_object"/>
         </service>
+        <service id="zicht_admin.form.buttons" class="Zicht\Bundle\AdminBundle\Form\ButtonsType">
+            <tag name="form.type" alias="zicht_buttons"/>
+        </service>
 
         <service id="Zicht\Bundle\AdminBundle\AdminMenu\EventPropagationBuilder">
             <argument type="service" id="request_stack"/>

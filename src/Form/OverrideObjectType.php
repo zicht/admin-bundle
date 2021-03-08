@@ -12,6 +12,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A type utilizing the override functionality.
+ *
+ * @deprecated Use the more generic {@see \Zicht\Bundle\AdminBundle\Form\ButtonsType}
+ *   Before, OverrideObjectType had to be passed the object explicitly,
+ *   but automatically would take the route 'override' and the translate 'admin.override.text_button':
+ *     ```
+ *     ->add(
+ *         'copiedFrom',
+ *         OverrideObjectType::class,
+ *         ['object' => $this->getSubject()]
+ *     )
+ *     ```
+ *   Now, ButtonsType should be passed the options for the button, but automatically takes
+ *   the admin's subject as the target object:
+ *     ```
+ *     ->add(
+ *         'copiedFrom',
+ *         ButtonsType::class,
+ *         ['buttons' => [
+ *             'override' => [
+ *                 'label' => 'admin.override.text_button',
+ *                 'style' => 'info',
+ *                 'route' => 'override',
+ *             ],
+ *         ]]
+ *     )
+ *     ```
  */
 class OverrideObjectType extends AbstractType
 {

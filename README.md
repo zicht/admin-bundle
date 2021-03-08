@@ -17,7 +17,7 @@ sonata_admin:
 ```
 
 ## Override Menu-events to supply other hosts
-Add the following configuration to `config/zicht_admin.yml` to override the `AdminEvents::MENU_EVENT` 
+Add the following configuration to `config/zicht_admin.yml` to override the `AdminEvents::MENU_EVENT`
 and alter the url to a match in the list.
 
 ```yaml
@@ -79,11 +79,17 @@ To also override the entities content (after duplication, see section above), ad
             ->tab('admin.tab.schedule_publication')
                 ->add(
                     'copiedFrom',
-                    OverrideObjectType::class,
+                    ButtonType::class,
                     [
-                        'required' => false, 
-                        'object' => $this->getSubject(),
-                        'help' => $this->trans('admin.help.override', ['%copied_from%' => $this->getSubject()->getCopiedFrom()])
+                        'required' => false,
+                        'help' => $this->trans('admin.help.override', ['%copied_from%' => $this->getSubject()->getCopiedFrom()]),
+                        'buttons' => [
+                            'override' => [
+                                'label' => 'admin.override.text_button',
+                                'style' => 'info',
+                                'route' => 'override',
+                            ],
+                        ],
                     ]
                 )
                 ->end()
