@@ -18,6 +18,9 @@ use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
 
 /**
  * Provides a base class for easily providing admins for tree structures.
+ *
+ * @template T of object
+ * @extends AbstractAdmin<T>
  */
 class TreeAdmin extends AbstractAdmin
 {
@@ -107,11 +110,10 @@ class TreeAdmin extends AbstractAdmin
 
     /**
      * @param ListMapper $listMapper
-     * @return ListMapper
      */
     public function configureListFields(ListMapper $listMapper)
     {
-        return $listMapper
+        $listMapper
             ->addIdentifier('title', null, ['template' => 'ZichtAdminBundle:CRUD:tree_title.html.twig'])
             ->add(
                 '_action',
