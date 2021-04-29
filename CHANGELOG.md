@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.2.1 - 2021-04-29
+### Added
+- Added @template and @extend annotations to TreeAdmin
+### Fixed
+- Fixed the TreeAdmin configureListFields return type
+
 ## 6.2.0 - 2021-03-08
 ### Added
 - Added the generic `ButtonType` form type to be able to add buttons to an (inline) edit form
