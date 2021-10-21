@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.2.2 - 2021-10-21
+### Added
+- Added @template annotation to AdminUtil
+
 ## 6.2.1 - 2021-04-29
 ### Added
 - Added @template and @extend annotations to TreeAdmin
