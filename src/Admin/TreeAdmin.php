@@ -25,10 +25,7 @@ use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
 class TreeAdmin extends AbstractAdmin
 {
     /**
-     * Override the default query builder to utilize correct sorting
-     *
-     * @param string $context
-     * @return ProxyQueryInterface
+     * {@inheritDoc}
      */
     public function createQuery($context = 'list')
     {
@@ -60,9 +57,9 @@ class TreeAdmin extends AbstractAdmin
     /**
      * {@inheritDoc}
      */
-    public function configureFormFields(FormMapper $formMapper)
+    public function configureFormFields(FormMapper $form)
     {
-        $formMapper
+        $form
             ->tab('General')
             ->with('General')
             ->add('parent', ParentChoiceType::class, ['required' => false, 'class' => $this->getClass()])
@@ -109,11 +106,11 @@ class TreeAdmin extends AbstractAdmin
 
 
     /**
-     * @param ListMapper $listMapper
+     * {@inheritDoc}
      */
-    public function configureListFields(ListMapper $listMapper)
+    public function configureListFields(ListMapper $list)
     {
-        $listMapper
+        $list
             ->addIdentifier('title', null, ['template' => 'ZichtAdminBundle:CRUD:tree_title.html.twig'])
             ->add(
                 '_action',
@@ -134,9 +131,7 @@ class TreeAdmin extends AbstractAdmin
     }
 
     /**
-     * Configure route
-     *
-     * @param RouteCollection $collection
+     * {@inheritDoc}
      */
     protected function configureRoutes(RouteCollection $collection)
     {

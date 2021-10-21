@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Exception\LogicException;
 
 /**
+ * @template T of object
  * @method $this tab($name, array $options = array())
  * @method $this with($name, array $options = array())
  * @method $this end()
@@ -31,7 +32,8 @@ final class AdminUtil
      * Need the formMapper since the used methods to set the tabs
      * are protected in the original Sonata implementation
      *
-     * @param FormMapper $formMapper
+     * @template Tr of object
+     * @param FormMapper<Tr> $formMapper
      * @param array $tabOrder
      *
      * @return void
@@ -55,9 +57,9 @@ final class AdminUtil
     /**
      * Start a mapping of fields on the given formMapper
      *
-     * @param FormMapper $formMapper
+     * @param FormMapper<T> $formMapper
      * @param null|string $helpPrefix
-     * @return AdminUtil
+     * @return $this
      */
     public function map(FormMapper $formMapper, $helpPrefix = null)
     {
