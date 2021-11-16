@@ -5,10 +5,11 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Event;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zicht\Bundle\AdminBundle\Event\Propagator;
 
-class PropagatorTest extends \PHPUnit_Framework_TestCase
+class PropagatorTest extends TestCase
 {
     public function testPropagation()
     {

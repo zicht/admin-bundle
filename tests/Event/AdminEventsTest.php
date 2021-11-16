@@ -5,7 +5,9 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Event;
 
-class AdminEventsTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class AdminEventsTest extends TestCase
 {
     public function testClassConstants()
     {

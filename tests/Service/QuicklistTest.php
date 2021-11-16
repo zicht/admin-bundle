@@ -6,11 +6,12 @@
 
 namespace ZichtTest\Bundle\AdminBundle {
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
-    class QuicklistTest extends \PHPUnit_Framework_TestCase
+    class QuicklistTest extends TestCase
     {
-        public function setUp()
+        public function setUp(): void
         {
             $this->doctrine = $this->getMockBuilder('Doctrine\Bundle\DoctrineBundle\Registry')
                 ->setMethods(['getRepository'])
