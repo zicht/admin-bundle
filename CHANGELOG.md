@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.3.0 - 2021-11-30
+### Added
+- Support for PHP 8
+### Removed
+- Support for PHP 7.0 and 7.1
+
 ## 6.2.2 - 2021-10-21
 ### Added
 - Added @template annotation to AdminUtil

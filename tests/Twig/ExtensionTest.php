@@ -6,6 +6,7 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Twig;
 
+use PHPUnit\Framework\TestCase;
 use Twig\TwigFunction;
 use Zicht\Bundle\AdminBundle\Twig\Extension;
 
@@ -13,7 +14,7 @@ class MyModel
 {
 }
 
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+class ExtensionTest extends TestCase
 {
     public function testExtensionConfiguration()
     {
@@ -71,11 +72,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $e->adminUrl('my_model', 'list');
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAdminUrlForUnsupportedObjectWillThrowInvalidArgumentException()
     {
+        $this->expectException('\InvalidArgumentException');
         $e = new Extension(
             $sonata = $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()
@@ -115,12 +114,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $e->adminUrl('My:MyModel', 'list');
     }
 
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testAdminUrlWithAnythingElseThrowsInvalidArgumentException()
     {
+        $this->expectException('\InvalidArgumentException');
         $e = new Extension(
             $this->getMockBuilder('Sonata\AdminBundle\Admin\Pool')
                 ->disableOriginalConstructor()

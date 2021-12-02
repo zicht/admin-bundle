@@ -5,10 +5,11 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Event;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Bundle\AdminBundle\Event\AdminEvents;
 use Zicht\Bundle\AdminBundle\Event\Subscriber;
 
-class SubscriberTest extends \PHPUnit_Framework_TestCase
+class SubscriberTest extends TestCase
 {
     public function testSubscription()
     {

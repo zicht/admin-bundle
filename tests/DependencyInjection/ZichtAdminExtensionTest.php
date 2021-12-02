@@ -5,10 +5,11 @@
 
 namespace ZichtTest\Bundle\AdminBundle\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Zicht\Bundle\AdminBundle\DependencyInjection\ZichtAdminExtension;
 
-class ZichtAdminExtensionTest extends \PHPUnit_Framework_TestCase
+class ZichtAdminExtensionTest extends TestCase
 {
     public function testLoadWillLoadXmlFile()
     {

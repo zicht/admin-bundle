@@ -5,9 +5,10 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Event;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Bundle\AdminBundle\Event\MenuEvent;
 
-class MenuEventTest extends \PHPUnit_Framework_TestCase
+class MenuEventTest extends TestCase
 {
     public function testConstructorWillSetUrlAndTitle()
     {

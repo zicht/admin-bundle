@@ -5,13 +5,14 @@
 
 namespace ZichtTest\Bundle\AdminBundle\Controller;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Bundle\AdminBundle\Controller\QuicklistController;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
-class QuicklistControllerTest extends \PHPUnit_Framework_TestCase
+class QuicklistControllerTest extends TestCase
 {
-    protected function setUp()
+    public function setUp(): void
     {
         $ql = $this->getMockBuilder('Zicht\Bundle\AdminBundle\Service\Quicklist')
             ->disableOriginalConstructor()
