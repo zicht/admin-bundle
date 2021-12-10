@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.3.1 - 2021-12-10
+### Added
+- Added `autocomplete="off"` for username in `login.html.twig`.
+
 ## 6.3.0 - 2021-11-30
 ### Added
 - Support for PHP 8
