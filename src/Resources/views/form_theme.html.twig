@@ -37,10 +37,6 @@
 
 {% block zicht_quicklist_autocomplete_single_widget %}
     {{ block('zicht_quicklist_autocomplete_control') }}
-
-    {% if not required %}
-        <input type="checkbox" class="null-control" {% if not value.id %}checked{% endif %}>
-    {% endif %}
 {% endblock %}
 
 {% block zicht_quicklist_autocomplete_multiple_widget %}
