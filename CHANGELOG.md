@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.3.2 - 2022-01-31
+### Fixed
+- BC fix `class` option for `AutocompleteType`
+
 ## 6.3.1 - 2021-12-10
 ### Added
 - Added `autocomplete="off"` for username in `login.html.twig`.

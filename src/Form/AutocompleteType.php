@@ -90,7 +90,8 @@ class AutocompleteType extends AbstractType
                     'translation_domain' => 'admin',
                     'transformer' => 'auto',
                     'route' => 'zicht_admin_quicklist_quicklist',
-                    'route_params' => []
+                    'route_params' => [],
+                    'class' => null, // BC - somehow this options is created when adding this type as a filter... :?
                 ]
             );
     }
