@@ -115,7 +115,7 @@ class CRUDController extends BaseCRUDController
         if (method_exists($newObject, 'setCopiedFrom')) {
             $newObject->setCopiedFrom($object);
         }
-        
+
         // dispatching an event in order for other bundles to listen to this event and do extra stuff for specific entities for example
         $this->get('event_dispatcher')->dispatch(new ObjectDuplicateEvent($object, $newObject), AdminEvents::OBJECT_DUPLICATE_EVENT);
 
@@ -176,7 +176,7 @@ class CRUDController extends BaseCRUDController
 
             if (count($delegates)) {
                 return $this->renderWithExtraParams(
-                    'ZichtAdminBundle:CRUD:create-subclass.html.twig',
+                    '@ZichtAdmin/CRUD/create-subclass.html.twig',
                     ['admins' => $delegates]
                 );
             }

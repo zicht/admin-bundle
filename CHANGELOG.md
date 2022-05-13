@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.3.3 - 2022-05-13
+### Fixed
+- Fixed usage of deprecated Twig template colon path and changed into modern path
+
 ## 6.3.2 - 2022-01-31
 ### Fixed
 - BC fix `class` option for `AutocompleteType`
