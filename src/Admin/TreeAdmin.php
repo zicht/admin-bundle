@@ -111,17 +111,17 @@ class TreeAdmin extends AbstractAdmin
     public function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('title', null, ['template' => 'ZichtAdminBundle:CRUD:tree_title.html.twig'])
+            ->addIdentifier('title', null, ['template' => '@ZichtAdmin/CRUD/tree_title.html.twig'])
             ->add(
                 '_action',
                 'actions',
                 [
                     'actions' => [
                         'filter' => [
-                            'template' => 'ZichtAdminBundle:CRUD:actions/filter.html.twig',
+                            'template' => '@ZichtAdmin/CRUD/actions/filter.html.twig',
                         ],
                         'move' => [
-                            'template' => 'ZichtAdminBundle:CRUD:actions/move.html.twig',
+                            'template' => '@ZichtAdmin/CRUD/actions/move.html.twig',
                         ],
                         'edit' => [],
                         'delete' => [],

@@ -14,7 +14,7 @@ use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
 /**
  * Custom date time object for rendering of datePicker
  *
- * Make sure you include both ZichtAdminBundle:Views:Admin:includes:zicht_date_picker* files in your admin theme
+ * Make sure you include both `@ZichtAdmin/Views/Admin/includes/zicht_date_picker*` files in your admin theme
  */
 class DatePickerType extends AbstractType
 {

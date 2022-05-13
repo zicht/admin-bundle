@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
-            'ZichtAdminBundle:Security:login.html.twig',
+            '@ZichtAdmin/Security/login.html.twig',
             [
                 // last username entered by the user
                 'last_username' => $lastUsername,

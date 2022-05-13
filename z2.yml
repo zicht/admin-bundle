@@ -1,4 +1,0 @@
-plugins: ['git']
-
-vcs:
-    url: git@github.com:zicht/admin-bundle.git
