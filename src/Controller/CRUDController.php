@@ -179,6 +179,7 @@ class CRUDController extends BaseCRUDController
     /**
      * Move the item up. Used for Tree admins
      *
+     * @param Request $request
      * @param mixed $id
      */
     public function moveUpAction(Request $request, $id): Response
@@ -197,6 +198,7 @@ class CRUDController extends BaseCRUDController
     /**
      * Move the item up. Used for Tree admins
      *
+     * @param Request $request
      * @param mixed $id
      */
     public function moveDownAction(Request $request, $id): Response
