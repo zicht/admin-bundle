@@ -7,7 +7,7 @@ on:
 
 jobs:
     backend:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-22.04
         strategy:
             matrix:
                 php: [ '7.2', '7.4', '8.0', '8.1' ]
@@ -37,12 +37,12 @@ jobs:
                 run: composer run-script test
 
     translations:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-22.04
         steps:
             -   uses: actions/checkout@v2
             -   uses: actions/setup-python@v2
                 with:
-                    python-version: '3.6'
+                    python-version: '3.7'
             -   run: python -m pip install --upgrade pip
             -   run: pip install yaz_messaging_plugin
             -   run: yaz-messaging version
