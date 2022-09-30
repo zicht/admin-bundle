@@ -5,9 +5,9 @@
 
 namespace Zicht\Bundle\AdminBundle\Command;
 
-use Exporter\Source\DoctrineDBALConnectionSourceIterator;
-use Exporter\Handler;
 use Doctrine\DBAL\Driver\Connection;
+use Exporter\Handler;
+use Exporter\Source\DoctrineDBALConnectionSourceIterator;
 use Exporter\Source\SourceIteratorInterface;
 use Exporter\Writer\WriterInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -48,9 +48,6 @@ class ExportSqlCommand extends Command
         $this->twig = $twig;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         $this
@@ -61,9 +58,6 @@ class ExportSqlCommand extends Command
             ->setDescription('Will export all sql result from given sql select query.');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         // support for posix stdin pipe
@@ -80,37 +74,14 @@ class ExportSqlCommand extends Command
         );
 
         if (false == @preg_match('#(\s+)?SELECT#i', $input->getArgument('sql'))) {
-            throw new \RuntimeException(
-                sprintf(
-                    '"%s" is not a valid SELECT query.',
-                    preg_replace(
-                        '/(\s{2,}|\n)/',
-                        ' ',
-                        $input->getArgument('sql')
-                    )
-                )
-            );
+            throw new \RuntimeException(sprintf('"%s" is not a valid SELECT query.', preg_replace('/(\s{2,}|\n)/', ' ', $input->getArgument('sql'))));
         }
 
         if (!array_key_exists(strtolower($input->getOption('type')), $this->typeMapping)) {
-            throw new \RuntimeException(
-                sprintf(
-                    '"%s" is not a valid export type. valid type are "%s"',
-                    $input->getOption('type'),
-                    implode(
-                        '", "',
-                        array_keys(
-                            $this->typeMapping
-                        )
-                    )
-                )
-            );
+            throw new \RuntimeException(sprintf('"%s" is not a valid export type. valid type are "%s"', $input->getOption('type'), implode('", "', array_keys($this->typeMapping))));
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (null === ($file = $input->getOption('file'))) {
@@ -122,7 +93,6 @@ class ExportSqlCommand extends Command
 
     /**
      * @param string $file
-     * @param InputInterface $input
      * @return Handler
      */
     private function getHandler($file, InputInterface $input)
@@ -133,11 +103,9 @@ class ExportSqlCommand extends Command
         );
     }
 
-
     /**
      * @param string $type
      * @param string $file
-     * @param InputInterface $input
      * @return WriterInterface
      */
     private function getWriter($type, $file, InputInterface $input)
@@ -164,7 +132,6 @@ class ExportSqlCommand extends Command
 
     /**
      * @param $type
-     * @param InputInterface $input
      * @return array
      */
     private function getArgs($type, InputInterface $input)
@@ -205,7 +172,6 @@ class ExportSqlCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
      * @return string
      */
     private function getType(InputInterface $input)
@@ -255,16 +221,13 @@ class ExportSqlCommand extends Command
         return $twig;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function run(InputInterface $input, OutputInterface $output)
     {
         switch ($this->getType($input)) {
             case 'xls':
             case 'xmlexcel':
                 $this->getDefinition()->addOptions([
-                    new InputOption('no-headers', null, InputOption::VALUE_NONE)
+                    new InputOption('no-headers', null, InputOption::VALUE_NONE),
                 ]);
                 break;
             case 'xml':
@@ -293,9 +256,6 @@ class ExportSqlCommand extends Command
         return parent::run($input, $output);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getHelp()
     {
         return <<<EOH

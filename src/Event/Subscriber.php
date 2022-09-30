@@ -5,16 +5,15 @@
 
 namespace Zicht\Bundle\AdminBundle\Event;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Knp\Menu\MenuItem;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\MenuItem;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Kernel event subscriber for the Admin menu
  */
 class Subscriber implements EventSubscriberInterface
 {
-
     /**
      * @var MenuItem
      */
@@ -25,9 +24,12 @@ class Subscriber implements EventSubscriberInterface
      */
     private $factory;
 
-    /**
-     * {@inheritDoc}
-     */
+    public function __construct(MenuItem $root, FactoryInterface $factory)
+    {
+        $this->menu = $root;
+        $this->factory = $factory;
+    }
+
     public static function getSubscribedEvents()
     {
         return [
@@ -35,22 +37,9 @@ class Subscriber implements EventSubscriberInterface
         ];
     }
 
-
-    /**
-     * @param \Knp\Menu\MenuItem $root
-     * @param \Knp\Menu\FactoryInterface $factory
-     */
-    public function __construct(MenuItem $root, FactoryInterface $factory)
-    {
-        $this->menu = $root;
-        $this->factory = $factory;
-    }
-
-
     /**
      * Add a child to the menu
      *
-     * @param MenuEvent $e
      * @return void
      */
     public function addMenuItem(MenuEvent $e)

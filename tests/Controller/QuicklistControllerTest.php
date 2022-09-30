@@ -6,9 +6,9 @@
 namespace ZichtTest\Bundle\AdminBundle\Controller;
 
 use PHPUnit\Framework\TestCase;
-use Zicht\Bundle\AdminBundle\Controller\QuicklistController;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
+use Zicht\Bundle\AdminBundle\Controller\QuicklistController;
 
 class QuicklistControllerTest extends TestCase
 {
@@ -41,7 +41,6 @@ class QuicklistControllerTest extends TestCase
 
         $this->assertEquals(['repos' => ['foo' => 'bar']], $res);
     }
-
 
     public function testQuickListActionJson()
     {

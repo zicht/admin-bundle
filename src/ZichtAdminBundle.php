@@ -5,18 +5,15 @@
 
 namespace Zicht\Bundle\AdminBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Bundle for the admin menu
  */
 class ZichtAdminBundle extends Bundle
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

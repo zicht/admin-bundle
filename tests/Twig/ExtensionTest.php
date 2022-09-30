@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable Zicht.Commenting.FunctionComment.Missing,PSR1.Classes.ClassDeclaration.MultipleClasses
 /**
  * @copyright Zicht Online <https://zicht.nl>
  */
@@ -34,7 +33,6 @@ class ExtensionTest extends TestCase
         return $e;
     }
 
-
     public function testAdminUrlForModelObject()
     {
         $e = new Extension(
@@ -55,7 +53,6 @@ class ExtensionTest extends TestCase
         $admin->expects($this->once())->method('generateObjectUrl')->with('edit', $model);
         $e->adminUrl($model, 'edit');
     }
-
 
     public function testAdminUrlForString()
     {
@@ -95,7 +92,6 @@ class ExtensionTest extends TestCase
             ->will($this->returnValue(null));
         $e->adminUrl('unknown_model', 'list');
     }
-
 
     public function testAdminUrlSupportsDoctrineNamespaces()
     {

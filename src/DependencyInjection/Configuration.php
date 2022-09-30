@@ -10,9 +10,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('zicht_admin');
@@ -45,7 +42,7 @@ class Configuration implements ConfigurationInterface
                             ->validate()
                                 ->ifTrue(
                                     function ($p) {
-                                        return (false === preg_match($p, ''));
+                                        return false === preg_match($p, '');
                                     }
                                 )->thenInvalid('Invalid PCRE pattern')
                             ->end()

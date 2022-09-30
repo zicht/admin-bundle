@@ -13,27 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TinymceType extends AbstractType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix()
     {
         return 'tinymce';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['theme' => 'regular']);
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr']['required'] = false;

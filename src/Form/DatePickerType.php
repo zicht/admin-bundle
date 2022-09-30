@@ -18,9 +18,6 @@ use Zicht\Bundle\AdminBundle\DataTransformer\HumanReadableDateTransformer;
  */
 class DatePickerType extends AbstractType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -28,31 +25,21 @@ class DatePickerType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'zicht_date_picker',
-                ]
+                ],
             ]
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix()
     {
         return 'zicht_date_picker';
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addViewTransformer(new HumanReadableDateTransformer($options['model_timezone'], $options['view_timezone']));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getParent()
     {
         return DateTimeType::class;

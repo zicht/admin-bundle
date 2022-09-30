@@ -7,10 +7,9 @@ namespace Zicht\Bundle\AdminBundle\Security\Voter;
 
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Delegates to the sonata ROLE_ voter based on an entity
@@ -42,11 +41,6 @@ class AdminVoter implements VoterInterface
     /**
      * AdminVoter constructor.
      * The passed attributes are mapped to ROLE_* attributes delegated to the authorization checker
-     *
-     * @param array $attributes
-     * @param Pool $pool
-     * @param AccessDecisionManagerInterface $decisionManager
-     * @param SecurityHandlerInterface $securityHandler
      */
     public function __construct(array $attributes, Pool $pool, AccessDecisionManagerInterface $decisionManager, SecurityHandlerInterface $securityHandler)
     {
@@ -56,17 +50,11 @@ class AdminVoter implements VoterInterface
         $this->securityHandler = $securityHandler;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, $this->attributes);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supportsClass($class)
     {
         // support any class that has an associated sonata admin
@@ -74,9 +62,7 @@ class AdminVoter implements VoterInterface
     }
 
     /**
-     * @param TokenInterface $token
-     * @param null|object $object
-     * @param array $attributes
+     * @param object|null $object
      * @return int
      */
     public function vote(TokenInterface $token, $object, array $attributes)

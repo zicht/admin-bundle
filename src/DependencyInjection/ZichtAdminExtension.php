@@ -5,10 +5,10 @@
 
 namespace Zicht\Bundle\AdminBundle\DependencyInjection;
 
-use Symfony\Component\HttpKernel\DependencyInjection\Extension as DIExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension as DIExtension;
 use Zicht\Bundle\AdminBundle\AdminMenu\EventPropagationBuilder;
 
 /**
@@ -16,10 +16,6 @@ use Zicht\Bundle\AdminBundle\AdminMenu\EventPropagationBuilder;
  */
 class ZichtAdminExtension extends DIExtension
 {
-    /**
-     * @param array $configs
-     * @param ContainerBuilder $container
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $config = $this->processConfiguration(new Configuration(), $configs);

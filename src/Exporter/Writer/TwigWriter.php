@@ -40,33 +40,21 @@ class TwigWriter implements TypedWriterInterface
         $this->addEol = $addEol;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultMimeType(): string
     {
         return 'text/plain';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getFormat(): string
     {
         return 'text';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function open()
     {
         $this->file = fopen($this->filename, 'w', false);
     }
 
-    /**
-     * @param array $data
-     */
     public function write(array $data)
     {
         /** @var Template $template */
@@ -83,9 +71,6 @@ class TwigWriter implements TypedWriterInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function close()
     {
         fclose($this->file);
