@@ -11,9 +11,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Zicht\Bundle\AdminBundle\Sonata\Datagrid\CustomSortProxyQuery;
 use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
 
 /**
@@ -24,40 +24,22 @@ use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
  */
 class TreeAdmin extends AbstractAdmin
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function createQuery($context = 'list')
+    protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
     {
-        if ($context === 'list') {
-            /** @var $em \Doctrine\ORM\EntityManager */
-            $em = $this->getModelManager()->getEntityManager($this->getClass());
+        $em = $query->getQueryBuilder()->getEntityManager();
+        $metadata = $em->getMetadataFactory()->getMetadataFor($this->getClass());
 
-            /** @var $cmd \Doctrine\Common\Persistence\Mapping\ClassMetadata */
-            $cmd = $em->getMetadataFactory()->getMetadataFor($this->getClass());
-
-            $queryBuilder = $em->createQueryBuilder();
-            $queryBuilder
-                ->select('n')
-                ->from($this->getClass(), 'n');
-
-            if ($cmd->hasField('root')) {
-                $queryBuilder->orderBy('n.root', Criteria::ASC);
-                $queryBuilder->addOrderBy('n.lft', Criteria::ASC);
-            } else {
-                $queryBuilder->orderBy('n.lft', Criteria::ASC);
-            }
-
-            return new CustomSortProxyQuery($queryBuilder);
+        $rootAlias = current($query->getRootAliases());
+        if ($metadata->hasField('root')) {
+            $query->orderBy($rootAlias . '.root', Criteria::ASC);
+            $query->addOrderBy($rootAlias . '.lft', Criteria::ASC);
+        } else {
+            $query->orderBy($rootAlias . '.lft', Criteria::ASC);
         }
-        return parent::createQuery($context);
+        return $query;
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    public function configureFormFields(FormMapper $form)
+    public function configureFormFields(FormMapper $form): void
     {
         $form
             ->tab('General')
@@ -68,16 +50,12 @@ class TreeAdmin extends AbstractAdmin
             ->end();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureDatagridFilters(DatagridMapper $filter)
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
             ->add(
                 'root',
-                'doctrine_orm_callback',
+                CallbackFilter::class,
                 [
                     'label' => 'Sectie',
                     'callback' => function ($qb, $alias, $f, $v) {
@@ -97,18 +75,14 @@ class TreeAdmin extends AbstractAdmin
             )
             ->add(
                 'id',
-                'doctrine_orm_callback',
+                CallbackFilter::class,
                 [
                     'callback' => [$this, 'filterWithChildren'],
                 ]
             );
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    public function configureListFields(ListMapper $list)
+    public function configureListFields(ListMapper $list): void
     {
         $list
             ->addIdentifier('title', null, ['template' => '@ZichtAdmin/CRUD/tree_title.html.twig'])
@@ -130,17 +104,13 @@ class TreeAdmin extends AbstractAdmin
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
 
         $collection->add('moveUp', $this->getRouterIdParameter() . '/move-up');
         $collection->add('moveDown', $this->getRouterIdParameter() . '/move-down');
     }
-
 
     /**
      * Get item plus children

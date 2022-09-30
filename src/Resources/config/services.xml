@@ -13,6 +13,11 @@
             <tag name="knp_menu.menu" alias="zicht_admin"/>
         </service>
 
+        <service id="Zicht\Bundle\AdminBundle\Controller\CRUDController" autowire="true" public="true">
+            <tag name="controller.service_arguments" />
+            <tag name="container.service_subscriber" />
+        </service>
+
         <service id="zicht_admin.event_subscriber" class="Zicht\Bundle\AdminBundle\Event\Subscriber">
             <argument type="service" id="zicht_admin.menu"/>
             <argument type="service" id="knp_menu.factory"/>

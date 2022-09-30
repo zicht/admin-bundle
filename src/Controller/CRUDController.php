@@ -9,14 +9,16 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Zicht\Bundle\AdminBundle\Event\AdminEvents;
-use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Zicht\Bundle\AdminBundle\Event\AdminEvents;
+use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
+use Zicht\Bundle\UrlBundle\Url\Provider as UrlProvider;
 
 /**
  * Provides some basic utility functionality for admin controllers, to be supplied as an construction parameter
@@ -26,14 +28,17 @@ class CRUDController extends BaseCRUDController
     /** @var string[] */
     protected $overrideExcludedProperties = ['copiedFrom'];
 
+    public static function getSubscribedServices(): array
+    {
+        return ['zicht_url.provider' => UrlProvider::class] + parent::getSubscribedServices();
+    }
+
     /**
      * Override content of an original page with content of a new page and remove new page
-     *
-     * @return RedirectResponse
      */
-    public function overrideAction()
+    public function overrideAction(Request $request): RedirectResponse
     {
-        $id = $this->getRequest()->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
         $originalObject = $object->getCopiedFrom();
 
@@ -86,16 +91,12 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * Duplicate pages
-     *
-     * @return RedirectResponse
-     *
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function duplicateAction()
+    public function duplicateAction(Request $request): RedirectResponse
     {
-        $id = $this->getRequest()->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
         if (!$object) {
@@ -128,42 +129,30 @@ class CRUDController extends BaseCRUDController
         return new RedirectResponse($this->admin->generateObjectUrl('edit', $newObject));
     }
 
-    /**
-     * @param int|null $id
-     * @return RedirectResponse|Response
-     */
-    public function showAction($id = null)
+    public function showAction(Request $request): Response
     {
-        $id = $this->getRequest()->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
         $obj = $this->admin->getObject($id);
         if ($this->container->has('zicht_url.provider') && $this->get('zicht_url.provider')->supports($obj)) {
             return $this->redirect($this->get('zicht_url.provider')->url($obj));
         }
 
-        return parent::showAction($id);
+        return parent::showAction($request);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    public function editAction($id = null)
+    public function editAction(Request $request): Response
     {
-        if ($this->getRequest()->get('__bind_only')) {
-            return $this->bindAndRender('edit');
+        if ($request->get('__bind_only')) {
+            return $this->bindAndRender($request, 'edit');
         }
 
-        return parent::editAction($id);
+        return parent::editAction($request);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    public function createAction()
+    public function createAction(Request $request): Response
     {
         $refl = new \ReflectionClass($this->admin->getClass());
-        if ($refl->isAbstract() && !$this->getRequest()->get('subclass')) {
+        if ($refl->isAbstract() && !$request->get('subclass')) {
             $delegates = [];
             $classMetadata = $this->getDoctrine()->getManager()->getClassMetadata($this->admin->getClass());
             foreach ($classMetadata->subClasses as $subClass) {
@@ -183,70 +172,56 @@ class CRUDController extends BaseCRUDController
         }
 
 
-        if ($this->getRequest()->get('__bind_only')) {
-            return $this->bindAndRender('create');
+        if ($request->get('__bind_only')) {
+            return $this->bindAndRender($request, 'create');
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
-
 
     /**
      * Move the item up. Used for Tree admins
      *
      * @param mixed $id
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function moveUpAction($id)
+    public function moveUpAction(Request $request, $id): Response
     {
         $repo = $this->getDoctrine()->getManager()->getRepository($this->admin->getClass());
         $result = $repo->find($id);
         $repo->moveUp($result);
 
-        if ($referer = $this->getRequest()->headers->get('referer')) {
+        if ($referer = $request->headers->get('referer')) {
             return $this->redirect($referer);
         } else {
             return new Response('<script>history.go(-1);</script>');
         }
     }
-
 
     /**
      * Move the item up. Used for Tree admins
      *
      * @param mixed $id
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function moveDownAction($id)
+    public function moveDownAction(Request $request, $id): Response
     {
         $repo = $this->getDoctrine()->getManager()->getRepository($this->admin->getClass());
         $result = $repo->find($id);
         $repo->moveDown($result);
 
-        if ($referer = $this->getRequest()->headers->get('referer')) {
+        if ($referer = $request->headers->get('referer')) {
             return $this->redirect($referer);
         } else {
             return new Response('<script>history.go(-1);</script>');
         }
     }
 
-
-    /**
-     * Binds the request to the form and only renders the resulting form.
-     *
-     * @param string $action
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    protected function bindAndRender($action)
+    protected function bindAndRender(Request $request, string $action): Response
     {
         // the key used to lookup the template
         $templateKey = 'edit';
 
         if ($action == 'edit') {
-            $id = $this->getRequest()->get($this->admin->getIdParameter());
+            $id = $request->get($this->admin->getIdParameter());
 
             $object = $this->admin->getObject($id);
 
@@ -273,8 +248,8 @@ class CRUDController extends BaseCRUDController
         $form = $this->admin->getForm();
         $form->setData($object);
 
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->handleRequest($this->getRequest());
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
         }
 
         $view = $form->createView();
