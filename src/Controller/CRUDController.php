@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zicht\Bundle\AdminBundle\Event\AdminEvents;
 use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
@@ -170,7 +168,6 @@ class CRUDController extends BaseCRUDController
                 );
             }
         }
-
 
         if ($request->get('__bind_only')) {
             return $this->bindAndRender($request, 'create');
