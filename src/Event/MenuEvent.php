@@ -40,7 +40,6 @@ class MenuEvent extends Event
         $this->options = $options;
     }
 
-
     /**
      * Returns the title of the menu item
      *
@@ -60,7 +59,6 @@ class MenuEvent extends Event
     {
         return $this->url;
     }
-
 
     /**
      * Returns the config to use when building the MenuItem

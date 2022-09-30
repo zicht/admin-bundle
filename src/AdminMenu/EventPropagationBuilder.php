@@ -44,7 +44,6 @@ class EventPropagationBuilder implements PropagationInterface
     /**
      * Build the relevant event and forward it.
      *
-     * @param Event $e
      * @return void
      */
     public function buildAndForwardEvent(Event $e)

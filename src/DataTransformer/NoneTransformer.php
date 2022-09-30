@@ -24,7 +24,6 @@ class NoneTransformer implements DataTransformerInterface
     private $repo;
 
     /**
-     * @param \Zicht\Bundle\AdminBundle\Service\Quicklist $lister
      * @param string $repo
      */
     public function __construct(Quicklist $lister, $repo)

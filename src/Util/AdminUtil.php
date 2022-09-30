@@ -20,7 +20,7 @@ final class AdminUtil
     /** @var FormMapper */
     protected $formMapper = null;
 
-    /** @var null|string */
+    /** @var string|null */
     protected $helpPrefix;
 
     /** @var bool */
@@ -34,7 +34,6 @@ final class AdminUtil
      *
      * @template Tr of object
      * @param FormMapper<Tr> $formMapper
-     * @param array $tabOrder
      *
      * @return void
      */
@@ -58,7 +57,7 @@ final class AdminUtil
      * Start a mapping of fields on the given formMapper
      *
      * @param FormMapper<T> $formMapper
-     * @param null|string $helpPrefix
+     * @param string|null $helpPrefix
      * @return $this
      */
     public function map(FormMapper $formMapper, $helpPrefix = null)
@@ -84,8 +83,6 @@ final class AdminUtil
      *
      * @param string $name
      * @param null $type
-     * @param array $options
-     * @param array $fieldDescriptionOptions
      * @return $this
      */
     public function add($name, $type = null, array $options = [], array $fieldDescriptionOptions = [])

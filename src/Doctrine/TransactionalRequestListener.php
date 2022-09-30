@@ -32,7 +32,6 @@ class TransactionalRequestListener implements EventSubscriberInterface
     private $wasTxStarted;
 
     /**
-     * @param Registry $doctrine
      * @param string $pattern A Regular expression matching a url
      */
     public function __construct(Registry $doctrine, $pattern)
@@ -43,9 +42,6 @@ class TransactionalRequestListener implements EventSubscriberInterface
         $this->wasTxStarted = false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -57,7 +53,6 @@ class TransactionalRequestListener implements EventSubscriberInterface
     /**
      * Starts a transaction within any url matching the constructor's $pattern parameter
      *
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
      * @return void
      */
     public function onKernelRequest(KernelEvent $event)
@@ -70,11 +65,9 @@ class TransactionalRequestListener implements EventSubscriberInterface
         }
     }
 
-
     /**
      * Commits the transaction, if started
      *
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
      * @return void
      */
     public function onKernelResponse(KernelEvent $event)

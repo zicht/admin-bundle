@@ -9,13 +9,9 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransforme
 
 /**
  * Support transformer for ZichtDatePickerType
- *
  */
 class HumanReadableDateTransformer extends BaseDateTimeTransformer
 {
-    /**
-     * {@inheritDoc}
-     */
     public function transform($value)
     {
         if (!empty($value)) {
@@ -25,9 +21,6 @@ class HumanReadableDateTransformer extends BaseDateTimeTransformer
         return $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function reverseTransform($value)
     {
         if (!empty($value)) {

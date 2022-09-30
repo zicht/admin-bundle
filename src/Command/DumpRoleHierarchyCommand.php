@@ -37,9 +37,6 @@ class DumpRoleHierarchyCommand extends Command
         $this->securityHandler = $securityHandler;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         $this
@@ -67,9 +64,6 @@ class DumpRoleHierarchyCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $attributes = array_merge(

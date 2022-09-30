@@ -10,13 +10,11 @@ use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zicht\Bundle\AdminBundle\Event\AdminEvents;
 use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
 /**
  * Provides some basic utility functionality for admin controllers, to be supplied as an construction parameter
@@ -86,10 +84,7 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * Duplicate pages
-     *
      * @return RedirectResponse
-     *
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -143,10 +138,6 @@ class CRUDController extends BaseCRUDController
         return parent::showAction($id);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function editAction($id = null)
     {
         if ($this->getRequest()->get('__bind_only')) {
@@ -156,10 +147,6 @@ class CRUDController extends BaseCRUDController
         return parent::editAction($id);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function createAction()
     {
         $refl = new \ReflectionClass($this->admin->getClass());
@@ -182,14 +169,12 @@ class CRUDController extends BaseCRUDController
             }
         }
 
-
         if ($this->getRequest()->get('__bind_only')) {
             return $this->bindAndRender('create');
         }
 
         return parent::createAction();
     }
-
 
     /**
      * Move the item up. Used for Tree admins
@@ -210,7 +195,6 @@ class CRUDController extends BaseCRUDController
         }
     }
 
-
     /**
      * Move the item up. Used for Tree admins
      *
@@ -230,13 +214,11 @@ class CRUDController extends BaseCRUDController
         }
     }
 
-
     /**
      * Binds the request to the form and only renders the resulting form.
      *
      * @param string $action
      * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */

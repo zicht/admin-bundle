@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Criteria;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,9 +23,6 @@ use Zicht\Bundle\FrameworkExtraBundle\Form\ParentChoiceType;
  */
 class TreeAdmin extends AbstractAdmin
 {
-    /**
-     * {@inheritDoc}
-     */
     public function createQuery($context = 'list')
     {
         if ($context === 'list') {
@@ -53,10 +49,6 @@ class TreeAdmin extends AbstractAdmin
         return parent::createQuery($context);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function configureFormFields(FormMapper $form)
     {
         $form
@@ -68,10 +60,6 @@ class TreeAdmin extends AbstractAdmin
             ->end();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $filter
@@ -91,7 +79,7 @@ class TreeAdmin extends AbstractAdmin
                         'query_builder' => function ($repo) {
                             return $repo->createQueryBuilder('t')->andWhere('t.parent IS NULL');
                         },
-                        'class' => $this->getClass()
+                        'class' => $this->getClass(),
                     ],
                 ]
             )
@@ -104,10 +92,6 @@ class TreeAdmin extends AbstractAdmin
             );
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function configureListFields(ListMapper $list)
     {
         $list
@@ -130,9 +114,6 @@ class TreeAdmin extends AbstractAdmin
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configureRoutes(RouteCollection $collection)
     {
         parent::configureRoutes($collection);
@@ -140,7 +121,6 @@ class TreeAdmin extends AbstractAdmin
         $collection->add('moveUp', $this->getRouterIdParameter() . '/move-up');
         $collection->add('moveDown', $this->getRouterIdParameter() . '/move-down');
     }
-
 
     /**
      * Get item plus children

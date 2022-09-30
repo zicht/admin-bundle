@@ -33,9 +33,6 @@ zicht_admin
 To duplicate an entity, add the following code:
 1. In the admin of the entity you want to duplicate, add the route:
     ```
-    /**
-     * {@inheritDoc}
-     */
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('duplicate');
