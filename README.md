@@ -33,10 +33,7 @@ zicht_admin
 To duplicate an entity, add the following code:
 1. In the admin of the entity you want to duplicate, add the route:
     ```
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('duplicate');
     }
@@ -54,10 +51,7 @@ For an example, see https://github.com/zicht/zestor.nl/pull/155/files
 To also override the entities content (after duplication, see section above), add the following code:
 1. Add the route in the admin so the configureRoute method becomes:
    ```
-   /**
-    * {@inheritDoc}
-    */
-   protected function configureRoutes(RouteCollection $collection)
+   protected function configureRoutes(RouteCollectionInterface $collection): void
    {
        $collection->add('duplicate');
        $collection->add('override');
@@ -66,11 +60,10 @@ To also override the entities content (after duplication, see section above), ad
 2. In the entity create the field `copiedFrom` (and its getter and setter).
    ```
    /**
-    * @var Page
     * @ORM\ManyToOne(targetEntity="App\Entity\Page")
     * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
     */
-   private $copiedFrom;
+   private ?Page $copiedFrom;
    ```
 3. In the admin of the entity, add the override-button:
     ```

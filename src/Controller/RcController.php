@@ -21,7 +21,6 @@ class RcController
      * Renders all RC controls
      *
      * @return array
-     *
      * @Template("@ZichtAdmin/Rc/controls.html.twig")
      */
     public function controlsAction()
