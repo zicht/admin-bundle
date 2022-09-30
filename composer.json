@@ -18,8 +18,8 @@
         "twig/twig": "^2.9 || ^3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "zicht/standards-php": "^4"
+        "friendsofphp/php-cs-fixer": "~3.4.0",
+        "phpunit/phpunit": "^8"
     },
     "autoload": {
         "psr-4": {
@@ -38,17 +38,8 @@
     "minimum-stability": "stable",
     "license": "MIT",
     "scripts": {
-        "lint": [
-            "phpcs --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
-        ],
-        "lint-no-warn": [
-            "phpcs -n --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
-        ],
-        "lint-fix": [
-            "phpcbf --standard=vendor/zicht/standards-php/phpcs.xml src/ tests/"
-        ],
-        "test": [
-            "phpunit tests/"
-        ]
+        "lint": "php-cs-fixer fix --dry-run --diff -vvv",
+        "lint-fix": "php-cs-fixer fix",
+        "test": "phpunit tests/"
     }
 }

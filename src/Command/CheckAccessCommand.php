@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -44,9 +43,6 @@ class CheckAccessCommand extends Command
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         $this->addArgument('role', InputArgument::REQUIRED, 'Check the rights for a specific role');
@@ -55,9 +51,6 @@ class CheckAccessCommand extends Command
         $this->addOption('id', '', InputOption::VALUE_REQUIRED, 'ID of the entity to check the specified attribute on');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $role = $input->getArgument('role');

@@ -5,8 +5,8 @@
 
 namespace Zicht\Bundle\AdminBundle\Event;
 
-use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Service that propagates events as other types, using PropagtionInterface instances
@@ -40,7 +40,6 @@ class Propagator
      *
      * @param \Symfony\Component\EventDispatcher\Event $anyEvent
      * @param string $eventName
-     * @param EventDispatcherInterface $dispatcher
      * @return void
      */
     public function onEvent(Event $anyEvent, $eventName, EventDispatcherInterface $dispatcher)

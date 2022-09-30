@@ -14,9 +14,6 @@ use Sonata\AdminBundle\Security\Handler\RoleSecurityHandler as BaseRoleSecurityH
  */
 class RoleSecurityHandler extends BaseRoleSecurityHandler
 {
-    /**
-     * {@inheritDoc}
-     */
     public function isGranted(AdminInterface $admin, $attributes, $object = null)
     {
         if ($this->authorizationChecker->isGranted($attributes, $object)) {
