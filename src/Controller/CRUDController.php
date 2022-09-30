@@ -6,28 +6,18 @@
 namespace Zicht\Bundle\AdminBundle\Controller;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Psr\Log\LoggerInterface;
-use Sonata\AdminBundle\Admin\Pool;
-use Sonata\AdminBundle\Bridge\Exporter\AdminExporter;
 use Sonata\AdminBundle\Controller\CRUDController as BaseCRUDController;
-use Sonata\AdminBundle\Model\AuditManagerInterface;
-use Sonata\AdminBundle\Request\AdminFetcherInterface;
-use Sonata\AdminBundle\Util\AdminAclUserManagerInterface;
-use Sonata\AdminBundle\Util\AdminObjectAclManipulator;
-use Sonata\Exporter\Exporter;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Zicht\Bundle\AdminBundle\Event\AdminEvents;
-use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
-use Zicht\Bundle\UrlBundle\Url\Provider;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Zicht\Bundle\AdminBundle\Event\AdminEvents;
+use Zicht\Bundle\AdminBundle\Event\ObjectDuplicateEvent;
 use Zicht\Bundle\UrlBundle\Url\Provider as UrlProvider;
 
 /**
@@ -45,10 +35,8 @@ class CRUDController extends BaseCRUDController
 
     /**
      * Override content of an original page with content of a new page and remove new page
-     *
-     * @return RedirectResponse
      */
-    public function overrideAction(Request $request)
+    public function overrideAction(Request $request): RedirectResponse
     {
         $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
@@ -152,10 +140,6 @@ class CRUDController extends BaseCRUDController
         return parent::showAction($request);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function editAction(Request $request): Response
     {
         if ($request->get('__bind_only')) {
@@ -165,10 +149,6 @@ class CRUDController extends BaseCRUDController
         return parent::editAction($request);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function createAction(Request $request): Response
     {
         $refl = new \ReflectionClass($this->admin->getClass());
@@ -199,13 +179,10 @@ class CRUDController extends BaseCRUDController
         return parent::createAction($request);
     }
 
-
     /**
      * Move the item up. Used for Tree admins
      *
-     * @param Request $request
      * @param mixed $id
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function moveUpAction(Request $request, $id): Response
     {
@@ -220,11 +197,9 @@ class CRUDController extends BaseCRUDController
         }
     }
 
-
     /**
      * Move the item up. Used for Tree admins
      *
-     * @param Request $request
      * @param mixed $id
      */
     public function moveDownAction(Request $request, $id): Response
