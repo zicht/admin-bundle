@@ -7,12 +7,10 @@ namespace Zicht\Bundle\AdminBundle\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -41,9 +39,6 @@ class TreeAdmin extends AbstractAdmin
         return $query;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureFormFields(FormMapper $form): void
     {
         $form
@@ -55,10 +50,6 @@ class TreeAdmin extends AbstractAdmin
             ->end();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
@@ -91,10 +82,6 @@ class TreeAdmin extends AbstractAdmin
             );
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function configureListFields(ListMapper $list): void
     {
         $list
@@ -117,9 +104,6 @@ class TreeAdmin extends AbstractAdmin
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
@@ -127,7 +111,6 @@ class TreeAdmin extends AbstractAdmin
         $collection->add('moveUp', $this->getRouterIdParameter() . '/move-up');
         $collection->add('moveDown', $this->getRouterIdParameter() . '/move-down');
     }
-
 
     /**
      * Get item plus children

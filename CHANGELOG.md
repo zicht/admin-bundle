@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
-## 7.0.0 - 2022-07-11
+## 7.0.0 - 2022-09-30
 ### Removed
 - Support for Sonata ^3
 ### Added
