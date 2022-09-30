@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class EventPropagationPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         $def = $container->getDefinition('zicht_admin.event_propagator');

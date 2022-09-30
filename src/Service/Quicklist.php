@@ -5,8 +5,8 @@
 
 namespace Zicht\Bundle\AdminBundle\Service;
 
-use Sonata\AdminBundle\Admin\Pool;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Sonata\AdminBundle\Admin\Pool;
 
 /**
  * Quick list service
@@ -28,10 +28,6 @@ class Quicklist
      */
     private $repos;
 
-    /**
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-     * @param \Sonata\AdminBundle\Admin\Pool $pool
-     */
     public function __construct(Registry $doctrine, Pool $pool)
     {
         $this->doctrine = $doctrine;
@@ -50,7 +46,6 @@ class Quicklist
     {
         $this->repos[$name] = $config;
     }
-
 
     /**
      * Returns all configurations
@@ -75,7 +70,7 @@ class Quicklist
      * Gets the first admin when there are multiple definitions.
      *
      * @param string $class
-     * @return null|\Sonata\AdminBundle\Admin\AdminInterface
+     * @return \Sonata\AdminBundle\Admin\AdminInterface|null
      */
     private function getFirstAdminPerClass($class)
     {
@@ -98,7 +93,7 @@ class Quicklist
      *
      * @param string $repository
      * @param string $pattern
-     * @param null|string $language
+     * @param string|null $language
      * @param int $max
      * @return array
      */
@@ -115,7 +110,6 @@ class Quicklist
             $resultRecord = $this->createResultRecord($record, $admin);
             $results[] = $resultRecord;
         }
-
 
         // TODO do this sort in DQL. Unfortunately, doctrine is not too handy with this, so
         // I'll keep it like this for a second. Note the the "setMaxResults()" should be reverted to $max
@@ -134,7 +128,6 @@ class Quicklist
 
         return array_slice($results, 0, $max);
     }
-
 
     /**
      * Return a single record by it's id. Used to map the front-end variable back to an object from the repository.
@@ -155,7 +148,7 @@ class Quicklist
     /**
      * @param string $repository
      * @param string $pattern
-     * @param null|string $language
+     * @param string|null $language
      * @return mixed
      */
     private function findRecords($repository, $pattern, $language = null)
@@ -194,7 +187,7 @@ class Quicklist
             'label' => (string)$record,
             'value' => (string)$record,
             'url' => ($admin ? $admin->generateObjectUrl('edit', $record) : null),
-            'id' => ($admin ? $admin->id($record) : null)
+            'id' => ($admin ? $admin->id($record) : null),
         ];
         return $resultRecord;
     }

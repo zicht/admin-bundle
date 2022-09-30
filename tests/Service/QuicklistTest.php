@@ -1,11 +1,9 @@
 <?php
-// phpcs:disable Zicht.Commenting.FunctionComment.Missing,Zicht.NamingConventions.Functions.NestedDefinition,PSR1.Classes.ClassDeclaration.MultipleClasses
 /**
  * @copyright Zicht Online <https://zicht.nl>
  */
 
 namespace ZichtTest\Bundle\AdminBundle {
-
 use PHPUnit\Framework\TestCase;
 use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
@@ -38,7 +36,6 @@ use Zicht\Bundle\AdminBundle\Service\Quicklist;
             $this->assertEquals(['a' => ['repository' => ['b' => 'c']]], $q->getRepositoryConfigs(false));
             $this->assertEquals([], $q->getRepositoryConfigs(true));
         }
-
 
         public function testGetResults()
         {
@@ -101,7 +98,6 @@ namespace ZichtTest\Bundle\AdminBundle\M {
             return new Eb();
         }
 
-
         public function __call($method, $args)
         {
             $this->calls[] = [$method, $args];
@@ -109,13 +105,11 @@ namespace ZichtTest\Bundle\AdminBundle\M {
             return $this;
         }
 
-
         public function getQuery()
         {
             return new Q($this->results);
         }
     }
-
 
     class Q
     {

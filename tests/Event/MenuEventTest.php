@@ -19,7 +19,6 @@ class MenuEventTest extends TestCase
         $this->assertEquals(['name' => $e->getTitle(), 'uri' => $e->getUrl()], $e->getMenuConfig());
     }
 
-
     public function testOptions()
     {
         $e = new MenuEvent('url', 'title', ['foo' => 'bar']);
@@ -27,7 +26,7 @@ class MenuEventTest extends TestCase
             [
                 'name' => $e->getTitle(),
                 'uri' => $e->getUrl(),
-                'foo' => 'bar'
+                'foo' => 'bar',
             ],
             $e->getMenuConfig()
         );

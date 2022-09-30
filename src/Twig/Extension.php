@@ -5,9 +5,9 @@
 
 namespace Zicht\Bundle\AdminBundle\Twig;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use InvalidArgumentException;
 use Sonata\AdminBundle\Admin\Pool;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -26,16 +26,11 @@ class Extension extends AbstractExtension
      */
     private $doctrine;
 
-    /**
-     * @param Pool $sonata
-     * @param Registry $doctrine
-     */
     public function __construct(Pool $sonata, Registry $doctrine)
     {
         $this->sonata = $sonata;
         $this->doctrine = $doctrine;
     }
-
 
     /**
      * Registers the 'admin_url' function
@@ -48,7 +43,6 @@ class Extension extends AbstractExtension
             'admin_url' => new TwigFunction('admin_url', [$this, 'adminUrl']),
         ];
     }
-
 
     /**
      * Render an url to a sonata admin
@@ -89,7 +83,6 @@ class Extension extends AbstractExtension
             return $admin->generateUrl($action, $parameters);
         }
     }
-
 
     /**
      * Returns the name of the extension.

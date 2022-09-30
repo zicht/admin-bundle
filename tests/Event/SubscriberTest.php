@@ -46,7 +46,7 @@ class SubscriberTest extends TestCase
         $itemConfig = [
             'name' => 'name',
             'foo' => 'bar',
-            'baz' => 'bat'
+            'baz' => 'bat',
         ];
 
         $item->expects($this->once())->method('getMenuConfig')->will($this->returnValue($itemConfig));

@@ -24,7 +24,7 @@ class ObjectDuplicateEvent extends Event
         $this->oldObject = $oldObject;
         $this->newObject = $newObject;
     }
-    
+
     /**
      * @return object
      */

@@ -17,17 +17,11 @@ class MultipleTransformer implements DataTransformerInterface
      */
     private $innerTransformer;
 
-    /**
-     * @param DataTransformerInterface $innerTransformer
-     */
     public function __construct(DataTransformerInterface $innerTransformer)
     {
         $this->innerTransformer = $innerTransformer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function transform($values)
     {
         $ret = [];
@@ -40,9 +34,6 @@ class MultipleTransformer implements DataTransformerInterface
         return $ret;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function reverseTransform($values)
     {
         $ret = [];

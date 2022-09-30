@@ -15,6 +15,10 @@ Nothing so far
 - Support for Sonata ^3
 - Support for PHP 7.2/7.3
 
+## 6.3.4 - 2022-09-30
+### Changed
+- Swapped the zicht/standards-php (PHPCS) linter for PHP CS Fixer.
+
 ## 6.3.3 - 2022-05-13
 ### Fixed
 - Fixed usage of deprecated Twig template colon path and changed into modern path

@@ -14,6 +14,6 @@ final class AdminEvents
      * Events of this type are added to the admin menu
      */
     const MENU_EVENT = 'zicht_admin.menu';
-    
+
     const OBJECT_DUPLICATE_EVENT = 'zicht_admin.object_duplicate';
 }

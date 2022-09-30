@@ -69,7 +69,7 @@ class TreeAdmin extends AbstractAdmin
                         'query_builder' => function ($repo) {
                             return $repo->createQueryBuilder('t')->andWhere('t.parent IS NULL');
                         },
-                        'class' => $this->getClass()
+                        'class' => $this->getClass(),
                     ],
                 ]
             )

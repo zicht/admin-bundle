@@ -7,13 +7,12 @@ namespace Zicht\Bundle\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormBuilderInterface;
-
-use Zicht\Bundle\AdminBundle\DataTransformer\MultipleTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zicht\Bundle\AdminBundle\DataTransformer\ClassTransformer;
+use Zicht\Bundle\AdminBundle\DataTransformer\MultipleTransformer;
 use Zicht\Bundle\AdminBundle\DataTransformer\NoneTransformer;
 use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
@@ -27,18 +26,11 @@ class AutocompleteType extends AbstractType
      */
     private $quicklist;
 
-    /**
-     * @param Quicklist $quicklist
-     */
     public function __construct(Quicklist $quicklist)
     {
         $this->quicklist = $quicklist;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -67,18 +59,11 @@ class AutocompleteType extends AbstractType
         }
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     public function getParent()
     {
         return TextType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -96,9 +81,6 @@ class AutocompleteType extends AbstractType
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['route'] = $options['route'];
@@ -112,9 +94,6 @@ class AutocompleteType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix()
     {
         return 'zicht_quicklist_autocomplete';
