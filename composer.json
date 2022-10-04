@@ -40,6 +40,6 @@
     "scripts": {
         "lint": "php-cs-fixer fix --dry-run --diff -vvv",
         "lint-fix": "php-cs-fixer fix",
-        "test": "phpunit tests/"
+        "test": "phpunit"
     }
 }
