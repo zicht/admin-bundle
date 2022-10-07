@@ -34,10 +34,8 @@ final class AdminUtil
      *
      * @template Tr of object
      * @param FormMapper<Tr> $formMapper
-     *
-     * @return void
      */
-    public static function reorderTabs(FormMapper $formMapper, array $tabOrder)
+    public static function reorderTabs(FormMapper $formMapper, array $tabOrder): void
     {
         $tabsOriginal = $formMapper->getAdmin()->getFormTabs();
 
@@ -59,6 +57,7 @@ final class AdminUtil
      * @param FormMapper<T> $formMapper
      * @param string|null $helpPrefix
      * @return $this
+     * @deprecated since v7.0.1. You should set help text directly in the field definition
      */
     public function map(FormMapper $formMapper, $helpPrefix = null)
     {
@@ -71,6 +70,7 @@ final class AdminUtil
      * Toggle wether or not to add help text
      *
      * @return $this
+     * @deprecated since v7.0.1. You should set help text directly in the field definition
      */
     public function toggleHelp()
     {
@@ -82,18 +82,22 @@ final class AdminUtil
      * Add a field to the given formMapper
      *
      * @param string $name
-     * @param null $type
+     * @param string|null $type
      * @return $this
+     * @deprecated since v7.0.1. You should set help text directly in the field definition
      */
     public function add($name, $type = null, array $options = [], array $fieldDescriptionOptions = [])
     {
         if (null === $this->formMapper) {
             throw new LogicException('No FormMapper to add fields to, please make sure you start with AdminUtil->map');
         }
-        $this->formMapper->add($name, $type, $options, $fieldDescriptionOptions);
-        if ($this->addHelp) {
-            $this->formMapper->setHelps([$name => 'help' . (null !== $this->helpPrefix ? sprintf('.%s', $this->helpPrefix) : '') . '.' . $name]);
+
+        if ($this->addHelp && !isset($options['help'])) {
+            $options['help'] = 'help' . (null !== $this->helpPrefix ? sprintf('.%s', $this->helpPrefix) : '') . '.' . $name;
         }
+
+        $this->formMapper->add($name, $type, $options, $fieldDescriptionOptions);
+
         return $this;
     }
 
@@ -101,6 +105,7 @@ final class AdminUtil
      * @param string $name
      * @param array $arguments
      * @return $this
+     * @deprecated since v7.0.1. You should set help text directly in the field definition
      */
     public function __call($name, $arguments = [])
     {
