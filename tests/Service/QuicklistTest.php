@@ -4,8 +4,8 @@
  */
 
 namespace ZichtTest\Bundle\AdminBundle {
-use PHPUnit\Framework\TestCase;
-use Zicht\Bundle\AdminBundle\Service\Quicklist;
+    use PHPUnit\Framework\TestCase;
+    use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
     class QuicklistTest extends TestCase
     {
