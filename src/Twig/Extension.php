@@ -6,7 +6,6 @@
 namespace Zicht\Bundle\AdminBundle\Twig;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use InvalidArgumentException;
 use Sonata\AdminBundle\Admin\Pool;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -51,7 +50,7 @@ class Extension extends AbstractExtension
      * @param string $action
      * @param array $parameters
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function adminUrl($subject, $action, $parameters = [])
     {
@@ -64,7 +63,7 @@ class Extension extends AbstractExtension
                 $className = $this->doctrine->getAliasNamespace($namespace) . '\\' . $entity;
             }
         } else {
-            throw new InvalidArgumentException('Unsupported subject, need either an object or a string');
+            throw new \InvalidArgumentException('Unsupported subject, need either an object or a string');
         }
 
         /** @var $admin \Sonata\AdminBundle\Admin\Admin */
@@ -75,7 +74,7 @@ class Extension extends AbstractExtension
         }
 
         if (!$admin) {
-            throw new InvalidArgumentException("No admin found for {$className}");
+            throw new \InvalidArgumentException("No admin found for {$className}");
         }
         if (is_object($subject)) {
             return $admin->generateObjectUrl($action, $subject, $parameters);

@@ -6,7 +6,6 @@
 namespace Zicht\Bundle\AdminBundle\AdminMenu;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\Event;
 use Zicht\Bundle\AdminBundle\Event\AdminEvents;
@@ -19,19 +18,13 @@ use Zicht\Bundle\PageBundle\Event\PageViewEvent;
  */
 class EventPropagationBuilder implements PropagationInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $hosts;
 
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     public function __construct(RequestStack $requestStack, array $hosts, EventDispatcherInterface $eventDispatcher)
@@ -52,9 +45,7 @@ class EventPropagationBuilder implements PropagationInterface
             return;
         }
         /** @var \Zicht\Bundle\PageBundle\Event\PageViewEvent $e */
-
-        /** @var Request $request */
-        if ($request = $this->requestStack->getMasterRequest()) {
+        if ($request = $this->requestStack->getMainRequest()) {
             $host = $request->getHost();
             foreach ($this->hosts as $otherHost) {
                 if ($otherHost != $host) {

@@ -13,7 +13,7 @@
         "php": "^7.4 || ^8.0",
         "symfony/console": "^5.4",
         "sonata-project/doctrine-orm-admin-bundle": "^4",
-        "zicht/framework-extra-bundle": "dev-feature/symfony-5",
+        "zicht/framework-extra-bundle": "^10",
         "sensio/framework-extra-bundle": "^5",
         "twig/twig": "^2.13 || ^3"
     },

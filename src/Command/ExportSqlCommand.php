@@ -131,7 +131,7 @@ class ExportSqlCommand extends Command
     }
 
     /**
-     * @param $type
+     * @param mixed $type
      * @return array
      */
     private function getArgs($type, InputInterface $input)
