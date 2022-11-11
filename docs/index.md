@@ -16,7 +16,7 @@ screen. You can enable this menu by adding it to your front end template:
 You can add quick lists to your dashboard by configuring a block which renders the quicklist action, or by adding this
 to your main admin layout:
 
-    {% render 'ZichtAdminBundle:Quicklist:quicklist' %}
+    {% render '\Zicht\Bundle\AdminBundle\Controller\QuicklistController::quicklistAction' %}
 
 This renders a list of simple forms which you can use to quickly jump to the "show" screen of a record in the database.
 

@@ -39,7 +39,7 @@ final class AdminUtil
     {
         $tabsOriginal = $formMapper->getAdmin()->getFormTabs();
 
-        //filter out tabs that doesn't exist (yet)
+        // filter out tabs that doesn't exist (yet)
         $tabOrder = array_filter(
             $tabOrder,
             function ($key) use ($tabsOriginal) {

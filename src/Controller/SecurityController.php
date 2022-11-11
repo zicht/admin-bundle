@@ -19,10 +19,8 @@ class SecurityController extends AbstractController
     /**
      * The login handling, rendering of the login form etc
      */
-    public function loginAction(): Response
+    public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

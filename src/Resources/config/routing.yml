@@ -11,7 +11,7 @@ zicht_admin_redirect:
 
 zicht_admin_login:
     path:     /login
-    defaults: { _controller: ZichtAdminBundle:Security:login }
+    defaults: { _controller: 'Zicht\Bundle\AdminBundle\Controller\SecurityController::loginAction' }
 
 zicht_admin_login_check:
     path: /admin/login_check
