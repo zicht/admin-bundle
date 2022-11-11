@@ -14,6 +14,7 @@
             <argument type="service" id="doctrine"/>
             <argument type="service" id="sonata.admin.pool"/>
         </service>
+        <service id="Zicht\Bundle\AdminBundle\Service\Quicklist" alias="zicht_admin.quicklist"/>
 
         <service id="zicht_admin.form.autocomplete" class="%zicht_admin.autocomplete_type.class%">
             <argument type="service" id="zicht_admin.quicklist"/>

@@ -10,12 +10,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 /**
  * Controls a quick list for configured entities.
  */
 class QuicklistController extends AbstractController
 {
+    public static function getSubscribedServices(): array
+    {
+        return ['zicht_admin.quicklist' => Quicklist::class] + parent::getSubscribedServices();
+    }
+
     /**
      * Displays a quick list control for jumping to entries registered in the quick list service
      *
