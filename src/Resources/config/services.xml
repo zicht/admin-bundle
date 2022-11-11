@@ -16,6 +16,9 @@
         <prototype namespace="Zicht\Bundle\AdminBundle\Controller\" resource="../../Controller/" exclude="../../Controller/RcController.php" autowire="true" public="true">
             <tag name="controller.service_arguments" />
             <tag name="container.service_subscriber" />
+            <call method="setContainer">
+                <argument type="service" id="Psr\Container\ContainerInterface" />
+            </call>
         </prototype>
 
         <service id="zicht_admin.event_subscriber" class="Zicht\Bundle\AdminBundle\Event\Subscriber">
