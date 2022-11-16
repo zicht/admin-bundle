@@ -150,5 +150,6 @@ class DumpRoleHierarchyCommand extends Command
         $output->writeln('# ' . join(' ', $_SERVER['argv']));
         $output->writeln('');
         $output->writeln(Yaml::dump($dumpableConfig, 4));
+        return Command::SUCCESS;
     }
 }

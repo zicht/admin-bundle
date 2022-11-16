@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.0.2 - 2022-11-14
+### Fixed
+- Returnvalue for `DumpRoleHierarchyCommand`
+### Removed
+- `CheckAccessCommand` and `ExportSqlCommand`
+
 ## 8.0.1 - 2022-11-11
 ### Fixed
 - Set Psr ContainerInterface as container on Controllers
