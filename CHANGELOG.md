@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.0.3 - 2022-11-28
+### Fixed
+- Supply javascript for `jQuery.ui-autocomplete` usage.
+
 ## 8.0.2 - 2022-11-14
 ### Fixed
 - Returnvalue for `DumpRoleHierarchyCommand`
