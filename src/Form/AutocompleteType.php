@@ -21,6 +21,13 @@ use Zicht\Bundle\AdminBundle\Service\Quicklist;
  */
 class AutocompleteType extends AbstractType
 {
+    public const OPTION_TRANSFORMER_AUTO = 'auto';
+    public const OPTION_TRANSFORMER_CLASS = 'class';
+    public const OPTION_TRANSFORMER_MULTIPLE = 'multiple';
+    public const OPTION_TRANSFORMER_MULTIPLE_NONE = 'multiple_none';
+    public const OPTION_TRANSFORMER_NONE = 'none';
+    public const OPTION_TRANSFORMER_NOOP = 'noop'; // disable transformation completely
+
     /**
      * @var Quicklist
      */
@@ -36,24 +43,24 @@ class AutocompleteType extends AbstractType
         parent::buildForm($builder, $options);
 
         $transformerStrategy = $options['transformer'];
-        if ($transformerStrategy === 'auto') {
-            $transformerStrategy = $options['multiple'] ? 'multiple' : 'class';
+        if (self::OPTION_TRANSFORMER_AUTO === $transformerStrategy) {
+            $transformerStrategy = $options['multiple'] ? self::OPTION_TRANSFORMER_MULTIPLE : self::OPTION_TRANSFORMER_CLASS;
         }
 
         switch ($transformerStrategy) {
-            case 'class':
+            case self::OPTION_TRANSFORMER_CLASS:
                 $builder->addViewTransformer(new ClassTransformer($this->quicklist, $options['repo']));
                 break;
 
-            case 'none':
+            case self::OPTION_TRANSFORMER_NONE:
                 $builder->addViewTransformer(new NoneTransformer($this->quicklist, $options['repo']));
                 break;
 
-            case 'multiple':
+            case self::OPTION_TRANSFORMER_MULTIPLE:
                 $builder->addViewTransformer(new MultipleTransformer(new ClassTransformer($this->quicklist, $options['repo'])));
                 break;
 
-            case 'multiple_none':
+            case self::OPTION_TRANSFORMER_MULTIPLE_NONE:
                 $builder->addViewTransformer(new MultipleTransformer(new NoneTransformer($this->quicklist, $options['repo'])));
                 break;
         }
@@ -73,7 +80,7 @@ class AutocompleteType extends AbstractType
                     'attr' => ['placeholder' => 'zicht_quicklist.autocomplete_type.search_placeholder'],
                     'multiple' => false,
                     'translation_domain' => 'admin',
-                    'transformer' => 'auto',
+                    'transformer' => self::OPTION_TRANSFORMER_AUTO,
                     'route' => 'zicht_admin_quicklist_quicklist',
                     'route_params' => [],
                     'class' => null, // BC - somehow this options is created when adding this type as a filter... :?
