@@ -31,9 +31,9 @@
 {% endblock %}
 
 {% block zicht_quicklist_autocomplete_control %}
-    {% set _value=value %}
-    <input type="hidden" name="{{ full_name }}" value="{{ _value.id }}" id="{{ id }}">
-    {% set value=_value.value %}
+    {% set _value = value %}
+    <input type="hidden" name="{{ full_name }}" value="{{ _value ? _value.id }}" id="{{ id }}">
+    {% set value = _value ? _value.label : null %}
     {% set full_name=id ~ "_text_control" %}
     {{ block('form_widget_simple') }}
 {% endblock %}
