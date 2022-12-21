@@ -77,7 +77,11 @@ class AutocompleteType extends AbstractType
             ->setRequired(['repo'])
             ->setDefaults(
                 [
-                    'attr' => ['placeholder' => 'zicht_quicklist.autocomplete_type.search_placeholder'],
+                    'attr' => [
+                        'placeholder' => 'zicht_quicklist.autocomplete_type.search_placeholder',
+                        'data-allow-manual-input' => false,
+                        'data-allow-manual-input-regex' => null,
+                    ],
                     'multiple' => false,
                     'translation_domain' => 'admin',
                     'transformer' => self::OPTION_TRANSFORMER_AUTO,

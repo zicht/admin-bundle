@@ -1,23 +1,28 @@
 /**
  */
-var ZichtQuicklistAutocomplete = (function($) {
+var ZichtQuicklistAutocomplete = (function ($) {
     'use strict';
 
     function initTextControl($hidden, $text, service_url, callback) {
         callback = callback || $.noop;
 
-        var language = $text.data('language') || false,
-            params = {};
+        var language = $text.data('language') || false;
+        var params = {};
 
         if ($text.data('language')) {
             params = {language: language};
         }
 
+        var allowManualInput = $text.data('allow-manual-input') || false;
+        var allowManualInputRegex = $text.data('allow-manual-input-regex') || '';
+
         $text
-            .focus(function(){$text.select();})
+            .focus(function () {
+                $text.select();
+            })
             .autocomplete({
                 appendTo: ".zicht-ui-autocompletecontainer_" + $text.attr('id'),
-                source: function(req, resp) {
+                source: function (req, resp) {
                     params.pattern = req.term;
                     $.get(
                         service_url,
@@ -25,44 +30,29 @@ var ZichtQuicklistAutocomplete = (function($) {
                         resp
                     );
                 },
-                select: function(e, ui) {
+                select: function (e, ui) {
                     $hidden.val(ui.item.id);
                     $text.val(ui.item.label);
                     callback(ui.item);
+                },
+                change: function (e, ui) {
+                    if (!allowManualInput) {
+                        return;
+                    }
+                    var value = new String($(e.target).val());
+                    if (allowManualInputRegex && !new RegExp(allowManualInputRegex, 'i').test(value)) {
+                        return;
+                    }
+
+                    $hidden.val(value);
                 }
             })
         ;
         return $text;
     }
 
-    function initCheckboxControl($hidden, $text, $checkbox) {
-        function updateCheckboxStatus() {
-            if ($checkbox.prop('checked')) {
-                $text.val('');
-                $hidden.val('');
-                $text.prop('readonly', true);
-            } else {
-                $text.prop('readonly', false);
-            }
-        }
-        updateCheckboxStatus();
-        $checkbox.on('change', updateCheckboxStatus);
-        $text.on({
-            'click': function() {
-                if ($checkbox.prop('checked')) {
-                    $checkbox.prop('checked', false);
-                    $checkbox.trigger('change');
-                }
-            }
-        });
-        $hidden.on('change', function() {
-            $checkbox.prop('checked', !$hidden.val());
-            $checkbox.trigger('change');
-        });
-    }
-
     function initRemoveControl($control) {
-        $control.on('click', function(e) {
+        $control.on('click', function (e) {
             $control.parents('li:first').remove();
             e.preventDefault();
         });
@@ -76,7 +66,7 @@ var ZichtQuicklistAutocomplete = (function($) {
      * @param {jQuery} $form
      */
     function initPreSubmitCheck($hidden, $text, $form) {
-        $form.on('submit', function() {
+        $form.on('submit', function () {
             if ($text.val() === '') {
                 $hidden.val('');
             }
@@ -86,7 +76,6 @@ var ZichtQuicklistAutocomplete = (function($) {
     function initSingleAutocomplete($hidden, service_url, callback) {
         var $text = $hidden.siblings('input[type="text"]');
         initTextControl($hidden, $text, service_url, callback);
-        initCheckboxControl($hidden, $text, $hidden.siblings('input[type="checkbox"]'));
         initPreSubmitCheck($hidden, $text, $hidden.closest('form'));
     }
 
@@ -98,15 +87,15 @@ var ZichtQuicklistAutocomplete = (function($) {
 
 
     function initMultipleAutocomplete($ul, service_url) {
-        var $add        = $ul.find('.add-control');
-        var $items      = $ul.find('>li');
-        var $template   = $ul.find('script#' + $ul.attr('data-template'));
+        var $add = $ul.find('.add-control');
+        var $items = $ul.find('>li');
+        var $template = $ul.find('script#' + $ul.attr('data-template'));
 
-        $items.each(function(i, li) {
+        $items.each(function (i, li) {
             var $li = $(li);
 
             if ($li.find('.add-control')) {
-                initListItem($li, service_url, function() {
+                initListItem($li, service_url, function () {
                     addSelectionToList($(li));
                 });
             } else {
@@ -129,7 +118,7 @@ var ZichtQuicklistAutocomplete = (function($) {
         }
 
 
-        $add.on('click', function(e) {
+        $add.on('click', function (e) {
             e.preventDefault();
             var $li = $add.parents('li:first');
             // if no value set, ignore click
@@ -141,7 +130,7 @@ var ZichtQuicklistAutocomplete = (function($) {
     }
 
     return {
-        'init': function($control, service_url, multiple) {
+        'init': function ($control, service_url, multiple) {
             if (multiple) {
                 initMultipleAutocomplete($control, service_url);
             } else {
