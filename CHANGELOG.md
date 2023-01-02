@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.1.0 - 2022-12-22
+### Added
+- Allow for manual values in `AutocompleteType`
+
 ## 8.0.4 - 2022-12-01
 ### Fixed
 - Autocomplete control widget: value is null when creating a new entity
