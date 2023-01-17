@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.1.1 - 2023-01-17
+### Fixed
+- Forward merge of v6.3.5: Fixed Event Propagation types
+
 ## 8.1.0 - 2022-12-22
 ### Added
 - Allow for manual values in `AutocompleteType`
