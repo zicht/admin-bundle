@@ -14,9 +14,6 @@ interface PropagationInterface
 {
     /**
      * Build the event and forward it, using the event's own dispatcher.
-     *
-     * @param \Symfony\Component\EventDispatcher\Event $e
-     * @return mixed
      */
     public function buildAndForwardEvent(Event $e);
 }
