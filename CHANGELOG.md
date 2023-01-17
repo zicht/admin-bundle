@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 6.3.5 - 2023-01-17
+### Fixed
+- Fixed Event Propagation types
+
 ## 6.3.4 - 2022-09-30
 ### Changed
 - Swapped the zicht/standards-php (PHPCS) linter for PHP CS Fixer.

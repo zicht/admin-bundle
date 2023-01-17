@@ -59,8 +59,8 @@ class EventPropagationBuilder implements PropagationInterface
             foreach ($this->hosts as $otherHost) {
                 if ($otherHost != $host) {
                     $this->eventDispatcher->dispatch(
-                        AdminEvents::MENU_EVENT,
-                        new MenuEvent(sprintf('%s:\\\\%s%s', $request->getScheme(), $otherHost, $request->getRequestUri()), $otherHost)
+                        new MenuEvent(sprintf('%s:\\\\%s%s', $request->getScheme(), $otherHost, $request->getRequestUri()), $otherHost),
+                        AdminEvents::MENU_EVENT
                     );
                 }
             }
