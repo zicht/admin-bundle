@@ -36,6 +36,10 @@ Nothing so far
 ### Removed
 - Support for Symfony 4
 
+## 7.0.2 - 2023-01-17
+### Fixed
+- Forward merge of v6.3.5: Fixed Event Propagation types
+
 ## 7.0.1 - 2022-10-14
 ### Changed
 - Fixed and deprecated the AdminUtil help text methods.
@@ -46,6 +50,10 @@ Nothing so far
 ### Removed
 - Support for Sonata ^3
 - Support for PHP 7.2/7.3
+
+## 6.3.5 - 2023-01-17
+### Fixed
+- Fixed Event Propagation types
 
 ## 6.3.4 - 2022-09-30
 ### Changed
