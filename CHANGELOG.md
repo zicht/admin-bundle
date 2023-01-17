@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 7.0.2 - 2023-01-17
+### Fixed
+- Forward merge of v6.3.5: Fixed Event Propagation types
+
 ## 7.0.1 - 2022-10-14
 ### Changed
 - Fixed and deprecated the AdminUtil help text methods.
