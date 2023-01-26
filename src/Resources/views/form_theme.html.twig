@@ -15,12 +15,14 @@
         {{ block('zicht_quicklist_autocomplete_single_widget') }}
         {% set initializer = 'init' %}
     {% endif %}
+
     <script type="text/javascript">
         jQuery(function() {
             ZichtQuicklistAutocomplete.init(
                 jQuery('#{{ id }}'),
                 {{ path(route, route_params)|json_encode|raw }},
-                {{ (multiple ? true : false)|json_encode|raw }}
+                {{ (multiple ? true : false)|json_encode|raw }},
+                {{ js_callback|default ? js_callback : 'undefined' }}
             );
         });
     </script>

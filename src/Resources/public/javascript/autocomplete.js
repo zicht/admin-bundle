@@ -130,11 +130,11 @@ var ZichtQuicklistAutocomplete = (function ($) {
     }
 
     return {
-        'init': function ($control, service_url, multiple) {
+        'init': function ($control, service_url, multiple, callback) {
             if (multiple) {
                 initMultipleAutocomplete($control, service_url);
             } else {
-                initSingleAutocomplete($control, service_url);
+                initSingleAutocomplete($control, service_url, callback);
             }
         }
     };

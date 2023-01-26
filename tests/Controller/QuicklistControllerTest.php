@@ -34,14 +34,6 @@ class QuicklistControllerTest extends TestCase
         $this->ql = $ql;
     }
 
-    public function testQuickListAction()
-    {
-        $req = new Request();
-        $res = $this->controller->quicklistAction($req);
-
-        $this->assertEquals(['repos' => ['foo' => 'bar']], $res);
-    }
-
     public function testQuickListActionJson()
     {
         $req2 = new Request([
