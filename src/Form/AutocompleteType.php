@@ -88,6 +88,7 @@ class AutocompleteType extends AbstractType
                     'route' => 'zicht_admin_quicklist_quicklist',
                     'route_params' => [],
                     'class' => null, // BC - somehow this options is created when adding this type as a filter... :?
+                    'js_callback' => null,
                 ]
             );
     }
@@ -103,6 +104,7 @@ class AutocompleteType extends AbstractType
         if ($options['multiple']) {
             $view->vars['full_name'] = $view->vars['full_name'] . '[]';
         }
+        $view->vars['js_callback'] = $options['js_callback'];
     }
 
     public function getBlockPrefix()

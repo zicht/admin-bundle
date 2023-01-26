@@ -7,6 +7,8 @@ namespace Zicht\Bundle\AdminBundle\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sonata\AdminBundle\Admin\Pool;
+use Sonata\AdminBundle\Exception\AdminClassNotFoundException;
+use Sonata\AdminBundle\Exception\AdminCodeNotFoundException;
 
 /**
  * Quick list service
@@ -84,8 +86,11 @@ class Quicklist
             }
         }
 
-        return $code === null ?
-            $this->adminPool->getAdminByClass($class) : $this->adminPool->getAdminByAdminCode($code);
+        try {
+            return $code === null ? $this->adminPool->getAdminByClass($class) : $this->adminPool->getAdminByAdminCode($code);
+        } catch (AdminClassNotFoundException|AdminCodeNotFoundException) {
+            return null;
+        }
     }
 
     /**

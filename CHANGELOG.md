@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.1.2 - 2023-01-26
+### Fixed
+- Restored the working of `QuickListController::quicklistAction`
+
 ## 8.1.1 - 2023-01-17
 ### Fixed
 - Forward merge of v6.3.5: Fixed Event Propagation types

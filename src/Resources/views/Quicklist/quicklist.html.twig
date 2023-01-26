@@ -3,15 +3,19 @@
     <div class="box-body">
         <table class="table table-bordered table-collapsed">
             <tbody>
-            {% for k, r in repos %}
+            {% for repo in repos %}
                 <tr>
-                    <th>{{ r.title|trans }} <a href="{{ admin_url(r.repository, 'list') }}"><i class="icon-list"></i></a></th>
-                    <td><input type="text" data-quicklist-url="{{ path('zicht_admin_quicklist_quicklist', {'repo': k}) }}"></td>
+                    <th>
+                        {{ repo.label|trans }}
+                    </th>
+                    <td>
+                        {{ form_start(repo.form) }}
+                        {{ form_widget(repo.form) }}
+                        {{ form_end(repo.form) }}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
-<script type="text/javascript" src="{{ asset('bundles/zichtadmin/javascript/quicklist.js') }}"></script>
