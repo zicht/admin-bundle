@@ -2,7 +2,7 @@
 (function() {
     'use strict';
     var loader = function() {
-        var logo_url = '/bundles/zichtadmin/images/zicht.png',
+        var logo_url = '/bundles/zichtadmin/images/fabrique.png',
             container = document.getElementById('zicht_admin_menu'),
             links = container.getElementsByTagName('a'),
             wrapper = document.createElement('div'),
@@ -17,6 +17,7 @@
         wrapper.style.display = 'none';
 
         logo.setAttribute('src', logo_url);
+        logo.classList.add('logo');
 
         if (links.length) {
             wrapper.setAttribute('id', 'zicht_admin_menu_wrapper');
