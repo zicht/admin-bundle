@@ -10,6 +10,8 @@ use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 /**
  * Simple utility transformer used for the autocomplete using the Quicklist service.
+ *
+ * @implements DataTransformerInterface<mixed, mixed>
  */
 class NoneTransformer implements DataTransformerInterface
 {

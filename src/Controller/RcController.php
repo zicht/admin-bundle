@@ -22,12 +22,8 @@ class RcController
         $this->configs = $configs;
     }
 
-    /**
-     * Renders all RC controls
-     *
-     * @return Response
-     */
-    public function controlsAction()
+    /** Renders all RC controls */
+    public function controlsAction(): Response
     {
         return $this->twig->render('@ZichtAdmin/Rc/controls.html.twig', ['configs' => $this->configs]);
     }

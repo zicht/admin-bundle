@@ -1,7 +1,4 @@
 <?php
-/**
- * @copyright Zicht Online <https://zicht.nl>
- */
 
 namespace Zicht\Bundle\AdminBundle\Controller;
 
@@ -20,6 +17,8 @@ use Zicht\Bundle\UrlBundle\Url\Provider as UrlProvider;
 
 /**
  * Provides some basic utility functionality for admin controllers, to be supplied as an construction parameter
+ *
+ * @extends BaseCRUDController<object>
  */
 class CRUDController extends BaseCRUDController
 {
@@ -84,8 +83,8 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
      */
     public function duplicateAction(Request $request): RedirectResponse
     {

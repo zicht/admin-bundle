@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A type utilizing the override functionality.
  *
- * @deprecated Use the more generic {@see \Zicht\Bundle\AdminBundle\Form\ButtonsType}
+ * @deprecated Use the more generic {@see ButtonsType}
  *   Before, OverrideObjectType had to be passed the object explicitly,
  *   but automatically would take the route 'override' and the translate 'admin.override.text_button':
  *     ```

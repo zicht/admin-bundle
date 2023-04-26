@@ -55,10 +55,8 @@ To also override the entities content (after duplication, see section above), ad
    ```
 2. In the entity create the field `copiedFrom` (and its getter and setter).
    ```
-   /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Page")
-    * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
-    */
+   #[ORM\ManyToOne(targetEntity: Page::class)]
+   #[ORM\JoinColumn(referencedColumnName: 'id', onDelete: 'SET NULL')]
    private ?Page $copiedFrom;
    ```
 3. In the admin of the entity, add the override-button:

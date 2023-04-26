@@ -9,6 +9,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 /**
  * Multiple transformer that delegates both the transform and the reverseTransform to the specified inner transformer
+ *
+ * @implements DataTransformerInterface<mixed, mixed[]>
  */
 class MultipleTransformer implements DataTransformerInterface
 {

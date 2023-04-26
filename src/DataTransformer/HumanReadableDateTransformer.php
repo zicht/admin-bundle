@@ -5,10 +5,14 @@
 
 namespace Zicht\Bundle\AdminBundle\DataTransformer;
 
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\DataTransformer\BaseDateTimeTransformer;
 
 /**
  * Support transformer for ZichtDatePickerType
+ *
+ * @extends BaseDateTimeTransformer<string>
+ * @implements DataTransformerInterface<string, string>
  */
 class HumanReadableDateTransformer extends BaseDateTimeTransformer
 {

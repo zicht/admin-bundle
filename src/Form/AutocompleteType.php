@@ -97,8 +97,8 @@ class AutocompleteType extends AbstractType
     {
         $view->vars['route'] = $options['route'];
         $view->vars['route_params'] = $options['route_params'] + [
-                'repo' => $options['repo'],
-            ];
+            'repo' => $options['repo'],
+        ];
         $view->vars['multiple'] = $options['multiple'];
 
         if ($options['multiple']) {

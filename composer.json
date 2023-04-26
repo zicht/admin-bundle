@@ -10,15 +10,19 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
-        "symfony/console": "^5.4",
+        "php": "^8",
+        "symfony/console": "^5.4 || ^6",
+        "symfony/yaml": "^5.4 || ^6",
         "sonata-project/doctrine-orm-admin-bundle": "^4",
-        "zicht/framework-extra-bundle": "^10",
+        "zicht/framework-extra-bundle": "^10 || ^11.x-dev",
         "twig/twig": "^2.13 || ^3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3",
-        "phpunit/phpunit": "^9.1"
+        "phpunit/phpunit": "^9.1",
+        "vimeo/psalm": "^5.16",
+        "zicht/page-bundle": "^9.x-dev",
+        "zicht/url-bundle": "^8.x-dev"
     },
     "autoload": {
         "psr-4": {
@@ -30,11 +34,17 @@
             "ZichtTest\\Bundle\\AdminBundle\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "license": "MIT",
     "scripts": {
+        "analysis": "psalm --no-cache",
         "lint": "php-cs-fixer fix --dry-run --diff -vvv",
         "lint-fix": "php-cs-fixer fix",
         "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-feature-symfony-6": "9.x-dev"
+        }
     }
 }

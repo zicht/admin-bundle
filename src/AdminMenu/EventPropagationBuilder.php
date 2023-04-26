@@ -44,7 +44,6 @@ class EventPropagationBuilder implements PropagationInterface
         if (!$e instanceof PageViewEvent) {
             return;
         }
-        /** @var \Zicht\Bundle\PageBundle\Event\PageViewEvent $e */
         if ($request = $this->requestStack->getMainRequest()) {
             $host = $request->getHost();
             foreach ($this->hosts as $otherHost) {

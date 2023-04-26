@@ -38,7 +38,6 @@ class Propagator
     /**
      * Builds and forwards the event for all progragations registered for the specified event type.
      *
-     * @param \Symfony\Component\EventDispatcher\Event $anyEvent
      * @param string $eventName
      * @return void
      */

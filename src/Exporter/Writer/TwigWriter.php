@@ -28,7 +28,6 @@ class TwigWriter implements TypedWriterInterface
 
     /**
      * @param string $file
-     * @param \Twig_Environment $twig
      * @param string $template
      * @param bool $addEol
      */

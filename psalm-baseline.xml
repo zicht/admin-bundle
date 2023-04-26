@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.x-dev@f9f8bacdf1d1931d10c208401aa3189d1958d182">
+  <file src="src/Security/Handler/RoleSecurityHandler.php">
+    <InvalidExtendClass>
+      <code>BaseRoleSecurityHandler</code>
+    </InvalidExtendClass>
+  </file>
+</files>
