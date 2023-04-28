@@ -11,11 +11,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    public static function getSubscribedServices(): array
-    {
-        return array_merge(parent::getSubscribedServices(), [AuthenticationUtils::class => AuthenticationUtils::class]);
-    }
-
     /**
      * The login handling, rendering of the login form etc
      */
