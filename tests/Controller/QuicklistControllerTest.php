@@ -42,7 +42,7 @@ class QuicklistControllerTest extends TestCase
         ]);
 
         $this->ql->expects($this->once())->method('getResults')->with('bat', 'qux');
-        $res2 = $this->controller->quicklistAction($req2);
+        $res2 = $this->controller->quicklistAction($req2, $this->ql);
 
         $this->assertInstanceOf(
             'Symfony\Component\HttpFoundation\JsonResponse',

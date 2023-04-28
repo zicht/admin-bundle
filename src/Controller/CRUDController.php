@@ -26,11 +26,6 @@ class CRUDController extends BaseCRUDController
     /** @var string[] */
     protected $overrideExcludedProperties = ['copiedFrom'];
 
-    public static function getSubscribedServices(): array
-    {
-        return ['zicht_url.provider' => UrlProvider::class] + parent::getSubscribedServices();
-    }
-
     /**
      * Override content of an original page with content of a new page and remove new page
      */
@@ -127,12 +122,12 @@ class CRUDController extends BaseCRUDController
         return new RedirectResponse($this->admin->generateObjectUrl('edit', $newObject));
     }
 
-    public function showAction(Request $request): Response
+    public function showAction(Request $request, ?UrlProvider $urlProvider = null): Response
     {
         $id = $request->get($this->admin->getIdParameter());
         $obj = $this->admin->getObject($id);
-        if ($this->container->has('zicht_url.provider') && $this->get('zicht_url.provider')->supports($obj)) {
-            return $this->redirect($this->get('zicht_url.provider')->url($obj));
+        if ($urlProvider && $urlProvider->supports($obj)) {
+            return $this->redirect($urlProvider->url($obj));
         }
 
         return parent::showAction($request);

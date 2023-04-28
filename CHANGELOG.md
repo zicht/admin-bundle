@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.1.3 - 2023-04-28
+### Fixed
+- Controller container `->get('service')` deprecations.
+
 ## 8.1.2 - 2023-01-26
 ### Fixed
 - Restored the working of `QuickListController::quicklistAction`

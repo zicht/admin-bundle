@@ -18,11 +18,6 @@ use Zicht\Bundle\AdminBundle\Service\Quicklist;
  */
 class QuicklistController extends AbstractController
 {
-    public static function getSubscribedServices(): array
-    {
-        return ['zicht_admin.quicklist' => Quicklist::class] + parent::getSubscribedServices();
-    }
-
     /**
      * Displays a quick list control for jumping to entries registered in the quick list service
      *
@@ -30,9 +25,8 @@ class QuicklistController extends AbstractController
      * @Template("@ZichtAdmin/Quicklist/quicklist.html.twig")
      * @Route("quick-list")
      */
-    public function quicklistAction(Request $request)
+    public function quicklistAction(Request $request, Quicklist $quicklist)
     {
-        $quicklist = $this->get('zicht_admin.quicklist');
         if ($request->get('repo') && $request->get('pattern')) {
             if ($request->get('language')) {
                 $language = $request->get('language');
