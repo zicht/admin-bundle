@@ -101,10 +101,10 @@ class Quicklist
      * @param string $repository
      * @param string $pattern
      * @param null|string $language
-     * @param int $max
+     * @param null|int $max
      * @return array
      */
-    public function getResults($repository, $pattern, $language = null, $max = 15)
+    public function getResults($repository, $pattern, $language = null, $max = null)
     {
         $queryResults = $this->findRecords($repository, $pattern, $language);
 
@@ -135,7 +135,7 @@ class Quicklist
         );
 
         $repoConfig = $this->repos[$repository];
-        $maxResults = isset($repoConfig['max_results']) ? $repoConfig['max_results'] : $max;
+        $maxResults = $max !== null ? $max : $repoConfig['max_results'];
 
         return array_slice($results, 0, $maxResults);
     }
