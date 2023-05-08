@@ -134,8 +134,7 @@ class Quicklist
             }
         );
 
-        $repoConfig = $this->repos[$repository];
-        $maxResults = $max !== null ? $max : $repoConfig['max_results'];
+        $maxResults = $max !== null ? $max : $this->repos[$repository]['max_results'];
 
         return array_slice($results, 0, $maxResults);
     }
