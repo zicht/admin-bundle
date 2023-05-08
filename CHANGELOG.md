@@ -1,3 +1,7 @@
+## 3.5.8 - 2023-05-08
+### Added
+- Quicklist integer option `max_results` (15 by default).
+
 ## 3.5.7 - 2020-05-04
 - Prefixed the Admin bundle Controller routes with /admin to place /quick-list within the admin path and prevent unauthorised user to request the quick list
 
