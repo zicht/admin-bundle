@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 5.2.4 - 2023-05-09
 ### Added
-- Forward merge of 3.5.8: Quicklist integer option `max_results` (15 by default)
+- Forward merge of 3.5.8: Quicklist integer option `max_results` (15 by default).
 
 ## 5.2.3 - 2020-09-29
 ### Changed
