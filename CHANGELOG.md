@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 
+## 5.2.4 - 2023-05-09
+### Added
+- Forward merge of 3.5.8: Quicklist integer option `max_results` (15 by default)
+
 ## 5.2.3 - 2020-09-29
 ### Changed
 - Increased DX (Developer Experience) and modified output of DumpRoleHierarchyCommand.
@@ -67,6 +71,10 @@ app/console --env=development zicht:admin:dump-role-hierarchy DUPLICATE TRANSLAT
 ### Removed
 - Support for Symfony 2.x
 
+## 4.1.1 - 2023-05-09
+### Added
+- Forward merge of 3.5.8: Quicklist integer option `max_results` (15 by default).
+
 ## 4.1.0 - 2020-05-04
 - Fix quick list admin route (merged in from v3.4.10)
 - fix the flash_message translation so we can change the default message in ZHL (merged in from 3.5.6)
@@ -83,6 +91,10 @@ app/console --env=development zicht:admin:dump-role-hierarchy DUPLICATE TRANSLAT
 
 ## 4.0.1
 - fix for php > 7.1
+
+## 3.5.8 - 2023-05-08
+### Added
+- Quicklist integer option `max_results` (15 by default).
 
 ## 3.5.7 - 2020-05-04
 - Prefixed the Admin bundle Controller routes with /admin to place /quick-list within the admin path and prevent unauthorised user to request the quick list

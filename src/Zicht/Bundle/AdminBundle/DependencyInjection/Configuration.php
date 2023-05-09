@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('quicklist')
                     ->prototype('array')
                         ->children()
+                            ->integerNode('max_results')->defaultValue(15)->end()
                             ->scalarNode('repository')->end()
                             ->scalarNode('title')->end()
                             ->arrayNode('fields')->prototype('scalar')->end()->end()
