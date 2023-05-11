@@ -46,6 +46,7 @@ namespace ZichtTest\Bundle\AdminBundle {
                 [
                     'repository' => 'Foo',
                     'fields' => ['title'],
+                    'max_results' => 15,
                 ]
             );
             $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
