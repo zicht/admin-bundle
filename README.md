@@ -1,7 +1,3 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zicht/admin-bundle/badges/quality-score.png?b=3.5.x)](https://scrutinizer-ci.com/g/zicht/admin-bundle/?branch=3.5.x)
-[![Code Coverage](https://scrutinizer-ci.com/g/zicht/admin-bundle/badges/coverage.png?b=3.5.x)](https://scrutinizer-ci.com/g/zicht/admin-bundle/?branch=3.5.x)
-[![Build Status](https://scrutinizer-ci.com/g/zicht/admin-bundle/badges/build.png?b=3.5.x)](https://scrutinizer-ci.com/g/zicht/admin-bundle/build-status/3.5.x)
-
 # `zicht/admin-bundle`
 Provides integration utilities for SonataAdminBundle.
 
@@ -21,7 +17,7 @@ Add the following configuration to `config/zicht_admin.yml` to override the `Adm
 and alter the url to a match in the list.
 
 ```yaml
-zicht_admin
+zicht_admin:
     menu:
         hosts:
             - site.nl.dev
@@ -92,6 +88,64 @@ To also override the entities content (after duplication, see section above), ad
 
 For an example, see https://github.com/zicht/zestor.nl/pull/155/files
 
+## Quicklist
+The quicklist is an autocomplete feature. In the CMS you can place this as an extra block at the dashboard to search for entities. It is also possible to use the `AutocompleteType` class in admin entities.
+
+### Configuration
+In your project, create `templates/admin/block_admin.html.twig` and add this:
+```
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    {{ render(controller('Zicht\\Bundle\\AdminBundle\\Controller\\QuicklistController::quicklistAction')) }}
+{% endblock %}
+```
+
+In `config/packages/zicht/admin.yaml` you have the option to add multiple repositories to be searched through.
+
+Example:
+```yaml
+zicht_admin:
+    quicklist:
+        App\Entity\Page\BiographyPage:
+            repository: 'App\Entity\Page\BiographyPage'
+            # choose multiple fields to search in...
+            fields: ['firstName', 'lastName', 'profession']
+            title: Bio
+        App\Entity\Page\ArticlePage:
+            repository: 'App\Entity\Page\ArticlePage'
+            # ...or just one field
+            fields: ['title']
+            title: Article
+        App\Entity\Slide:
+            repository: 'App\Entity\Slide'
+            fields: ['title', 'internalTitle', 'image']
+            title: Slide
+            # by default returns 15 results if not configured explicitly
+            max_results: 100
+```
+
+### Implementation example
+```php
+namespace App\Admin;
+
+use App\Entity\Page\BiographyPage;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Form\FormMapper;
+use Zicht\Bundle\AdminBundle\Form\AutocompleteType;
+
+class FooAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $form): void
+    {
+        $form
+            ->add('somePropertyNameHere', AutocompleteType::class, [
+                'repo' => BiographyPage::class,
+            ]);
+    }
+}
+```
+
+
 # Maintainers
 * Boudewijn Schoon <boudewijn@zicht.nl>
-* Erik Trapman <erik@zicht.nl>
