@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 7.0.4 - 2023-05-22
+### Fixed
+- Forward merge of 6.3.7: Attribute check in button form template.
+
 ## 7.0.3 - 2023-05-11
 ### Added
 - Forward merge of 3.5.8: Quicklist integer option `max_results` (15 by default).
