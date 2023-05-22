@@ -98,7 +98,7 @@
         {# @var admin \Sonata\AdminBundle\Admin\AbstractAdmin #}
         <div class="btn-group">
             {% for key, button in buttons %}
-                {% if (not admin.subject or admin.subject.id is empty) and not button.url|default %}
+                {% if (not admin.subject or (admin.subject.id is defined and admin.subject.id is empty)) and not button.url|default %}
                     {# We should create a URL through de subject, but there's no subject, so disable the button #}
                     {% set button = button|merge({ disabled: true }) %}
                 {% endif %}
