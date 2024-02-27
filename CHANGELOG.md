@@ -31,6 +31,11 @@ Nothing so far
 - Support for Sonata ^3
 - Support for PHP 7.2/7.3
 
+## 6.3.8 - 2024-02-27
+### Removed
+- Removed usage of Sensio Framework Extra Bundle features and thus the dependency
+  on the `sensio/framework-extra-bundle` package.
+
 ## 6.3.7 - 2023-05-22
 ### Fixed
 - Attribute check in button form template.

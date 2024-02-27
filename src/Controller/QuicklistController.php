@@ -5,10 +5,10 @@
 
 namespace Zicht\Bundle\AdminBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -19,8 +19,7 @@ class QuicklistController extends AbstractController
     /**
      * Displays a quick list control for jumping to entries registered in the quick list service
      *
-     * @return array|JsonResponse
-     * @Template("@ZichtAdmin/Quicklist/quicklist.html.twig")
+     * @return Response
      * @Route("quick-list")
      */
     public function quicklistAction(Request $request)
@@ -35,8 +34,6 @@ class QuicklistController extends AbstractController
             return new JsonResponse($quicklist->getResults($request->get('repo'), $request->get('pattern'), $language));
         }
 
-        return [
-            'repos' => $quicklist->getRepositoryConfigs(),
-        ];
+        return $this->render('@ZichtAdmin/Quicklist/quicklist.html.twig', ['repos' => $quicklist->getRepositoryConfigs()]);
     }
 }
