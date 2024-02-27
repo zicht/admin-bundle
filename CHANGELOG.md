@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 8.1.6 - 2024-02-27
+### Removed
+- Forward merge of v6.3.8: Removed usage of Sensio Framework Extra Bundle features and thus the dependency
+  on the `sensio/framework-extra-bundle` package.
+
 ## 8.1.5 - 2023-05-22
 ### Fixed
 - Forward merge of 6.3.7: Attribute check in button form template.
