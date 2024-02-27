@@ -14,7 +14,6 @@
         "symfony/console": "^4.4",
         "sonata-project/doctrine-orm-admin-bundle": "^3.15",
         "zicht/framework-extra-bundle": "^9",
-        "sensio/framework-extra-bundle": "^5",
         "twig/twig": "^2.9 || ^3"
     },
     "require-dev": {
@@ -23,16 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Zicht\\Bundle\\AdminBundle\\": [
-                "src/"
-            ]
+            "Zicht\\Bundle\\AdminBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ZichtTest\\Bundle\\AdminBundle\\": [
-                "tests/"
-            ]
+            "ZichtTest\\Bundle\\AdminBundle\\": "tests/"
         }
     },
     "minimum-stability": "stable",

@@ -6,6 +6,7 @@
 
     <services>
         <service id="zicht_admin.controller.rc" class="Zicht\Bundle\AdminBundle\Controller\RcController" public="true">
+            <argument type="service" id="twig" />
             <argument /><!-- replaced by extension -->
         </service>
     </services>
