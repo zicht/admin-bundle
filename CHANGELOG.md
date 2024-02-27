@@ -56,6 +56,11 @@ Nothing so far
 ### Removed
 - Support for Symfony 4
 
+## 7.0.5 - 2024-02-27
+### Removed
+- Forward merge of v6.3.8: Removed usage of Sensio Framework Extra Bundle features and thus the dependency
+  on the `sensio/framework-extra-bundle` package.
+
 ## 7.0.4 - 2023-05-22
 ### Fixed
 - Forward merge of 6.3.7: Attribute check in button form template.
@@ -78,6 +83,11 @@ Nothing so far
 ### Removed
 - Support for Sonata ^3
 - Support for PHP 7.2/7.3
+
+## 6.3.8 - 2024-02-27
+### Removed
+- Removed usage of Sensio Framework Extra Bundle features and thus the dependency
+  on the `sensio/framework-extra-bundle` package.
 
 ## 6.3.7 - 2023-05-22
 ### Fixed
