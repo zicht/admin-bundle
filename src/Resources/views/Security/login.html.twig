@@ -6,44 +6,47 @@
     <title>Zicht CMS | login</title>
     <link rel="stylesheet" href="{{ asset('bundles/zichtadmin/style/login.css') }}">
 </head>
-<body class="z-cms">
-    <div class="login-page">
-        <div id="logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">
-                <path fill="currentColor" d="M96 48c0 26.4-21.6 48-48 48S0 74.4 0 48 21.6 0 48 0s48 21.6 48 48zm-63 5.7h18.3l26.1-31.8h-42L22.5 35.1h25.8zm29.1 17.7L75 58.2H29.4L18.6 71.4z"/>
-            </svg>
-        </div>
-        <div id="form">
-            <form class="login-form" action="{{ path('zicht_admin_login_check') }}" method="post">
-                <h1>Inloggen</h1>
-                {% if error %}
-                    <div class="error">
-                        {{ error.messageKey|trans(error.messageData, 'security') }}
+<body>
+    <main class="z-cms">
+        <article class="login-page">
+            <section class="header">
+                <h1>Fabrique CMS</h1>
+            </section>
+            <section class="form">
+                <form class="login-form" action="{{ path('zicht_admin_login_check') }}" method="post">
+                    <h2>Inloggen</h2>
+                    {% if error %}
+                        <div class="error">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                    <label for="username">Gebruikersnaam</label>
+                    <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" autofocus autocomplete="off"/>
+                    <label for="password">Wachtwoord</label>
+                    <input type="password" id="password" name="_password" class="form-control" /><br>
+
+                    <div id="rememberme" style="display: flex; margin-bottom: 10px;">
+                        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                        <label for="remember_me">onthoud mij</label>
                     </div>
-                {% endif %}
-                <label for="username">
-                    Gebruikersnaam
-                </label>
-                <input type="text" id="username" class="form-control" name="_username" placeholder="Vul uw gebruikersnaam in..." value="{{ last_username }}" autofocus autocomplete="off"/>
-                <label for="password">
-                    Wachtwoord
-                </label>
-                <input type="password" id="password" name="_password" placeholder="Wachtwoord" class="form-control" /><br>
 
-                <div id="rememberme" style="display: flex; margin-bottom: 10px;">
-                    <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-                    <label for="remember_me">onthoud mij</label>
-                </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                <button type="submit">Inloggen</button>
-            </form>
-        </div>
-        <p class="message  has-hover-propagation">
-            <svg xmlns="http://www.w3.org/2000/svg" class="v-hover--right  u-trans--transform" width="17" height="9" viewBox="0 0 25.5 11.25"><path fill="currentColor" d="M0 5.625L6.675 0v4.8H22.5v1.65H6.675v4.8z"/></svg>
-            <a class="v-hover--color" href="/">terug naar website</a>
-        </p>
-    </div>
+                    <button type="submit">
+                        <span class="button__label">Inloggen</span>
+                        <span class="button__icon">
+                            <svg viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M0.1562 23L11.3438 11.8125 0.1562 0.625" stroke="#000" fill="none" fill-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </section>
+            <section class="message  has-hover-propagation">
+                <svg xmlns="http://www.w3.org/2000/svg" class="v-hover--right  u-trans--transform" width="17" height="9" viewBox="0 0 25.5 11.25"><path fill="currentColor" d="M0 5.625L6.675 0v4.8H22.5v1.65H6.675v4.8z"/></svg>
+                <a class="v-hover--color" href="/">terug naar website</a>
+            </section>
+        </article>
+    </main>
 </body>
 </html>

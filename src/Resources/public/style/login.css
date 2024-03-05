@@ -1,76 +1,82 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 @font-face {
-  font-family: poppins;
-  font-style: normal;
-  font-weight: 400;
-  src:
-          local("Poppins"),
-          local("Poppins-Regular"),
-          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff2") format("woff2"),
-          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: poppins;
+  font-family: "Fabrique Web";
   font-style: normal;
   font-weight: 700;
   src:
-          local("Poppins Bold"),
-          local("Poppins Bold"),
-          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-700.woff2") format("woff2"),
-          url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-700.woff2") format("woff");
+    url("/bundles/zichtadmin/fonts/fab/fab.woff2") format("woff2"),
+    url("/bundles/zichtadmin/fonts/fab/fab.woff") format("woff");
 }
 
 @font-face {
-  font-family: campton-bold;
+  font-family: "Graphik Regular";
   font-style: normal;
-  font-weight: 800;
+  font-weight: 400;
   src:
-          url("/bundles/zichtadmin/fonts/campton/36C641_0_unhinted_0.woff2") format("woff2"),
-          url("/bundles/zichtadmin/fonts/campton/36C641_0_unhinted_0.woff") format("woff");
+      url("/bundles/zichtadmin/fonts/gk/gkr.woff2") format("woff2"),
+      url("/bundles/zichtadmin/fonts/gk/gkr.woff") format("woff");
 }
 
-#logo {
-  color: #201747;
-  display: flex;
-  justify-content: center;
+body {
+  margin: 0;
+}
+main.z-cms {
+  padding: 0 32px;
+}
+@media all and (max-width: 600px) {
+  main.z-cms {
+    padding:0 12px
+  }
+}
+
+.z-cms .header {
+  color: #1E1E1E;
   margin-bottom: 20px;
 }
 
 .z-cms h1 {
-  color: #201747;
-  font-family: campton-bold, sans-serif;
-  font-size: 24px;
-  line-height: 32px;
+  color: #1E1E1E;
+  font-family: "Fabrique Web", Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 2.75rem;
+  line-height: 3.5rem;
   margin-bottom: 16px;
+}
+.z-cms h2 {
+  color: #1E1E1E;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
+  font-size: 1.625rem;
+  line-height: 2.375rem;
+  margin-bottom: 20px;
 }
 
 .z-cms .login-page {
-  width: 373px;
   padding: 3% 0 0;
-  margin: auto;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
-.z-cms #form {
-  border-bottom-right-radius: 24px;
-  position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  max-width: 373px;
-  margin: 0 auto 15px;
-  padding: 30px  45px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05), 0 5px 5px 0 rgba(0, 0, 0, 0.09);
+.z-cms section {
+  margin: 0 0 1.25rem 30px;
+  width: calc(50% - 45px);
+}
+@media all and (max-width: 600px) {
+  .z-cms section {
+    margin-left: 20px;
+    width: calc(75% - 35px);
+  }
 }
 
-.z-cms #form label {
-  color: #7A7A7A;
-  font-family: Poppins, sans-serif;
-  font-size: 12px;
-  line-height: 24px;
+.z-cms .form label {
+  color: #1E1E1E;
+  margin-bottom: 0.3125rem;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
-.z-cms #form input[type='checkbox'] {
+.z-cms .form input[type='checkbox'] {
   opacity: 0;
   width: 0;
   margin: 0;
@@ -142,51 +148,67 @@ label {
   outline: rgb(32, 23, 71) auto 5px;
 }
 
-.z-cms #form input:not([type='checkbox']):placeholder {
-  color: #7a7a7a;
-}
-
-.z-cms #form input:not([type='checkbox']) {
-  color: #201747;
-  border: 1px solid #FFFFFF;
-  border-radius: 8px;
+.z-cms .form input:not([type='checkbox']) {
+  border: 1px solid #1E1E1E;
   background-color: #FFFFFF;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   outline: 0;
   width: 100%;
-  margin: 0 0 15px;
-  padding: 15px;
+  margin: 0 0 1.25rem;
+  padding: 12px 15px;
+  color: #1E1E1E;
   box-sizing: border-box;
-  font-family: Poppins, sans-serif;
-  font-size: 14px;
-  line-height: 21px;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
-.z-cms #form input:not([type='checkbox']):last-child {
+.z-cms .form input:not([type='checkbox']):last-child {
   margin-bottom: 30px !important;
 }
 
 /* Chrome autofill color */
-.z-cms #form input:-webkit-autofill{
+.z-cms .form input:-webkit-autofill{
   background-color: transparent!important;
 }
 
-.z-cms #form button {
-  font-family: campton-bold, sans-serif;
+.z-cms button {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
   outline: 0;
-  background: #201747;
-  width: 60%;
-  border-radius: 24px;
-  border: 0 solid;
+  background-color: #1E1E1E;
+  min-width: 230px;
+  border: none;
   padding: 15px;
-  color: #FFFFFF;
+  color: #F5EA04;
   font-size: 16px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
+  -webkit-transition: background-color 300ms ease-in-out;
+  transition: background-color 300ms ease-in-out;
   cursor: pointer;
 }
-.z-cms #form button:hover,#form button:active,#form button:focus {
-  filter: brightness(120%);
+.z-cms button:hover, .z-cms button:active, .z-cms button:focus {
+    background-color: #666;;
+}
+.z-cms .button__label ~ .button__icon {
+    margin-left: 8px;
+}
+.z-cms .button__icon {
+    width: 15px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.z-cms .button__icon svg {
+    transition: transform 500ms ease-in-out
+}
+.z-cms .button__icon svg path {
+    stroke: #F5EA04;
+}
+.z-cms button:hover .button__icon svg {
+    transform: translateX(4px);
 }
 
 .z-cms .has-hover-propagation:hover .v-hover--right {
@@ -210,14 +232,16 @@ label {
   margin: 25px 0 5px 0;
 }
 
-.z-cms #form .error {
+.z-cms .form .error {
   margin: 0 0 20px 0;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
+  color: #FF4016;
 }
 
 .z-cms .message a {
-  color: #201747;
+  color: #1E1E1E;
   filter: brightness(100%);
-  font-family: Poppins, sans-serif;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
   font-size: 14px;
   font-weight: bold;
   line-height: 21px;
@@ -225,8 +249,7 @@ label {
 }
 
 body.z-cms {
-  background: #EDEBE6; /* fallback for old browsers */
-  font-family: Poppins, sans-serif;
+  font-family: "Graphik Regular", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,13 +1,11 @@
 
 @font-face {
-    font-family: poppins;
+    font-family: "Fabrique Web";
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     src:
-        local("Poppins"),
-        local("Poppins-Regular"),
-        url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff2") format("woff2"),
-        url("/bundles/zichtadmin/fonts/poppins/poppins-v5-latin-regular.woff") format("woff");
+        url("/bundles/zichtadmin/fonts/fab/fab.woff2") format("woff2"),
+        url("/bundles/zichtadmin/fonts/fab/fab.woff") format("woff");
 }
 
 @media only screen and (min-width: 768px) {
@@ -31,7 +29,7 @@
 }
 
 .z-cms-admin span.cms-title {
-    font-family: poppins, sans-serif;
+    font-family: "Fabrique Web", Helvetica, sans-serif;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
