@@ -70,7 +70,6 @@ class AdminVoter implements VoterInterface
         // check if class of this object is supported by this voter
         if (!is_null($object) && $this->supportsClass(get_class($object))) {
             $class = get_class($object);
-            /** @var AccessDecisionManagerInterface $accessDecisionManager */
             $accessDecisionManager = $this->decisionManager;
             foreach ($this->mapAttributesToRoles($class, $attributes) as $mappedAttr) {
                 if ($accessDecisionManager->decide($token, [$mappedAttr], $object)) {

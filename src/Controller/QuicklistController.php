@@ -9,22 +9,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Zicht\Bundle\AdminBundle\Form\AutocompleteType;
 use Zicht\Bundle\AdminBundle\Service\Quicklist;
 
 /**
  * Controls a quick list for configured entities.
  */
-class QuicklistController extends AbstractController
+final class QuicklistController extends AbstractController
 {
     /**
      * Displays a quick list control for jumping to entries registered in the quick list service
-     *
-     * @return Response
-     * @Route("quick-list")
      */
-    public function quicklistAction(Request $request, Quicklist $quicklist)
+    #[Route('quick-list')]
+    public function quicklistAction(Request $request, Quicklist $quicklist): Response
     {
         if ($request->get('repo') && $request->get('pattern')) {
             if ($request->get('language')) {

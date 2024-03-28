@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Support for Symfony 6
+- Vimeo Psalm
+### Removed
+- Support for PHP 7.4
+- Dependency on sensio/framework-extra-bundle
+## Changed
+- QuicklistController was made final
+- QuicklistController Route annotation was changed to Route attribute
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 

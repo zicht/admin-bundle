@@ -7,6 +7,7 @@ namespace Zicht\Bundle\AdminBundle\Command;
 
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,16 +20,12 @@ use Symfony\Component\Yaml\Yaml;
  *
  * Useful when using the role based security in Sonata
  */
+#[AsCommand('zicht:admin:dump-role-hierarchy')]
 class DumpRoleHierarchyCommand extends Command
 {
-    /** @var string */
-    protected static $defaultName = 'zicht:admin:dump-role-hierarchy';
+    private Pool $pool;
 
-    /** @var Pool */
-    private $pool;
-
-    /** @var SecurityHandlerInterface */
-    private $securityHandler;
+    private SecurityHandlerInterface $securityHandler;
 
     public function __construct(Pool $pool, SecurityHandlerInterface $securityHandler, string $name = null)
     {
@@ -64,7 +61,7 @@ class DumpRoleHierarchyCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $attributes = array_merge(
             ['LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE', 'EXPORT'],
@@ -77,7 +74,7 @@ class DumpRoleHierarchyCommand extends Command
         $roleHierarchy = [];
         $adminClasses = $pool->getAdminClasses();
 
-        foreach ($adminClasses as $class => $ids) {
+        foreach ($adminClasses as $ids) {
             list($id) = $ids;
 
             $admin = $pool->getAdminByAdminCode($id);
@@ -150,6 +147,7 @@ class DumpRoleHierarchyCommand extends Command
         $output->writeln('# ' . join(' ', $_SERVER['argv']));
         $output->writeln('');
         $output->writeln(Yaml::dump($dumpableConfig, 4));
+
         return Command::SUCCESS;
     }
 }
